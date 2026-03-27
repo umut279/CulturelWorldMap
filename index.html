@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kültürel Dünya Haritası</title>
+
+    <!-- Fontlar -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CDNs (jsDelivr, Unpkg e göre çok daha güvenilir ve hızlıdır, engellere takılmaz) -->
+    <script src="https://cdn.jsdelivr.net/npm/globe.gl"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fb;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            color: #1a1a24;
+        }
+
+        #globeViz {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            cursor: grab;
+            z-index: 1;
+        }
+
+        #globeViz:active {
+            cursor: grabbing;
+        }
+
+        .title-overlay {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .title-overlay h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF512F 0%, #F09819 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .title-overlay p {
+            margin: 12px 0 0 0;
+            color: #4a4a5a;
+            font-size: 15px;
+            max-width: 320px;
+            line-height: 1.6;
+        }
+
+        #infoPanel {
+            position: absolute;
+            top: 50%;
+            right: 40px;
+            transform: translateY(-50%) translateX(20px);
+            width: 360px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            /* Hafif gölgeli açık tema uyumlu sınır */
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 20;
+        }
+
+        #infoPanel.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #111;
+        }
+
+        .panel-header {
+            font-size: 26px;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: #1a1a24;
+        }
+
+        .panel-culture {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .stat-label {
+            color: #6a6a7c;
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 16px;
+            color: #1a1a24;
+        }
+
+        .culture-description {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        #loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #333;
+            font-size: 16px;
+            z-index: 100;
+            font-weight: 600;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 24px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: #FF512F;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 16px auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Hata durumları için görünür kutu */
+        #errorBox {
+            display: none;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffebee;
+            color: #c62828;
+            padding: 16px 24px;
+            border: 1px solid #c62828;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-width: 80%;
+        }
+
+        #anthemBtn {
+            display: none;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        #anthemBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        #infoPanel {
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* Scrolling for extra data */
+    </style>
+</head>
+
+<body>
+
+    <!-- Ağ veya JS hatalarını doğrudan ekranda görmek için hata kutusu -->
+    <div id="errorBox"></div>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <div id="loaderText">Harita Yükleniyor... Biraz zaman alabilir.</div>
+    </div>
+
+    <div class="title-overlay">
+        <h1>Kültürel Mozaik</h1>
+        <p>Dünyanın kültürel bölgelerini keşfedin. Ülkelerin benzer kültürel özelliklerine göre nasıl gruplandığını
+            görmek için haritayı döndürün ve detaylar için ülkelere tıklayın.</p>
+    </div>
+
+    <div id="globeViz"></div>
+
+    <div id="infoPanel">
+        <button class="close-btn" onclick="closePanel()">&times;</button>
+        <div id="countryName" class="panel-header">Ülke Adı</div>
+        <div id="cultureBadge" class="panel-culture">Kültür Bölgesi</div>
+
+        <button id="anthemBtn" onclick="toggleAnthem()">🎵 Milli Marşı Çal</button>
+        <audio id="countryAudio" style="display:none"></audio>
+
+        <div class="stat-row">
+            <span class="stat-label">Başkent</span>
+            <span id="capitalValue" class="stat-value">-</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Para Birimi</span>
+            <span id="currencyValue" class="stat-value">-</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Dil</span>
+            <span id="languageValue" class="stat-value">-</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Yüzölçümü</span>
+            <span id="areaValue" class="stat-value">-</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Telefon Kodu</span>
+            <span id="phoneCodeValue" class="stat-value">-</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Nüfus</span>
+            <span id="populationValue" class="stat-value">-</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Bölge</span>
+            <span id="regionValue" class="stat-value">-</span>
+        </div>
+
+        <div id="cultureDesc" class="culture-description"></div>
+    </div>
+
+    <script>
+        // Global hata yakalayıcı - Beyaz sayfa sorunlarını anında tespit edebilmek için
+        window.addEventListener('error', function (e) {
+            const eb = document.getElementById('errorBox');
+            eb.style.display = 'block';
+            eb.innerHTML = `<strong>Sistem Hatası:</strong> ${e.message} <br/><small>${e.filename}:${e.lineno}</small>`;
+            console.error(e);
+        });
+
+        window.addEventListener('unhandledrejection', function (e) {
+            const eb = document.getElementById('errorBox');
+            eb.style.display = 'block';
+            eb.innerHTML = `<strong>Ağ veya Veri Hatası:</strong> ${e.reason}`;
+            console.error(e);
+        });
+
+        // Ülkelere özgü kültürel profiller (GeoJSON'daki NAME alanıyla eşleşmeli)
+        const countryProfiles = {
+            "Afganistan": { name: "Spiritüellik", color: "#C8C8C8", desc: "Afganistan'da insanlar günlük yaşamlarında dini ve spiritüel ritüelleri yerine getirir; sabah ezanı ile namaz kılmak, dini bayramlarda toplu kutlamalara katılmak ve komşularla manevi paylaşımlarda bulunmak kültürün merkezindedir." },
+            "Almanya": { name: "Disiplin", color: "#808080", desc: "Almanya'da zamanlama ve düzen çok önemlidir; toplantılara dakik gelmek, kurallara uymak ve görevleri planlı şekilde yerine getirmek, bireylerin ve toplumun verimli çalışmasının temelini oluşturur." },
+            "Andorra": { name: "Kültürel Çeşitlilik", color: "#DA70D6", desc: "Andorra'da Katalan ve Fransız kültürleri günlük hayatta iç içe geçer; pazar yerlerinde her iki kültürün ürünleri satılır ve festivallerde müzik ile yemekler bir arada kutlanır." },
+            "Angola": { name: "Topluluk Ruhu", color: "#9ACD32", desc: "Angola'da köy ve mahalle etkinliklerinde birlikte çalışmak ve paylaşmak yaygındır; düğün, doğum ve hasat gibi olaylarda herkes bir araya gelir ve topluluk dayanışması gösterilir." },
+            "Antigua ve Barbuda": { name: "Neşe", color: "#CCCC00", desc: "Antigua ve Barbuda'da toplumsal hayat sokak festivalleri ve renkli etkinliklerle doludur; insanlar müzik ve dansla duygularını ifade eder ve toplumsal bağları güçlendirir." },
+            "Arjantin": { name: "Tutku", color: "#8B0000", desc: "Arjantinliler duygularını açıkça ifade eder; futbol maçlarına büyük bir tutku ile katılır, tango dansında coşku ve duygu yoğun olarak paylaşılır, tartışmalarda bile enerji ve heyecan görülür." },
+            "Arnavutluk": { name: "Misafirperverlik", color: "#FFA500", desc: "Arnavutluk'ta misafir geldiğinde ev sahibi hemen yiyecek ve içecek sunar; misafire özel ilgi gösterilir ve evden ayrılırken tekrar davet almak kültürel bir normdur." },
+            "Aruba": { name: "Deniz Kültürü", color: "#1E90FF", desc: "Aruba'da balıkçılık ve su sporları günlük yaşamın merkezindedir; çocuklar küçük yaşta yüzme öğrenir, toplumsal etkinlikler ve festivaller deniz kültürü etrafında şekillenir." },
+            "Bahamalar": { name: "Eğlence", color: "#D4A800", desc: "Bahamalılar sosyal hayatı festivaller, müzik ve dansla yaşar; sokak etkinlikleri, yerel ritimler ve kutlamalar toplumsal birlik ve mutluluk duygusunu pekiştirir." },
+            "Bangladeş": { name: "Aile Bağları", color: "#CC0000", desc: "Bangladeş'te geniş aileler bir arada yaşar; bayramlar ve özel günlerde birlikte yemekler yapılır, aile üyeleri karar süreçlerinde birbirine danışır ve toplumsal bağlılık güçlenir." },
+            "Barbados": { name: "Müzik ve Dans", color: "#FF4500", desc: "Barbados'ta calypso ve soca müziği sosyal yaşamın merkezindedir; sokak festivalleri ve dans etkinlikleri hem eğlence hem de kültürel kimlik için önemlidir." },
+            "Belçika": { name: "Gastronomi", color: "#8B4513", desc: "Belçikalılar yemek kültürüne büyük değer verir; çikolata, peynir ve bira günlük yaşamın ve sosyal buluşmaların ayrılmaz bir parçasıdır, misafirlere ikram bir nezaket göstergesidir." },
+            "Belize": { name: "Doğa ve Koruma", color: "#50C878", desc: "Belize'de insanlar doğal alanları korur, ulusal park etkinliklerine katılır ve çevre bilinci günlük yaşamın bir parçasıdır; topluluk içinde doğaya saygı kültürü hakimdir." },
+            "Benin": { name: "Festival Kültürü", color: "#FFC0CB", desc: "Benin'de ritüel ve geleneksel maskeli danslar sıkça sergilenir; toplumsal etkinlikler gençlerden yaşlılara kadar herkesin katılımıyla kültürel kimliğin sürdürülmesini sağlar." },
+            "Butan": { name: "Mutluluk & Ruhsal Zenginlik", color: "#C8B97A", desc: "Bhutan'da insanlar meditasyon ve toplumsal uyum ile ruhsal mutluluğu ön planda tutar; günlük yaşamda bireyler manevi değerleri toplumsal ilişkilerle birleştirir." },
+            "Bolivya": { name: "Yerli Miras", color: "#A52A2A", desc: "Bolivya'da yerli festivaller ve geleneksel kıyafetler kültürel kimliğin korunmasını sağlar; bayramlar ve kutlamalar topluluk üyelerinin bir araya gelmesine vesile olur." },
+            "Bosna Hersek": { name: "Tarih Bilinci", color: "#800000", desc: "Bosna-Hersek'te tarihi mekanların ziyaret edilmesi, anma törenlerine katılım ve geçmişin hatırlanması toplumda kültürel hafızayı canlı tutar." },
+            "Botsvana": { name: "Doğa ve Vahşi Yaşam", color: "#006400", desc: "Botsvana'da safari ve doğa koruma etkinlikleri hem turizm hem de yerel kültürün bir parçasıdır; insanlar vahşi yaşamın korunmasına aktif katılır." },
+            "Brezilya": { name: "Karnaval & Neşe", color: "#C8C800", desc: "Brezilya'da sokak partileri ve samba dansları toplumsal bağları güçlendirir; karnaval kültürü halkın duygularını ve neşesini ifade etme biçimidir." },
+            "Cebelitarık": { name: "Kültürel Kesişim", color: "#9370DB", desc: "İngiliz ve İspanyol etkileri günlük yaşamda birleşir; yemek, dil ve festivaller her iki kültürün özelliklerini taşır." },
+            "Cezayir": { name: "Misafir Ağırlama", color: "#D4A840", desc: "Cezayir'de misafire çay ve tatlı sunmak, ev sahipliğinin saygı ve özen göstergesidir; toplumsal ilişkilerde misafirperverlik önemlidir." },
+            "Çad": { name: "Aile Bağları", color: "#FF6347", desc: "Çad'da büyük ailelerde birlikte yemek yemek ve karar almak yaygındır; aile bağları kültürel yaşamın merkezindedir." },
+            "Çek Cumhuriyeti": { name: "Bira Kültürü", color: "#A0A0A0", desc: "Çekya'da bira evleri sosyal buluşmaların vazgeçilmezidir; arkadaş ve aile ile birlikte bira içmek kültürel bir ritüeldir." },
+            "Denmark": { name: "Sadelik (Hygge)", color: "#A0A0A0", desc: "Danimarka'da evlerde rahatlık ve samimi sohbetler öne çıkar; hygge kültürü, huzurlu ve dengeli bir yaşamı destekler." },
+            "Haiti": { name: "Müzik ve Dans", color: "#CC00CC", desc: "Haiti'de müzik ve dans günlük yaşamın ayrılmaz bir parçasıdır; Vodou ritüelleri, sokak etkinlikleri ve festivaller topluluk bağlarını güçlendirir." },
+            "Netherlands": { name: "Hoşgörü", color: "#90EE90", desc: "Hollanda'da farklı fikir ve yaşam tarzlarına saygı gösterilir; açık toplumsal tartışmalar ve kültürel çeşitliliğe önem verilir." },
+            "Honduras": { name: "Doğa ve Aile", color: "#006400", desc: "Honduras'ta doğa ile iç içe yaşam ve aile etkinlikleri ön plandadır; bayramlarda tüm aile bir araya gelir ve doğal alanlarda vakit geçirilir." },
+            "United Kingdom": { name: "Gelenekçilik", color: "#8B4513", desc: "İngiltere'de çay saatleri, kraliyet törenleri ve tarihi gelenekler günlük yaşamda önemlidir; insanlar geçmişle bağlarını korur." },
+            "Ireland": { name: "Müzik ve Hikâye", color: "#32CD32", desc: "İrlanda'da pub kültürü, halk hikâyeleri ve müzik toplumsal bağları güçlendirir; nesiller boyunca sözlü kültür aktarılır." },
+            "Spain": { name: "Rahat Yaşam", color: "#6BB8D4", desc: "İspanya'da öğle siestası, akşam geç yemek ve sokak kafeleri günlük yaşamın parçalarıdır; sosyal yaşam ve rahatlık ön plandadır." },
+            "Israel": { name: "Cesaret & İnovasyon", color: "#FF4500", desc: "İsrailliler kriz ve fırsat anlarında hızlı çözüm üretir; teknoloji ve girişimcilik kültürü cesaretle birleşir." },
+            "Sweden": { name: "Eşitlik", color: "#A0A0A0", desc: "İsveç'te toplumsal ve cinsiyet eşitliği günlük yaşamın normudur; okul ve iş yerlerinde fırsat eşitliği önemlidir." },
+            "Switzerland": { name: "Tarafsızlık", color: "#D4D4D4", desc: "İsviçre'de siyasi ve sosyal konularda tarafsızlık değerli bir kültürel ilkedir; çatışmalarda arabuluculuk ve denge ön plandadır." },
+            "Italy": { name: "Aile & Yemek", color: "#CC0000", desc: "İtalya'da aile yemekleri ve akşam sofraları günlük yaşamın merkezindedir; yemek, kültürel mirasın ve aile bağlarının korunmasını sağlar." },
+            "Jamaica": { name: "Müzik (Reggae)", color: "#00BB00", desc: "Jamaika'da reggae ve dans kültürü toplumsal kimliği yansıtır; festivaller ve sokak etkinlikleri bir araya gelmeyi teşvik eder." },
+            "Japan": { name: "Saygı & Gelenek", color: "#5C4033", desc: "Japonya'da yaşlılara saygı göstermek, selamlaşma kurallarına uymak ve gelenekleri korumak günlük yaşamın temelidir." },
+            "Cambodia": { name: "Din ve Spiritüellik", color: "#C8C8A0", desc: "Kamboçya'da Budist tapınak ziyaretleri ve dini törenler günlük hayatın bir parçasıdır; toplumda manevi bağlılık önemlidir." },
+            "Cameroon": { name: "Topluluk Ruhu", color: "#9ACD32", desc: "Kamerun'da köy ve mahalle etkinlikleri topluluk dayanışmasını güçlendirir; düğün ve festival hazırlıkları ortak yapılır." },
+            "Canada": { name: "Çok Kültürlülük", color: "#E04A25", desc: "Kanada'da farklı kültürlerden gelen insanlar bir arada yaşar; festival ve yemekler kültürel çeşitliliği kutlar." },
+            "Qatar": { name: "Misafirperverlik", color: "#D4A840", desc: "Katar'da misafire özenle yiyecek ve içecek sunulur; ziyaretlerde ev sahibi misafire özel ilgi gösterir." },
+            "Kazakhstan": { name: "Göçebe Miras", color: "#DEB887", desc: "Kazakistan'da at sırtında yaşam ve göçebe gelenekler günlük yaşamda önemlidir; toplulukla birlikte hayvancılık kültürü sürdürülür." },
+            "Kenya": { name: "Doğa ve Vahşi Yaşam", color: "#006400", desc: "Kenya'da safari ve koruma alanları toplumsal etkinliklerin bir parçasıdır; doğayla uyum kültürel bir değer taşır." },
+            "Latvia": { name: "Tarih ve Kültür", color: "#800080", desc: "Letonya'da halk festivalleri, tarihi anıtlar ve geleneksel müzik kültürel kimliğin korunmasına yardımcı olur." },
+            "Liberia": { name: "Dayanışma", color: "#FF4500", desc: "Liberya'da topluluk krizlerinde birbirine destek olmak ve ortak çözümler üretmek kültürel bir davranıştır." },
+            "Libya": { name: "Tarih & Misafirperverlik", color: "#FFA500", desc: "Libya'da misafire çay ve yiyecek ikram etmek, tarihsel geleneklerle birleşerek kültürel bir normdur." },
+            "Liechtenstein": { name: "Kültürel Koruma", color: "#8B008B", desc: "Lihtenştayn'da geleneksel festivaller, tarihi mekanlar ve folklor günlük yaşamın bir parçasıdır." },
+            "Macedonia": { name: "Tarih Bilinci", color: "#800000", desc: "Makedonya'da tarihi anıtlar ve festivaller kültürel bilinci canlı tutar; topluluk geçmişle bağ kurar." },
+            "Madagascar": { name: "Doğa", color: "#50C878", desc: "Madagaskar'da ekoturizm ve topluluk doğa etkinlikleri çevre bilincini destekler; yerel yaşam doğayla iç içedir." },
+            "Malawi": { name: "Müzik & Topluluk", color: "#FF4500", desc: "Malavi'de dans ve müzik festivalleri topluluk birliğini güçlendirir; ritim ve şarkılar kültürel ifade aracıdır." },
+            "Mali": { name: "Ritim ve Topluluk", color: "#FF8C00", desc: "Mali'de geleneksel davul ve dans topluluk etkinliklerinde merkezi bir rol oynar; kültürel paylaşımı sağlar." },
+            "Mexico": { name: "Festival Kültürü", color: "#FFC0CB", desc: "Meksika'da Dia de los Muertos gibi festivaller toplumsal bağları güçlendirir; ritüeller aile ve toplumla iç içedir." },
+            "Micronesia": { name: "Deniz Kültürü", color: "#1E90FF", desc: "Mikronezya'da denizcilik, balıkçılık ve su festivalleri günlük yaşamın ve kültürel kimliğin merkezindedir." },
+            "Namibia": { name: "Doğa ve Topluluk", color: "#228B22", desc: "Namibya'da vahşi yaşam ve doğal etkinlikler topluluk aktiviteleri ile birleştirilir; çevre bilinci kültürel değer taşır." },
+            "Nauru": { name: "Aile Bağları", color: "#CC0000", desc: "Nauru'da aile büyükleriyle birlikte yemek ve törenlere katılmak günlük yaşamda önemlidir; toplumsal bağlar güçlenir." },
+            "Nepal": { name: "Spiritüellik", color: "#D0D0D0", desc: "Nepal'de tapınak ziyaretleri, meditasyon ve dini törenler günlük yaşamın ayrılmaz bir parçasıdır." },
+            "Niger": { name: "Topluluk & Dayanıklılık", color: "#8B0000", desc: "Nijer'de kriz ve zorluklar karşısında topluluk birlikte hareket eder; dayanışma kültürel bir normdur." },
+            "Nigeria": { name: "Müzik & Topluluk", color: "#9932CC", desc: "Nijerya'da Afrobeat ve dans topluluk etkinliklerinde merkezi bir rol oynar; kültürel ifade ve birlik sağlanır." },
+            "Norway": { name: "Doğa Sevgisi", color: "#50C878", desc: "Norveç'te doğa yürüyüşleri ve açık hava etkinlikleri günlük yaşamın bir parçasıdır; doğayla uyum kültürel bir değerdir." },
+            "Oman": { name: "Misafirperverlik", color: "#D4A840", desc: "Umman'da misafire özenle yiyecek sunulur, ev sahibi misafire saygı ve ilgi gösterir." },
+            "Pakistan": { name: "Misafirperverlik", color: "#FFA500", desc: "Pakistan'da misafir evine geldiğinde yemek ve içecek ikram edilir; misafirperverlik kültürel bir değer olarak önemlidir." },
+            "Palau": { name: "Deniz & Topluluk", color: "#1E90FF", desc: "Palau'da deniz ve balıkçılık günlük yaşamın merkezindedir; topluluk etkinlikleri deniz kültürü etrafında şekillenir." },
+            "Panama": { name: "Kültürel Mozaik", color: "#DA70D6", desc: "Panama'da yerli, İspanyol ve Afrikalı kültürler birlikte yaşar; festivaller ve yemekler bu çeşitliliği yansıtır." },
+            "Paraguay": { name: "Aile Bağları", color: "#CC0000", desc: "Paraguay'da aile yemekleri ve bayram kutlamaları kültürel yaşamın merkezindedir; topluluk bağlılığı güçlenir." },
+            "Peru": { name: "Yerli Miras", color: "#A52A2A", desc: "Peru'da geleneksel festivaller ve kıyafetler yerli mirası korur; topluluk etkinlikleri kültürel sürekliliği sağlar." },
+            "Poland": { name: "Tarih Bilinci", color: "#800000", desc: "Polonya'da tarihi anma törenleri ve müzeler kültürel hafızayı canlı tutar; geçmişle bağ korunur." },
+            "Portugal": { name: "Denizcilik Kültürü", color: "#1E3A8A", desc: "Portekiz'de denizcilik gelenekleri ve festivaller kültürel yaşamın parçasıdır; topluluk denizle iç içedir." },
+            "Romania": { name: "Folklor & Müzik", color: "#800080", desc: "Romanya'da halk dansları, geleneksel müzik ve festivaller toplumsal bağları güçlendirir." },
+            "Russia": { name: "Dayanıklılık", color: "#333333", desc: "Rusya'da sert iklim ve tarihsel zorluklar topluluk dayanıklılığını ve sabrı kültürel bir değer haline getirmiştir." },
+            "Saint Lucia": { name: "Festival ve Topluluk", color: "#FFC0CB", desc: "Saint Lucia'da sokak festivalleri ve müzik etkinlikleri topluluk bağlarını güçlendirir ve kültürü yansıtır." },
+            "Samoa": { name: "Aile & Topluluk", color: "#CC0000", desc: "Samoa'da aile büyükleriyle birlikte törenlere katılmak ve topluluk etkinliklerinde yer almak kültürün merkezindedir." },
+            "Senegal": { name: "Müzik ve Ritim", color: "#FF8C00", desc: "Senegal'de geleneksel davul ve dans topluluk etkinliklerinde merkezi bir rol oynar; kültürel paylaşımı sağlar." },
+            "Serbia": { name: "Tarih & Gelenek", color: "#800000", desc: "Sırbistan'da tarihi festivaller ve halk ritüelleri kültürel kimliği korur." },
+            "Singapore": { name: "Modernlik & Çeşitlilik", color: "#A9A9A9", desc: "Singapur'da farklı kültürler bir arada yaşar; modern yaşam ve gelenekler birlikte sürdürülür." },
+            "Slovakia": { name: "Folklor", color: "#8B4513", desc: "Slovakya'da geleneksel dans ve müzik kültürel kimliğin korunmasına yardımcı olur." },
+            "Slovenia": { name: "Doğa", color: "#50C878", desc: "Slovenya'da dağ ve göl etkinlikleri günlük yaşamın bir parçasıdır; doğa ile uyum kültürel bir değerdir." },
+            "Somalia": { name: "Topluluk & Direnç", color: "#8B0000", desc: "Somali'de zorluklar karşısında topluluk birlikte hareket eder; dayanışma kültürel bir normdur." },
+            "Thailand": { name: "Güleryüz & Misafirperverlik", color: "#D4A840", desc: "Tayland'da misafire özenle yemek ve içecek sunulur; güleryüz kültürün önemli bir parçasıdır." },
+            "Togo": { name: "Aile Bağları", color: "#CC0000", desc: "Togo'da aile yemekleri ve bayram kutlamaları kültürel yaşamın merkezindedir; topluluk bağlılığı güçlenir." },
+            "Tunisia": { name: "Mutfak & Tarih", color: "#FF4500", desc: "Tunus'ta geleneksel yemekler ve tarihsel festivaller kültürel kimliği korur." },
+            "Turkey": { name: "Misafirperverlik", color: "#FFA500", desc: "Türkiye'de misafir evine geldiğinde çay ve yiyecek ikram edilir; ev sahibi misafire özel ilgi gösterir." },
+            "Ukraine": { name: "Müzik & Dayanıklılık", color: "#00008B", desc: "Ukrayna'da halk şarkıları ve dansları toplumsal bağları güçlendirir; zorluklarda dayanıklılık kültürel bir değer haline gelmiştir." },
+            "Uganda": { name: "Topluluk & Neşe", color: "#D4A800", desc: "Uganda'da topluluk etkinlikleri ve danslarla toplumsal birlik pekiştirilir; neşe kültürün önemli bir parçasıdır." },
+            "United Arab Emirates": { name: "Misafirperverlik", color: "#D4A840", desc: "BAE'de misafire özenle yiyecek sunulur ve ev sahibi saygı gösterir; kültürel norm olarak kabul edilir." },
+            "Venezuela": { name: "Müzik ve Ritim", color: "#FF1493", desc: "Venezuela'da salsa ve merengue dansları topluluk etkinliklerinde merkezi bir rol oynar; kültürel ifade için önemlidir." },
+            "Vietnam": { name: "Bağımsızlık & Direnç", color: "#006400", desc: "Vietnam'da tarihsel zorluklar karşısında topluluk birlikte hareket eder; kültürel kimlik ve direnç ön plandadır." },
+            "Yemen": { name: "Misafirperverlik & Dayanıklılık", color: "#8B0000", desc: "Yemen'de misafire özen gösterilir; kriz anlarında topluluk dayanışması sergilenir." },
+            "Zambia": { name: "Doğa & Topluluk", color: "#228B22", desc: "Zambiya'da vahşi yaşamı koruma ve topluluk etkinlikleri günlük yaşamın parçasıdır." },
+            "Zimbabwe": { name: "Müzik & Topluluk", color: "#FF4500", desc: "Zimbabve'de geleneksel müzik ve dans topluluk bağlarını güçlendirir; kültürel ifade önemlidir." }
+        };
+
+        // Eksik ülkeler eklentisi 
+        Object.assign(countryProfiles, {
+            "United States of America": { name: "Bireysellik ve İnovasyon", color: "#1E90FF", desc: "ABD'de bireysel özgürlükler, girişimcilik ve farklı kültürlerin bir arada yaşaması ön plandadır." },
+            "France": { name: "Sanat ve Gastronomi", color: "#4169E1", desc: "Fransa'da felsefe, sanat ve zengin yemek kültürü günlük yaşantının ayrılmaz bir parçasıdır." },
+            "China": { name: "Uyum ve Gelenek", color: "#FF0000", desc: "Çin'de Konfüçyüsçü değerler, aile bağı ve toplumsal uyum, köklü tarihi mirasla birleşir." },
+            "India": { name: "Spiritüellik ve Çeşitlilik", color: "#FF8C00", desc: "Hindistan'da derin manevi inançlar, renkli festivaller ve binlerce dilden oluşan devasa bir kültürel mozaik vardır." },
+            "Australia": { name: "Açık Hava Kültürü", color: "#32CD32", desc: "Avustralya'da doğa ile iç içe, spor ve rahat sahil yaşam tarzı toplumsal karakteri belirler." },
+            "South Africa": { name: "Gökkuşağı Ulusu", color: "#FFD700", desc: "Güney Afrika, çok sayıda etnik grubun, dilin ve kültürün birleştiği, müzik ve toplumsal dayanışma değerlerine sahip bir ülkedir." },
+            "Egypt": { name: "Tarih ve Miras", color: "#A52A2A", desc: "Mısır'da binlerce yıllık Firavunlar dönemi ve İslami kültürün etkileri günlük yaşama yansır." },
+            "Saudi Arabia": { name: "İslami Gelenekler", color: "#006400", desc: "Suudi Arabistan'da din, toplumsal kuralların ve aile yapısının temelini oluşturur; güçlü bedevi misafirperverliği yaygındır." },
+            "Colombia": { name: "Neşe ve Müzik", color: "#FFD700", desc: "Kolombiya'da sıcakkanlılık, salsa ve cumbia gibi müzik türleri toplumsal ilişkileri canlandırır." },
+            "Chile": { name: "Doğa ve Dayanıklılık", color: "#DC143C", desc: "Şili'de zorlu coğrafyaya uyum, güçlü aile bağları ve derin edebi bir kültür öne çıkar." },
+            "South Korea": { name: "Teknoloji ve Nezaket", color: "#0000CD", desc: "Güney Kore'de teknolojik ilerleme ve popüler kültür (K-Pop), geleneksel saygı normlarıyla çatışmadan bir arada var olur." },
+            "Indonesia": { name: "Birlik ve Çeşitlilik", color: "#B22222", desc: "Endonezya'da binlerce ada, farklı diller ve inançların bir araya geldiği zengin bir kültürel çeşitlilik sunar." },
+            "Greece": { name: "Felsefe ve Deniz", color: "#1E3A8A", desc: "Yunanistan'da mitoloji, felsefe ve Akdeniz mutfağı etrafında şekillenen köklü bir deniz kültürü vardır." },
+            "Morocco": { name: "Zanaat ve Baharat", color: "#D2691E", desc: "Fas'ta çarşı kültürü, göz alıcı mimari detaylar ve naneli çay ikramları toplumsal etkileşimin merkezindedir." },
+            "Iran": { name: "Şiir ve Misafirperverlik", color: "#2E8B57", desc: "İran'da edebi gelenekler (Hafız gibi şairler) ve eve gelen misafire en iyi ikramı sunma kültürü (Tarof) köklüdür." },
+            "Iraq": { name: "Mezopotamya Mirası", color: "#8B4513", desc: "Irak, insanlık tarihinin en eski medeniyetlerine ev sahipliği yapmış olup zengin bir tarihi ve dini kültüre sahiptir." },
+            "Syria": { name: "Tarihi İhtişam", color: "#A0522D", desc: "Suriye, köklü çarşıları ve Şam ile Halep gibi dünyanın en eski kesintisiz yaşanan şehirleriyle derin bir kültüre sahiptir." },
+            "New Zealand": { name: "Doğa ve Maori Kültürü", color: "#008000", desc: "Yeni Zelanda, vahşi doğaya derin saygı duyar ve yerli Maori gelenekleri (Haka dansı gibi) günlük yaşama yansır." },
+            "Philippines": { name: "Neşeli Dayanışma (Bayanihan)", color: "#FF4500", desc: "Filipinler'de birlikte yardımlaşma ruhu (Bayanihan), renkli festivaller ve canlı aile bağları öne çıkar." },
+            "Malaysia": { name: "Çok Kültürlü Uyum", color: "#FFD700", desc: "Malezya'da Malay, Çinli ve Hintli kültürler bir arada yaşar; bu da zengin bir gastronomi ve festival ruhu yaratır." },
+            "Ecuador": { name: "And Dağları Kültürü", color: "#FF8C00", desc: "Ekvador'da yerli And kültürü ile İspanyol etkisi iç içedir; renkli pazarlar ve doğaya saygı ön plandadır." },
+            "Cuba": { name: "Müzik ve Direnç", color: "#DC143C", desc: "Küba'da canlı salsa müzikleri, sokak sohbetleri ve tarihsel dayanıklılık güçlü bir ulusal kimlik yaratır." },
+            "Finland": { name: "Eşitlik ve Doğa", color: "#4682B4", desc: "Finlandiya'da sisu (zorluklar karşısında direnç), sauna kültürü ve ormanlarla olan derin bağ toplumsal yapıyı şekillendirir." },
+            "Iceland": { name: "Edebiyat ve Buzullar", color: "#ADD8E6", desc: "İzlanda'da kuvvetli bir okuma kültürü (Saga'lar), eşitlikçi toplum yapısı ve zorlu doğaya saygı vardır." }
+        });
+
+        // Bölge bazlı fallback profiller
+        const culturalZones = {
+            "Southern Europe": { name: "Akdeniz Kültürü", color: "#E05A47", desc: "Zengin bir mutfak, sıcak iklim ve dışa dönük sosyal yaşam." },
+            "Western Europe": { name: "Batı Avrupa", color: "#4A62D1", desc: "Modern endüstri, sanat ve demokrasi temelleri." },
+            "Eastern Europe": { name: "Doğu Avrupa", color: "#D1415D", desc: "Derin edebi gelenekler ve güçlü aile bağları." },
+            "Northern America": { name: "Kuzey Amerika", color: "#169BA5", desc: "Bireycilik, çok kültürlülük ve küresel pop kültürü." },
+            "Latin America and the Caribbean": { name: "Latin Amerika", color: "#D67A06", desc: "Müzik, yerli ve İberya kültürünün sentezi." },
+            "Eastern Asia": { name: "Doğu Asya", color: "#0B9BC2", desc: "Toplumsal uyum, teknoloji ve derin felsefi gelenekler." },
+            "Southern Asia": { name: "Güney Asya", color: "#0B7A70", desc: "Baharatlar, renkler ve maneviyatın doğduğu merkez." },
+            "Western Asia": { name: "Orta Doğu", color: "#A8B027", desc: "Köklü dinlerin beşiği ve tarihi ticaret yolları." },
+            "Northern Africa": { name: "Kuzey Afrika", color: "#C41829", desc: "Arap ve Berberi kültürlerinin harmanlandığı bölge." },
+            "Sub-Saharan Africa": { name: "Sahra Altı Afrika", color: "#7421B8", desc: "Sözlü tarih, ritmik müzik ve topluluk bazlı yaşam." },
+            "Australia and New Zealand": { name: "Okyanusya", color: "#3B821A", desc: "Doğa ile bütünleşik ve rahat sahil yaşam tarzı." }
+        };
+        const defaultCulture = { name: "Eşsiz Bölge", color: "#777777", desc: "Karmaşık ve çok yönlü kültürel miras." };
+
+        let world;
+
+        const geoJsonUrl = 'https://cdn.jsdelivr.net/gh/vasturiano/globe.gl@master/example/datasets/ne_110m_admin_0_countries.geojson';
+
+        document.getElementById('loaderText').innerText = "Veriler İndiriliyor...";
+
+        fetch(geoJsonUrl)
+            .then(res => {
+                if (!res.ok) throw new Error("Veri indirilemedi (HTTP " + res.status + ").");
+                return res.json();
+            })
+            .then(countriesData => {
+
+                if (typeof Globe === 'undefined') {
+                    throw new Error("Globe.gl kütüphanesi yüklenemedi. (İnternet bağlantınızı kontrol edin)");
+                }
+
+                // İngilizceden Türkçeye ad dönüşümleri (harita ve profil eşleştirme için)
+                const engToTr = {
+                    "Afghanistan": "Afganistan", "Germany": "Almanya", "Antigua and Barb.": "Antigua ve Barbuda", "Argentina": "Arjantin", "Albania": "Arnavutluk", "Aruba": "Aruba", "Bahamas": "Bahamalar", "Bangladesh": "Bangladeş", "Barbados": "Barbados", "Belgium": "Belçika", "Belize": "Belize", "Benin": "Benin", "Bhutan": "Butan", "Bolivia": "Bolivya", "Bosnia and Herz.": "Bosna Hersek", "Botswana": "Botsvana", "Brazil": "Brezilya", "Gibraltar": "Cebelitarık", "Algeria": "Cezayir", "Chad": "Çad", "Czech Rep.": "Çek Cumhuriyeti", "Denmark": "Danimarka", "Haiti": "Haiti", "Netherlands": "Hollanda", "Honduras": "Honduras", "United Kingdom": "Birleşik Krallık", "Ireland": "İrlanda", "Spain": "İspanya", "Israel": "İsrail", "Sweden": "İsveç", "Switzerland": "İsviçre", "Italy": "İtalya", "Jamaica": "Jamaika", "Japan": "Japonya", "Cambodia": "Kamboçya", "Cameroon": "Kamerun", "Canada": "Kanada", "Qatar": "Katar", "Kazakhstan": "Kazakistan", "Kenya": "Kenya", "Latvia": "Letonya", "Liberia": "Liberya", "Libya": "Libya", "Liechtenstein": "Lihtenştayn", "Macedonia": "Makedonya", "Madagascar": "Madagaskar", "Malawi": "Malavi", "Mali": "Mali", "Mexico": "Meksika", "Micronesia": "Mikronezya", "Namibia": "Namibya", "Nauru": "Nauru", "Nepal": "Nepal", "Niger": "Nijer", "Nigeria": "Nijerya", "Norway": "Norveç", "Oman": "Umman", "Pakistan": "Pakistan", "Palau": "Palau", "Panama": "Panama", "Paraguay": "Paraguay", "Peru": "Peru", "Poland": "Polonya", "Portugal": "Portekiz", "Romania": "Romanya", "Russia": "Rusya", "Saint Lucia": "Saint Lucia", "Samoa": "Samoa", "Senegal": "Senegal", "Serbia": "Sırbistan", "Singapore": "Singapur", "Slovakia": "Slovakya", "Slovenia": "Slovenya", "Somalia": "Somali", "Thailand": "Tayland", "Togo": "Togo", "Tunisia": "Tunus", "Turkey": "Türkiye", "Ukraine": "Ukrayna", "Uganda": "Uganda", "United Arab Emirates": "Birleşik Arap Emirlikleri", "Venezuela": "Venezuela", "Vietnam": "Vietnam", "Yemen": "Yemen", "Zambia": "Zambiya", "Zimbabwe": "Zimbabve", "United States of America": "Amerika Birleşik Devletleri", "France": "Fransa", "China": "Çin", "India": "Hindistan", "Australia": "Avustralya", "South Africa": "Güney Afrika", "Egypt": "Mısır", "Saudi Arabia": "Suudi Arabistan", "Colombia": "Kolombiya", "Chile": "Şili", "South Korea": "Güney Kore", "Indonesia": "Endonezya", "Greece": "Yunanistan", "Morocco": "Fas", "Iran": "İran", "Iraq": "Irak", "Syria": "Suriye", "New Zealand": "Yeni Zelanda", "Philippines": "Filipinler", "Malaysia": "Malezya", "Ecuador": "Ekvador", "Cuba": "Küba", "Finland": "Finlandiya", "Iceland": "İzlanda"
+                };
+
+                countriesData.features.forEach(d => {
+                    const name = (d.properties && d.properties.NAME) ? d.properties.NAME : "";
+                    const admin = (d.properties && d.properties.ADMIN) ? d.properties.ADMIN : "";
+                    const subregion = (d.properties && d.properties.SUBREGION) ? d.properties.SUBREGION : "";
+                    const region = (d.properties && d.properties.REGION_UN) ? d.properties.REGION_UN : "";
+                    
+                    const trName = engToTr[name] || engToTr[admin] || name;
+                    d.properties.TR_NAME = trName;
+
+                    // Hem Türkçe isimle hem de orijinal isimle profili arıyoruz
+                    const culture = countryProfiles[trName] || countryProfiles[name] || countryProfiles[admin] || culturalZones[subregion] || culturalZones[region] || defaultCulture;
+                    d.properties.culturalProfile = culture;
+                });
+
+                document.getElementById('loader').style.display = 'none';
+
+                const globeContainer = document.getElementById('globeViz');
+
+                // Cihazın boyutunu açık şekilde iletmeliyiz, aksi halde küre 0 boyutunda yani siyah boşluk şeklinde kalabiliyor.
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+
+                world = Globe()(globeContainer)
+                    .width(width)
+                    .height(height)
+                    .backgroundColor('#f4f7fb')
+
+                    // Siyah renkli bir küre sorunu olmaması için su görselini hafif bir tema olarak eklendi
+                    .globeImageUrl('https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-water.png')
+
+                    .showAtmosphere(true)
+                    .atmosphereColor('#abcceb')
+                    .atmosphereAltitude(0.15)
+
+                    .polygonsData(countriesData.features)
+                    .polygonAltitude(0.015)
+                    .polygonCapColor(d => hexToRgba(d.properties.culturalProfile.color, 0.9))
+                    .polygonSideColor(() => 'rgba(255,255,255,0.5)')
+                    .polygonStrokeColor(() => '#ffffff')
+                    .polygonLabel(({ properties: d }) => `
+            <div style="background: rgba(255,255,255,0.95); color: #111; padding: 10px 14px; border-radius: 8px; font-family: 'Inter', sans-serif; border: 1px solid ${d.culturalProfile.color}; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+              <div style="font-weight: 800; font-size: 14px; margin-bottom: 4px;">${d.TR_NAME || d.NAME || d.ADMIN || 'Bilinmeyen'}</div>
+              <div style="font-weight: 600; font-size: 12px; color: ${d.culturalProfile.color};">${d.culturalProfile.name}</div>
+            </div>
+          `)
+                    .onPolygonHover(hoverD => {
+                        world
+                            .polygonAltitude(d => d === hoverD ? 0.08 : 0.015)
+                            .polygonCapColor(d => d === hoverD ? d.properties.culturalProfile.color : hexToRgba(d.properties.culturalProfile.color, 0.9));
+
+                        // İmleci ayarla
+                        globeContainer.style.cursor = hoverD ? 'pointer' : 'grab';
+                    })
+                    .onPolygonClick(d => {
+                        showCountryDetails(d.properties);
+                        try {
+                            world.pointOfView({
+                                lat: d.properties.LABEL_Y || 0,
+                                lng: d.properties.LABEL_X || 0,
+                                altitude: 1.5
+                            }, 800);
+                        } catch (e) { }
+                    });
+
+                world.controls().autoRotate = true;
+                world.controls().autoRotateSpeed = 0.5;
+
+                world.controls().addEventListener('start', () => {
+                    world.controls().autoRotate = false;
+                });
+
+            })
+            .catch(err => {
+                document.getElementById('loader').style.display = 'none';
+                const eb = document.getElementById('errorBox');
+                eb.style.display = 'block';
+                eb.innerHTML = `<strong>Kritik Hata:</strong> Harita yüklenemedi. <br/>Algılanan Sorun: ${err.message}`;
+                console.error(err);
+            });
+
+        // Renk dönüştürücü
+        function hexToRgba(hex, alpha) {
+            if (!hex) return `rgba(100,100,100,${alpha})`;
+            var r = parseInt(hex.slice(1, 3), 16),
+                g = parseInt(hex.slice(3, 5), 16),
+                b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        // Audio Ayarları ve Milli Marş Linkleri
+        let currentAudio = document.getElementById('countryAudio');
+        let isPlaying = false;
+
+        // Tüm ülkeler için Milli Marş linkleri (ISO A2 kodu → ses dosyası)
+        const anthemLinks = {
+            "AF": "http://www.nationalanthems.info/af.mp3",
+            "AL": "http://www.nationalanthems.info/al.mp3",
+            "DZ": "http://www.nationalanthems.info/dz.mp3",
+            "AD": "http://www.nationalanthems.info/ad.mp3",
+            "AO": "http://www.nationalanthems.info/ao.mp3",
+            "AG": "http://www.nationalanthems.info/ag.mp3",
+            "AR": "http://www.nationalanthems.info/ar.mp3",
+            "AM": "http://www.nationalanthems.info/am.mp3",
+            "AU": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Advance_Australia_Fair_instrumental.ogg",
+            "AT": "http://www.nationalanthems.info/at.mp3",
+            "AZ": "http://www.nationalanthems.info/az.mp3",
+            "BS": "http://www.nationalanthems.info/bs.mp3",
+            "BH": "http://www.nationalanthems.info/bh.mp3",
+            "BD": "http://www.nationalanthems.info/bd.mp3",
+            "BB": "http://www.nationalanthems.info/bb.mp3",
+            "BY": "http://www.nationalanthems.info/by.mp3",
+            "BE": "http://www.nationalanthems.info/be.mp3",
+            "BZ": "http://www.nationalanthems.info/bz.mp3",
+            "BJ": "http://www.nationalanthems.info/bj.mp3",
+            "BT": "http://www.nationalanthems.info/bt.mp3",
+            "BO": "http://www.nationalanthems.info/bo.mp3",
+            "BA": "http://www.nationalanthems.info/ba.mp3",
+            "BW": "http://www.nationalanthems.info/bw.mp3",
+            "BR": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Brazilian_National_Anthem.ogg",
+            "BN": "http://www.nationalanthems.info/bn.mp3",
+            "BG": "http://www.nationalanthems.info/bg.mp3",
+            "BF": "http://www.nationalanthems.info/bf.mp3",
+            "BI": "http://www.nationalanthems.info/bi.mp3",
+            "CV": "http://www.nationalanthems.info/cv.mp3",
+            "KH": "http://www.nationalanthems.info/kh.mp3",
+            "CM": "http://www.nationalanthems.info/cm.mp3",
+            "CA": "https://upload.wikimedia.org/wikipedia/commons/5/5e/O_Canada_instrumental_1912.ogg",
+            "CF": "http://www.nationalanthems.info/cf.mp3",
+            "TD": "http://www.nationalanthems.info/td.mp3",
+            "CL": "http://www.nationalanthems.info/cl.mp3",
+            "CN": "https://upload.wikimedia.org/wikipedia/commons/b/b5/March_of_the_Volunteers_instrumental.ogg",
+            "CO": "http://www.nationalanthems.info/co.mp3",
+            "KM": "http://www.nationalanthems.info/km.mp3",
+            "CD": "http://www.nationalanthems.info/cd.mp3",
+            "CG": "http://www.nationalanthems.info/cg.mp3",
+            "CR": "http://www.nationalanthems.info/cr.mp3",
+            "HR": "http://www.nationalanthems.info/hr.mp3",
+            "CU": "http://www.nationalanthems.info/cu.mp3",
+            "CY": "http://www.nationalanthems.info/cy.mp3",
+            "CZ": "http://www.nationalanthems.info/cz.mp3",
+            "DK": "http://www.nationalanthems.info/dk.mp3",
+            "DJ": "http://www.nationalanthems.info/dj.mp3",
+            "DM": "http://www.nationalanthems.info/dm.mp3",
+            "DO": "http://www.nationalanthems.info/do.mp3",
+            "EC": "http://www.nationalanthems.info/ec.mp3",
+            "EG": "http://www.nationalanthems.info/eg.mp3",
+            "SV": "http://www.nationalanthems.info/sv.mp3",
+            "GQ": "http://www.nationalanthems.info/gq.mp3",
+            "ER": "http://www.nationalanthems.info/er.mp3",
+            "EE": "http://www.nationalanthems.info/ee.mp3",
+            "SZ": "http://www.nationalanthems.info/sz.mp3",
+            "ET": "http://www.nationalanthems.info/et.mp3",
+            "FJ": "http://www.nationalanthems.info/fj.mp3",
+            "FI": "http://www.nationalanthems.info/fi.mp3",
+            "FR": "https://upload.wikimedia.org/wikipedia/commons/3/30/La_Marseillaise.ogg",
+            "GA": "http://www.nationalanthems.info/ga.mp3",
+            "GM": "http://www.nationalanthems.info/gm.mp3",
+            "GE": "http://www.nationalanthems.info/ge.mp3",
+            "DE": "https://upload.wikimedia.org/wikipedia/commons/a/a6/National_anthem_of_Germany_-_U.S._Army_band.ogg",
+            "GH": "http://www.nationalanthems.info/gh.mp3",
+            "GR": "http://www.nationalanthems.info/gr.mp3",
+            "GD": "http://www.nationalanthems.info/gd.mp3",
+            "GT": "http://www.nationalanthems.info/gt.mp3",
+            "GN": "http://www.nationalanthems.info/gn.mp3",
+            "GW": "http://www.nationalanthems.info/gw.mp3",
+            "GY": "http://www.nationalanthems.info/gy.mp3",
+            "HT": "http://www.nationalanthems.info/ht.mp3",
+            "HN": "http://www.nationalanthems.info/hn.mp3",
+            "HU": "http://www.nationalanthems.info/hu.mp3",
+            "IS": "http://www.nationalanthems.info/is.mp3",
+            "IN": "https://upload.wikimedia.org/wikipedia/commons/9/94/Jana_Gana_Mana_instrumental.ogg",
+            "ID": "http://www.nationalanthems.info/id.mp3",
+            "IR": "http://www.nationalanthems.info/ir.mp3",
+            "IQ": "http://www.nationalanthems.info/iq.mp3",
+            "IE": "http://www.nationalanthems.info/ie.mp3",
+            "IL": "http://www.nationalanthems.info/il.mp3",
+            "IT": "https://upload.wikimedia.org/wikipedia/commons/9/90/Inno_di_Mameli_instrumental.ogg",
+            "JM": "http://www.nationalanthems.info/jm.mp3",
+            "JP": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Kimigayo_instrumental.ogg",
+            "JO": "http://www.nationalanthems.info/jo.mp3",
+            "KZ": "http://www.nationalanthems.info/kz.mp3",
+            "KE": "http://www.nationalanthems.info/ke.mp3",
+            "KI": "http://www.nationalanthems.info/ki.mp3",
+            "KP": "http://www.nationalanthems.info/kp.mp3",
+            "KR": "http://www.nationalanthems.info/kr.mp3",
+            "KW": "http://www.nationalanthems.info/kw.mp3",
+            "KG": "http://www.nationalanthems.info/kg.mp3",
+            "LA": "http://www.nationalanthems.info/la.mp3",
+            "LV": "http://www.nationalanthems.info/lv.mp3",
+            "LB": "http://www.nationalanthems.info/lb.mp3",
+            "LS": "http://www.nationalanthems.info/ls.mp3",
+            "LR": "http://www.nationalanthems.info/lr.mp3",
+            "LY": "http://www.nationalanthems.info/ly.mp3",
+            "LI": "http://www.nationalanthems.info/li.mp3",
+            "LT": "http://www.nationalanthems.info/lt.mp3",
+            "LU": "http://www.nationalanthems.info/lu.mp3",
+            "MG": "http://www.nationalanthems.info/mg.mp3",
+            "MW": "http://www.nationalanthems.info/mw.mp3",
+            "MY": "http://www.nationalanthems.info/my.mp3",
+            "MV": "http://www.nationalanthems.info/mv.mp3",
+            "ML": "http://www.nationalanthems.info/ml.mp3",
+            "MT": "http://www.nationalanthems.info/mt.mp3",
+            "MH": "http://www.nationalanthems.info/mh.mp3",
+            "MR": "http://www.nationalanthems.info/mr.mp3",
+            "MU": "http://www.nationalanthems.info/mu.mp3",
+            "MX": "https://upload.wikimedia.org/wikipedia/commons/d/de/Himno_Nacional_Mexicano_instrumental.ogg",
+            "FM": "http://www.nationalanthems.info/fm.mp3",
+            "MD": "http://www.nationalanthems.info/md.mp3",
+            "MC": "http://www.nationalanthems.info/mc.mp3",
+            "MN": "http://www.nationalanthems.info/mn.mp3",
+            "ME": "http://www.nationalanthems.info/me.mp3",
+            "MA": "http://www.nationalanthems.info/ma.mp3",
+            "MZ": "http://www.nationalanthems.info/mz.mp3",
+            "MM": "http://www.nationalanthems.info/mm.mp3",
+            "NA": "http://www.nationalanthems.info/na.mp3",
+            "NR": "http://www.nationalanthems.info/nr.mp3",
+            "NP": "http://www.nationalanthems.info/np.mp3",
+            "NL": "http://www.nationalanthems.info/nl.mp3",
+            "NZ": "http://www.nationalanthems.info/nz.mp3",
+            "NI": "http://www.nationalanthems.info/ni.mp3",
+            "NE": "http://www.nationalanthems.info/ne.mp3",
+            "NG": "http://www.nationalanthems.info/ng.mp3",
+            "MK": "http://www.nationalanthems.info/mk.mp3",
+            "NO": "http://www.nationalanthems.info/no.mp3",
+            "OM": "http://www.nationalanthems.info/om.mp3",
+            "PK": "http://www.nationalanthems.info/pk.mp3",
+            "PW": "http://www.nationalanthems.info/pw.mp3",
+            "PA": "http://www.nationalanthems.info/pa.mp3",
+            "PG": "http://www.nationalanthems.info/pg.mp3",
+            "PY": "http://www.nationalanthems.info/py.mp3",
+            "PE": "http://www.nationalanthems.info/pe.mp3",
+            "PH": "http://www.nationalanthems.info/ph.mp3",
+            "PL": "http://www.nationalanthems.info/pl.mp3",
+            "PT": "http://www.nationalanthems.info/pt.mp3",
+            "QA": "http://www.nationalanthems.info/qa.mp3",
+            "RO": "http://www.nationalanthems.info/ro.mp3",
+            "RU": "https://upload.wikimedia.org/wikipedia/commons/1/1a/National_Anthem_of_Russia_instrumental.ogg",
+            "RW": "http://www.nationalanthems.info/rw.mp3",
+            "KN": "http://www.nationalanthems.info/kn.mp3",
+            "LC": "http://www.nationalanthems.info/lc.mp3",
+            "VC": "http://www.nationalanthems.info/vc.mp3",
+            "WS": "http://www.nationalanthems.info/ws.mp3",
+            "SM": "http://www.nationalanthems.info/sm.mp3",
+            "ST": "http://www.nationalanthems.info/st.mp3",
+            "SA": "http://www.nationalanthems.info/sa.mp3",
+            "SN": "http://www.nationalanthems.info/sn.mp3",
+            "RS": "http://www.nationalanthems.info/rs.mp3",
+            "SC": "http://www.nationalanthems.info/sc.mp3",
+            "SL": "http://www.nationalanthems.info/sl.mp3",
+            "SG": "http://www.nationalanthems.info/sg.mp3",
+            "SK": "http://www.nationalanthems.info/sk.mp3",
+            "SI": "http://www.nationalanthems.info/si.mp3",
+            "SB": "http://www.nationalanthems.info/sb.mp3",
+            "SO": "http://www.nationalanthems.info/so.mp3",
+            "ZA": "http://www.nationalanthems.info/za.mp3",
+            "SS": "http://www.nationalanthems.info/ss.mp3",
+            "ES": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Marcha_Real-Royal_March_%28Spain_National_Anthem%29.ogg",
+            "LK": "http://www.nationalanthems.info/lk.mp3",
+            "SD": "http://www.nationalanthems.info/sd.mp3",
+            "SR": "http://www.nationalanthems.info/sr.mp3",
+            "SE": "http://www.nationalanthems.info/se.mp3",
+            "CH": "http://www.nationalanthems.info/ch.mp3",
+            "SY": "http://www.nationalanthems.info/sy.mp3",
+            "TW": "http://www.nationalanthems.info/tw.mp3",
+            "TJ": "http://www.nationalanthems.info/tj.mp3",
+            "TZ": "http://www.nationalanthems.info/tz.mp3",
+            "TH": "http://www.nationalanthems.info/th.mp3",
+            "TL": "http://www.nationalanthems.info/tl.mp3",
+            "TG": "http://www.nationalanthems.info/tg.mp3",
+            "TO": "http://www.nationalanthems.info/to.mp3",
+            "TT": "http://www.nationalanthems.info/tt.mp3",
+            "TN": "http://www.nationalanthems.info/tn.mp3",
+            "TR": "https://upload.wikimedia.org/wikipedia/commons/4/4c/IstiklalMarsi.ogg",
+            "TM": "http://www.nationalanthems.info/tm.mp3",
+            "TV": "http://www.nationalanthems.info/tv.mp3",
+            "UG": "http://www.nationalanthems.info/ug.mp3",
+            "UA": "http://www.nationalanthems.info/ua.mp3",
+            "AE": "http://www.nationalanthems.info/ae.mp3",
+            "GB": "https://upload.wikimedia.org/wikipedia/commons/f/ff/God_Save_the_King_%2A_1.ogg",
+            "US": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Star_Spangled_Banner_instrumental.ogg",
+            "UY": "http://www.nationalanthems.info/uy.mp3",
+            "UZ": "http://www.nationalanthems.info/uz.mp3",
+            "VU": "http://www.nationalanthems.info/vu.mp3",
+            "VE": "http://www.nationalanthems.info/ve.mp3",
+            "VN": "http://www.nationalanthems.info/vn.mp3",
+            "YE": "http://www.nationalanthems.info/ye.mp3",
+            "ZM": "http://www.nationalanthems.info/zm.mp3",
+            "ZW": "http://www.nationalanthems.info/zw.mp3"
+        };
+
+
+        function toggleAnthem() {
+            const btn = document.getElementById('anthemBtn');
+            if (isPlaying) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                btn.innerHTML = "🎵 Milli Marşı Çal";
+                isPlaying = false;
+            } else {
+                currentAudio.play();
+                btn.innerHTML = "⏸️ Durdur";
+                isPlaying = true;
+            }
+        }
+
+        // Seçilen Ülke Paneli (API Entegrasyonlu)
+        async function showCountryDetails(props) {
+            const panel = document.getElementById('infoPanel');
+            const culture = props.culturalProfile;
+
+            // Paneli göster ve temel verileri doldur
+            document.getElementById('countryName').innerText = props.TR_NAME || props.NAME || props.ADMIN || 'Bilinmiyor';
+
+            const badge = document.getElementById('cultureBadge');
+            badge.innerText = culture.name;
+            badge.style.backgroundColor = hexToRgba(culture.color, 0.15);
+            badge.style.color = culture.color;
+            badge.style.border = `1px solid ${culture.color}`;
+
+            document.getElementById('capitalValue').innerText = "Yükleniyor...";
+            document.getElementById('currencyValue').innerText = "Yükleniyor...";
+            document.getElementById('languageValue').innerText = "Yükleniyor...";
+            document.getElementById('areaValue').innerText = "Yükleniyor...";
+            document.getElementById('phoneCodeValue').innerText = "Yükleniyor...";
+
+            const numberFormat = new Intl.NumberFormat('tr-TR');
+            document.getElementById('populationValue').innerText = (props.POP_EST && props.POP_EST > 0) ? numberFormat.format(props.POP_EST) : "Bilgi Yok";
+            document.getElementById('regionValue').innerText = props.SUBREGION || props.REGION_UN || "Bilgi Yok";
+            document.getElementById('cultureDesc').innerText = culture.desc;
+
+            // Marş ayarları - tüm ülkeler için
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            isPlaying = false;
+            const btn = document.getElementById('anthemBtn');
+            btn.innerHTML = "🎵 Milli Marşı Çal";
+            btn.style.display = 'none';
+
+            let isoCode = props.ISO_A2;
+            if (!isoCode || isoCode === '-99') isoCode = props.ISO_A3;
+
+            if (isoCode && anthemLinks[isoCode]) {
+                currentAudio.src = anthemLinks[isoCode];
+                btn.style.display = 'block';
+            }
+
+            panel.classList.add('visible');
+
+            // RestCountries API'den Veri Çekme
+            try {
+                let searchTerm = isoCode !== "-99" && isoCode ? isoCode : props.NAME;
+                let url = (isoCode !== "-99" && isoCode)
+                    ? `https://restcountries.com/v3.1/alpha/${searchTerm}`
+                    : `https://restcountries.com/v3.1/name/${searchTerm}?fullText=true`;
+
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = (await response.json())[0];
+
+                    document.getElementById('capitalValue').innerText = data.capital ? data.capital.join(", ") : "-";
+
+                    if (data.currencies) {
+                        const currKeys = Object.keys(data.currencies);
+                        document.getElementById('currencyValue').innerText = currKeys.map(k => `${data.currencies[k].name} (${data.currencies[k].symbol || k})`).join(", ");
+                    } else {
+                        document.getElementById('currencyValue').innerText = "-";
+                    }
+
+                    if (data.languages) {
+                        document.getElementById('languageValue').innerText = Object.values(data.languages).join(", ");
+                    } else {
+                        document.getElementById('languageValue').innerText = "-";
+                    }
+
+                    if (data.area) {
+                        document.getElementById('areaValue').innerText = numberFormat.format(data.area) + " km²";
+                    } else {
+                        document.getElementById('areaValue').innerText = "-";
+                    }
+
+                    if (data.idd && (data.idd.root || data.idd.suffixes)) {
+                        const sfx = (data.idd.suffixes && data.idd.suffixes.length > 0) ? data.idd.suffixes[0] : "";
+                        document.getElementById('phoneCodeValue').innerText = (data.idd.root || "") + sfx;
+                    } else {
+                        document.getElementById('phoneCodeValue').innerText = "-";
+                    }
+                } else {
+                    document.getElementById('capitalValue').innerText = "Veri Yok";
+                    document.getElementById('currencyValue').innerText = "Veri Yok";
+                    document.getElementById('languageValue').innerText = "Veri Yok";
+                    document.getElementById('areaValue').innerText = "Veri Yok";
+                    document.getElementById('phoneCodeValue').innerText = "Veri Yok";
+                }
+            } catch (err) {
+                console.error("API Veri Çekme Hatası:", err);
+                document.getElementById('capitalValue').innerText = "API Hatası";
+                document.getElementById('currencyValue').innerText = "API Hatası";
+                document.getElementById('languageValue').innerText = "API Hatası";
+                document.getElementById('areaValue').innerText = "API Hatası";
+                document.getElementById('phoneCodeValue').innerText = "API Hatası";
+            }
+        }
+
+        function closePanel() {
+            document.getElementById('infoPanel').classList.remove('visible');
+            if (currentAudio) {
+                currentAudio.pause();
+                isPlaying = false;
+            }
+        }
+
+        // Pencere yeniden boyutlandırıldığında güvenli adaptasyona
+        window.addEventListener('resize', () => {
+            if (world) {
+                world.width(window.innerWidth);
+                world.height(window.innerHeight);
+            }
+        });
+
+    </script>
+</body>
+
+</html>
