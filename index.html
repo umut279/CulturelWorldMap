@@ -255,7 +255,7 @@
             max-height: calc(100vh - 24px);
             overflow-y: auto;
             overflow-x: hidden;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(252, 247, 240, 0.90));
+            background: #ffffff;
             backdrop-filter: blur(18px) saturate(118%);
             -webkit-backdrop-filter: blur(18px) saturate(118%);
             border: 1px solid var(--panel-outline, rgba(0, 0, 0, 0.08));
@@ -272,6 +272,7 @@
             --flag-color-2: rgba(255, 255, 255, 0.34);
             --flag-color-3: rgba(22, 77, 155, 0.28);
             --flag-color-4: rgba(245, 197, 75, 0.24);
+            --panel-flag-image: none;
         }
 
         #infoPanel.visible {
@@ -285,15 +286,8 @@
             position: absolute;
             inset: 0;
             border-radius: inherit;
-            background:
-                radial-gradient(circle at 12% 14%, var(--flag-color-1) 0 20%, transparent 42%),
-                radial-gradient(circle at 86% 16%, var(--flag-color-2) 0 22%, transparent 44%),
-                radial-gradient(circle at 82% 80%, var(--flag-color-3) 0 21%, transparent 45%),
-                radial-gradient(circle at 15% 84%, var(--flag-color-4) 0 19%, transparent 42%),
-                conic-gradient(from 180deg at 50% 50%, var(--flag-color-1) 0deg 42deg, transparent 42deg 106deg, var(--flag-color-2) 106deg 154deg, transparent 154deg 215deg, var(--flag-color-3) 215deg 272deg, transparent 272deg 324deg, var(--flag-color-4) 324deg 360deg),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, transparent 36%),
-                linear-gradient(135deg, var(--flag-paper) 0%, rgba(255, 255, 255, 0.92) 52%, var(--flag-paper) 100%);
-            opacity: 0.96;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.98));
+            opacity: 1;
         }
 
         #infoPanel::after {
@@ -301,12 +295,8 @@
             position: absolute;
             inset: 0;
             border-radius: inherit;
-            background:
-                linear-gradient(116deg, rgba(255, 255, 255, 0.34) 0%, transparent 18%, rgba(255, 255, 255, 0.16) 50%, transparent 76%),
-                repeating-linear-gradient(-28deg, rgba(255, 255, 255, 0.08) 0 18px, transparent 18px 46px),
-                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.18) 0 12%, transparent 36%);
-            mix-blend-mode: screen;
-            opacity: 0.54;
+            background: none;
+            opacity: 0;
         }
 
         #infoPanel>* {
@@ -315,11 +305,7 @@
         }
 
         .panel-ebru-art {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
+            display: none;
         }
 
         .panel-shape {
@@ -375,6 +361,44 @@
 
         .close-btn:hover {
             color: #111;
+        }
+
+        .ocean-node {
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 999px;
+            padding: 8px 12px;
+            background: rgba(9, 32, 55, 0.72);
+            color: #f4fbff;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            pointer-events: auto;
+            white-space: nowrap;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+
+        .ocean-node:hover {
+            transform: translateY(-2px) scale(1.03);
+            background: rgba(13, 45, 77, 0.82);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.28);
+        }
+
+        .ocean-node-name {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        .ocean-node-meta {
+            display: block;
+            margin-top: 3px;
+            font-size: 10px;
+            color: rgba(234, 246, 255, 0.82);
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
         }
 
         .panel-flag-header {
@@ -924,12 +948,12 @@
                     <img id="flagImg" src="" alt="Bayrak"
                         onerror="this.style.display='none'; document.getElementById('flagEmoji').style.display='flex';" />
                     <span id="flagEmoji"></span>
-                    <span class="visual-label">Bayrak</span>
+                    <span id="flagVisualLabel" class="visual-label">Bayrak</span>
                 </div>
                 <div class="visual-card" id="animalCard">
                     <img id="animalImg" src="" alt="Sembolik hayvan" style="display:none" />
                     <span id="animalEmoji" style="display:flex">🐾</span>
-                    <span class="visual-label">Sembolik Hayvan</span>
+                    <span id="animalVisualLabel" class="visual-label">Sembolik Hayvan</span>
                     <span id="animalNameValue" class="visual-name">Araştırılıyor</span>
                 </div>
             </div>
@@ -978,12 +1002,12 @@
             <div class="stat-row full-width"><span class="stat-label">Kom&#351;u &#220;lkeler</span><span
                     id="bordersValue" class="stat-value">-</span></div>
         </div>
-        <div class="detail-section">
-            <h3 class="section-title">K&#252;lt&#252;rel &#214;zellikler</h3>
+        <div id="cultureSection" class="detail-section">
+            <h3 id="cultureSectionTitle" class="section-title">K&#252;lt&#252;rel &#214;zellikler</h3>
             <div id="cultureFeatures" class="feature-grid"></div>
         </div>
-        <div class="detail-section">
-            <h3 class="section-title">Geleneksel Yemekler</h3>
+        <div id="foodSection" class="detail-section">
+            <h3 id="foodSectionTitle" class="section-title">Geleneksel Yemekler</h3>
             <div id="foodGallery" class="food-grid"></div>
         </div>
         <div class="detail-section">
@@ -4357,6 +4381,27 @@
         };
 
         Object.assign(symbolicAnimalProfiles, {
+            "Grönland": {
+                name: "Kutup ayısı",
+                page: "Polar_bear",
+                fallbackPages: ["Ursus_maritimus"],
+                searchTerms: ["Greenland polar bear", "polar bear Greenland"],
+                emoji: "🐻"
+            },
+            "Çek Cumhuriyeti": {
+                name: "Bohemya aslanı",
+                page: "Bohemian_lion",
+                fallbackPages: ["Lion"],
+                searchTerms: ["Czech lion symbol", "Bohemian lion"],
+                emoji: "🦁"
+            },
+            "Çekya": {
+                name: "Bohemya aslanı",
+                page: "Bohemian_lion",
+                fallbackPages: ["Lion"],
+                searchTerms: ["Czech lion symbol", "Bohemian lion"],
+                emoji: "🦁"
+            },
             "Papua Yeni Gine": Object.assign({}, symbolicAnimalProfiles["Papua Yeni Gine"], {
                 page: "Raggiana_bird-of-paradise",
                 fallbackPages: ["Bird-of-paradise", "Paradisaeidae"],
@@ -4388,6 +4433,29 @@
                 searchTerms: ["Huma bird Uzbekistan", "Humo bird Uzbekistan"]
             })
         });
+
+        const symbolicAnimalProfileIndex = (() => {
+            const index = new Map();
+            Object.entries(symbolicAnimalProfiles).forEach(([key, value]) => {
+                index.set(normalizeSearchText(key), { countryName: key, profile: value });
+            });
+
+            const aliases = {
+                "Greenland": "Grönland",
+                "Czechia": "Çekya",
+                "Czech Republic": "Çek Cumhuriyeti",
+                "Czech Rep.": "Çek Cumhuriyeti"
+            };
+
+            Object.entries(aliases).forEach(([alias, target]) => {
+                const profile = symbolicAnimalProfiles[target];
+                if (profile) {
+                    index.set(normalizeSearchText(alias), { countryName: target, profile });
+                }
+            });
+
+            return index;
+        })();
 
         function normalizeA3Code(code) {
             const s = String(code || '').trim().toUpperCase();
@@ -5136,6 +5204,133 @@
             */
         }
 
+        function setPanelRow(id, label, value, visible) {
+            const valueNode = document.getElementById(id);
+            if (!valueNode) return;
+            const row = valueNode.closest ? valueNode.closest('.stat-row') : valueNode.parentElement;
+            if (!row) return;
+            row.style.display = visible === false ? 'none' : '';
+            const labelNode = row.querySelector('.stat-label');
+            if (labelNode && label) labelNode.textContent = label;
+            if (visible === false) return;
+            valueNode.innerText = value || 'Bilgi Yok';
+        }
+
+        function resetPanelRowsToCountryDefaults() {
+            Object.entries(defaultPanelStatLabels).forEach(([id, label]) => {
+                const valueNode = document.getElementById(id);
+                if (!valueNode) return;
+                const row = valueNode.closest ? valueNode.closest('.stat-row') : valueNode.parentElement;
+                if (row) row.style.display = '';
+                const labelNode = row && row.querySelector('.stat-label');
+                if (labelNode) labelNode.textContent = label;
+            });
+        }
+
+        function getPanelSection(id, fallbackChildId) {
+            const direct = id ? document.getElementById(id) : null;
+            if (direct) return direct;
+            const child = fallbackChildId ? document.getElementById(fallbackChildId) : null;
+            return child ? child.parentElement : null;
+        }
+
+        function setCountryPanelMode() {
+            resetPanelRowsToCountryDefaults();
+            const flagVisualLabel = document.getElementById('flagVisualLabel');
+            const animalVisualLabel = document.getElementById('animalVisualLabel');
+            const cultureSectionTitle = document.getElementById('cultureSectionTitle');
+            const foodSectionTitle = document.getElementById('foodSectionTitle');
+            const clothingSection = getPanelSection('clothingSection', 'clothingGallery');
+            const clothingSectionTitle = clothingSection ? clothingSection.querySelector('.section-title') : null;
+
+            if (flagVisualLabel) flagVisualLabel.textContent = 'Bayrak';
+            if (animalVisualLabel) animalVisualLabel.textContent = 'Sembolik Hayvan';
+            if (cultureSectionTitle) cultureSectionTitle.textContent = 'Kültürel Özellikler';
+            if (foodSectionTitle) foodSectionTitle.textContent = 'Geleneksel Yemekler';
+            if (clothingSectionTitle) clothingSectionTitle.textContent = 'Geleneksel Kıyafetler';
+
+            const cultureSection = getPanelSection('cultureSection', 'cultureFeatures');
+            const foodSection = getPanelSection('foodSection', 'foodGallery');
+            if (cultureSection) cultureSection.style.display = '';
+            if (foodSection) foodSection.style.display = '';
+            if (clothingSection) clothingSection.style.display = '';
+            const flagCard = document.getElementById('flagCard');
+            const animalCard = document.getElementById('animalCard');
+            if (flagCard) flagCard.style.display = '';
+            if (animalCard) animalCard.style.display = '';
+        }
+
+        function setOceanPanelMode(ocean) {
+            resetPanelRowsToCountryDefaults();
+            const flagVisualLabel = document.getElementById('flagVisualLabel');
+            const animalVisualLabel = document.getElementById('animalVisualLabel');
+            const cultureSectionTitle = document.getElementById('cultureSectionTitle');
+            const foodSection = getPanelSection('foodSection', 'foodGallery');
+            const clothingSection = getPanelSection('clothingSection', 'clothingGallery');
+
+            if (flagVisualLabel) flagVisualLabel.textContent = 'Okyanus';
+            if (animalVisualLabel) animalVisualLabel.textContent = 'Canlı';
+            if (cultureSectionTitle) cultureSectionTitle.textContent = 'Okyanus Özellikleri';
+            if (foodSection) foodSection.style.display = 'none';
+            if (clothingSection) clothingSection.style.display = 'none';
+
+            setPanelRow('officialNameValue', 'Tür', ocean.subtitle, true);
+            setPanelRow('capitalValue', 'Yüzey Alanı', ocean.surfaceArea, true);
+            setPanelRow('animalStatValue', 'Öne Çıkan Canlı', ocean.species, true);
+            setPanelRow('currencyValue', 'Ortalama Derinlik', ocean.avgDepth, true);
+            setPanelRow('languageValue', 'En Derin Nokta', ocean.maxDepth, true);
+            setPanelRow('areaValue', 'Akıntılar', ocean.currents, true);
+            setPanelRow('phoneCodeValue', 'İklim Rolü', ocean.climateRole, true);
+            setPanelRow('populationValue', 'Kıyı Etkisi', ocean.coastalImpact, true);
+            setPanelRow('regionValue', 'Konum', ocean.region, true);
+            setPanelRow('continentValue', 'Bağlantı', ocean.continents, true);
+            setPanelRow('timezoneValue', '', '', false);
+            setPanelRow('domainValue', '', '', false);
+            setPanelRow('drivingSideValue', '', '', false);
+            setPanelRow('weekStartValue', '', '', false);
+            setPanelRow('carSignsValue', '', '', false);
+            setPanelRow('demonymValue', '', '', false);
+            setPanelRow('statusValue', '', '', false);
+            setPanelRow('bordersValue', '', '', false);
+        }
+
+        function renderOceanFeatures(ocean) {
+            renderCultureFeatures(ocean.facts || []);
+        }
+
+        function createOceanNodeElement(ocean) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'ocean-node';
+
+            const name = document.createElement('span');
+            name.className = 'ocean-node-name';
+            name.textContent = `${ocean.icon || '🌊'} ${ocean.name}`;
+
+            const meta = document.createElement('span');
+            meta.className = 'ocean-node-meta';
+            meta.textContent = 'Kısa bilgi';
+
+            button.appendChild(name);
+            button.appendChild(meta);
+            button.addEventListener('click', evt => {
+                evt.preventDefault();
+                evt.stopPropagation();
+                showOceanDetails(ocean);
+                focusOnCoordinates(ocean.lat, ocean.lng, 1.28, 1200);
+            });
+            return button;
+        }
+
+        function focusOnCoordinates(lat, lng, altitude, durationMs) {
+            if (!world || typeof world.pointOfView !== 'function') return;
+            try {
+                world.pointOfView({ lat, lng, altitude: altitude || 1.25 }, durationMs || 1000);
+            } catch (err) {
+                console.warn('Koordinata odaklanılamadı:', err && err.message ? err.message : err);
+            }
+        }
+
         function applyCountryFactData(props, culture, data) {
             const numberFormat = new Intl.NumberFormat('tr-TR');
             const displayName = getDisplayCountryName(props);
@@ -5208,10 +5403,23 @@
         }
 
         function getSymbolicAnimalProfile(props) {
-            const keys = [props && props.TR_NAME, props && props.NAME, props && props.ADMIN];
+            const keys = [
+                props && props.TR_NAME,
+                props && props.NAME,
+                props && props.ADMIN,
+                engToTr[props && props.NAME],
+                engToTr[props && props.ADMIN]
+            ];
+
             for (const key of keys) {
-                if (key && symbolicAnimalProfiles[key]) {
+                if (!key) continue;
+                if (symbolicAnimalProfiles[key]) {
                     return Object.assign({ countryName: key }, symbolicAnimalProfiles[key]);
+                }
+
+                const indexed = symbolicAnimalProfileIndex.get(normalizeSearchText(key));
+                if (indexed && indexed.profile) {
+                    return Object.assign({ countryName: indexed.countryName }, indexed.profile);
                 }
             }
             return null;
@@ -5321,7 +5529,19 @@
         let oceanWavesUniforms = null;
         let oceanWavesAnimationHandle = 0;
         let oceanWavesStartTime = 0;
+        let oceanWaveBurstMeshes = [];
+        let oceanWaveBurstIntervalHandle = 0;
         const oceanWavesEarthTextureUrl = 'https://unpkg.com/three-globe/example/img/earth-water.png';
+        const globeOceanBaseColor = '#FFFFFF';
+        const globeOceanTextureUrl = 'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
+        const globeBumpTextureUrl = 'https://unpkg.com/three-globe/example/img/earth-topology.png';
+        const oceanWaveSpawnPoints = [
+            { lat: -14, lng: -152 }, { lat: 11, lng: -138 }, { lat: 24, lng: -162 }, { lat: -33, lng: -124 },
+            { lat: -9, lng: -108 }, { lat: 37, lng: -41 }, { lat: 6, lng: -27 }, { lat: -28, lng: -18 },
+            { lat: 18, lng: -52 }, { lat: -41, lng: 18 }, { lat: -24, lng: 73 }, { lat: 9, lng: 86 },
+            { lat: -36, lng: 96 }, { lat: 22, lng: 64 }, { lat: 73, lng: -8 }, { lat: 79, lng: 118 },
+            { lat: -57, lng: -128 }, { lat: -61, lng: -12 }, { lat: -58, lng: 84 }, { lat: -54, lng: 152 }
+        ];
 
         function hexToRgba(hex, alpha) {
             if (!hex || typeof hex !== 'string') return `rgba(100,100,100,${alpha})`;
@@ -5374,14 +5594,119 @@
             oceanWavesAnimationHandle = 0;
         }
 
+        function stopOceanWaveBursts() {
+            if (oceanWaveBurstIntervalHandle) {
+                clearInterval(oceanWaveBurstIntervalHandle);
+                oceanWaveBurstIntervalHandle = 0;
+            }
+
+            if (!oceanWaveBurstMeshes.length) return;
+            const scene = world && typeof world.scene === 'function' ? world.scene() : null;
+            oceanWaveBurstMeshes.forEach(entry => {
+                if (!entry || !entry.mesh) return;
+                try {
+                    if (scene) scene.remove(entry.mesh);
+                    if (entry.mesh.geometry && entry.mesh.geometry.dispose) entry.mesh.geometry.dispose();
+                    const material = entry.mesh.material;
+                    if (Array.isArray(material)) material.forEach(item => item && item.dispose && item.dispose());
+                    else if (material && material.dispose) material.dispose();
+                } catch (err) { }
+            });
+            oceanWaveBurstMeshes = [];
+        }
+
+        function latLngToSurfaceVector(lat, lng, radius) {
+            const phi = (90 - lat) * Math.PI / 180;
+            const theta = (lng + 180) * Math.PI / 180;
+            return new THREE.Vector3(
+                -(radius * Math.sin(phi) * Math.cos(theta)),
+                radius * Math.cos(phi),
+                radius * Math.sin(phi) * Math.sin(theta)
+            );
+        }
+
+        function spawnOceanWaveBurst(lat, lng) {
+            if (!world || typeof THREE === 'undefined') return;
+            const scene = typeof world.scene === 'function' ? world.scene() : null;
+            if (!scene) return;
+
+            const baseRadius = getGlobeBaseRadius();
+            const normal = latLngToSurfaceVector(lat, lng, 1).normalize();
+            const position = normal.clone().multiplyScalar(baseRadius * 1.006);
+            const geometry = new THREE.TorusGeometry(baseRadius * 0.014, baseRadius * 0.00105, 18, 72);
+            const material = new THREE.MeshPhongMaterial({
+                color: '#F7FDFF',
+                emissive: '#8FD9E8',
+                emissiveIntensity: 0.12,
+                shininess: 60,
+                transparent: true,
+                opacity: 0.76,
+                depthWrite: false
+            });
+            const mesh = new THREE.Mesh(geometry, material);
+            const quaternion = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+            mesh.quaternion.copy(quaternion);
+            mesh.position.copy(position);
+            mesh.scale.setScalar(0.18);
+            scene.add(mesh);
+
+            oceanWaveBurstMeshes.push({
+                mesh,
+                bornAt: performance.now(),
+                lifeMs: 6200 + Math.random() * 1800,
+                drift: (Math.random() * 0.10) + 0.05,
+                normal,
+                radius: baseRadius
+            });
+        }
+
+        function spawnRandomOceanWaveBursts() {
+            const picks = 4;
+            for (let i = 0; i < picks; i++) {
+                const base = oceanWaveSpawnPoints[Math.floor(Math.random() * oceanWaveSpawnPoints.length)];
+                if (!base) continue;
+                spawnOceanWaveBurst(
+                    base.lat + ((Math.random() * 8) - 4),
+                    base.lng + ((Math.random() * 14) - 7)
+                );
+            }
+        }
+
+        function updateOceanWaveBursts(now) {
+            if (!oceanWaveBurstMeshes.length) return;
+            const scene = world && typeof world.scene === 'function' ? world.scene() : null;
+            oceanWaveBurstMeshes = oceanWaveBurstMeshes.filter(entry => {
+                if (!entry || !entry.mesh) return false;
+                const progress = (now - entry.bornAt) / entry.lifeMs;
+                if (progress >= 1) {
+                    try {
+                        if (scene) scene.remove(entry.mesh);
+                        if (entry.mesh.geometry && entry.mesh.geometry.dispose) entry.mesh.geometry.dispose();
+                        if (entry.mesh.material && entry.mesh.material.dispose) entry.mesh.material.dispose();
+                    } catch (err) { }
+                    return false;
+                }
+
+                const eased = 1 - Math.pow(1 - progress, 2);
+                const scale = 0.14 + eased * 3.5;
+                entry.mesh.scale.setScalar(scale);
+                entry.mesh.position.copy(entry.normal.clone().multiplyScalar(entry.radius * (1.006 + (progress * entry.drift * 0.0025))));
+                entry.mesh.material.opacity = Math.max(0, 0.78 - (eased * 0.9));
+                return true;
+            });
+        }
+
         function startOceanWavesAnimation() {
             stopOceanWavesAnimation();
             oceanWavesStartTime = performance.now();
 
             const tick = () => {
                 oceanWavesAnimationHandle = requestAnimationFrame(tick);
-                if (!oceanWavesUniforms) return;
-                oceanWavesUniforms.uTime.value = (performance.now() - oceanWavesStartTime) / 1000;
+                const now = performance.now();
+                if (oceanWavesUniforms) {
+                    oceanWavesUniforms.uTime.value = (now - oceanWavesStartTime) / 1000;
+                }
+                updateOceanWaveBursts(now);
             };
 
             tick();
@@ -5389,6 +5714,7 @@
 
         function removeOceanWavesLayer() {
             stopOceanWavesAnimation();
+            stopOceanWaveBursts();
             if (!oceanWavesMesh) return;
 
             try {
@@ -5425,10 +5751,11 @@
                 oceanWavesUniforms = {
                     uTime: { value: 0 },
                     uEarthTex: { value: earthTex },
-                    uOpacity: { value: 0.55 },
-                    uWaveAmp: { value: baseRadius * 0.0012 },
-                    uWaveFreq: { value: 260.0 },
-                    uWaveSpeed: { value: new THREE.Vector2(0.02, 0.015) }
+                    uOpacity: { value: 0.11 },
+                    uWaveAmp: { value: baseRadius * 0.00055 },
+                    uWaveFreq: { value: 168.0 },
+                    uWaveSpeed: { value: new THREE.Vector2(0.010, 0.007) },
+                    uSunDirection: { value: new THREE.Vector3(-0.48, 0.72, 0.5).normalize() }
                 };
 
                 const vertexShader = `
@@ -5439,6 +5766,8 @@
 
                     varying vec2 vUv;
                     varying float vWave;
+                    varying vec3 vWorldNormal;
+                    varying vec3 vViewDir;
 
                     void main() {
                         vUv = uv;
@@ -5446,20 +5775,28 @@
 
                         float w1 = sin(p.x * uWaveFreq) * cos(p.y * uWaveFreq * 1.35);
                         float w2 = sin((p.x * 1.7 + p.y * 0.3) * (uWaveFreq * 0.55));
-                        float wave = w1 * 0.65 + w2 * 0.35;
+                        float w3 = cos((p.y * 1.9 - p.x * 0.28) * (uWaveFreq * 0.28) - uTime * 0.75);
+                        float wave = w1 * 0.58 + w2 * 0.27 + w3 * 0.15;
                         vWave = wave;
 
                         vec3 displaced = position + normal * wave * uWaveAmp;
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(displaced, 1.0);
+                        vec3 waveNormal = normalize(normal + vec3(w1 * 0.11, w2 * 0.08, w3 * 0.11));
+                        vec4 worldPos = modelMatrix * vec4(displaced, 1.0);
+                        vWorldNormal = normalize(mat3(modelMatrix) * waveNormal);
+                        vViewDir = normalize(cameraPosition - worldPos.xyz);
+                        gl_Position = projectionMatrix * viewMatrix * worldPos;
                     }
                 `;
 
                 const fragmentShader = `
                     uniform sampler2D uEarthTex;
                     uniform float uOpacity;
+                    uniform vec3 uSunDirection;
 
                     varying vec2 vUv;
                     varying float vWave;
+                    varying vec3 vWorldNormal;
+                    varying vec3 vViewDir;
 
                     float waterMask(vec3 rgb) {
                         float b = rgb.b;
@@ -5476,11 +5813,34 @@
                         float mask = waterMask(tex);
                         if (mask <= 0.001) discard;
 
-                        float w = vWave * 0.5 + 0.5;
-                        float shimmer = pow(w, 3.0);
+                        vec3 normalDir = normalize(vWorldNormal);
+                        vec3 viewDir = normalize(vViewDir);
+                        vec3 sunDir = normalize(uSunDirection);
 
-                        vec3 waveColor = mix(vec3(0.04, 0.10, 0.18), vec3(0.20, 0.45, 0.75), shimmer);
-                        gl_FragColor = vec4(waveColor, uOpacity * mask);
+                        float w = vWave * 0.5 + 0.5;
+                        float crest = smoothstep(0.82, 0.995, w);
+                        float foam = pow(crest, 3.2) * 0.25;
+                        float fresnel = pow(1.0 - max(dot(normalDir, viewDir), 0.0), 3.4);
+                        float spec = pow(max(dot(reflect(-sunDir, normalDir), viewDir), 0.0), 56.0);
+                        float diffuse = max(dot(normalDir, sunDir), 0.0);
+                        float latitudeCool = smoothstep(0.18, 0.46, abs(vUv.y - 0.5) * 2.0);
+
+                        vec3 deepColor = mix(vec3(0.02, 0.18, 0.33), vec3(0.04, 0.32, 0.54), 1.0 - latitudeCool);
+                        vec3 surfaceColor = mix(deepColor, vec3(0.14, 0.47, 0.67), 0.28 + diffuse * 0.18);
+                        vec3 fresnelColor = mix(vec3(0.60, 0.79, 0.86), vec3(0.96, 0.99, 1.0), spec);
+                        vec3 foamColor = vec3(0.93, 0.97, 1.0);
+                        vec3 waveColor = surfaceColor;
+                        waveColor = mix(waveColor, fresnelColor, fresnel * 0.32 + spec * 0.18);
+                        waveColor = mix(waveColor, foamColor, foam);
+                        waveColor += vec3(1.0, 0.99, 0.97) * spec * 0.10;
+
+                        float alpha = mask * (
+                            (uOpacity * 0.42) +
+                            fresnel * 0.08 +
+                            foam * 0.04 +
+                            spec * 0.09
+                        );
+                        gl_FragColor = vec4(waveColor, alpha);
                     }
                 `;
 
@@ -5490,7 +5850,7 @@
                     fragmentShader,
                     transparent: true,
                     depthWrite: false,
-                    blending: THREE.AdditiveBlending
+                    blending: THREE.NormalBlending
                 });
 
                 oceanWavesMesh = new THREE.Mesh(geometry, material);
@@ -5549,11 +5909,11 @@
             world = Globe()(globeContainer)
                 .width(window.innerWidth)
                 .height(window.innerHeight)
-                .backgroundColor('#f4f7fb')
-                .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-water.png')
+                .backgroundColor('#ffffff')
+                .globeImageUrl(globeOceanTextureUrl)
                 .showAtmosphere(true)
-                .atmosphereColor('#abcceb')
-                .atmosphereAltitude(0.15)
+                .atmosphereColor('#8fcbff')
+                .atmosphereAltitude(0.16)
                 .polygonsData(countriesData.features)
                 .polygonAltitude(0.015)
                 .polygonCapColor(d => {
@@ -5574,6 +5934,28 @@
                 <div style="font-weight:600;font-size:12px;color:${culture.color};">${culture.name}</div>
             </div>`;
                 })
+                .pointsData(oceanProfiles)
+                .pointLat('lat')
+                .pointLng('lng')
+                .pointAltitude(() => 0.012)
+                .pointRadius(() => 0.55)
+                .pointResolution(18)
+                .pointColor(d => hexToRgba(d.color, 0.95))
+                .pointLabel(d => `<div style="background:rgba(8,22,37,0.92);color:#fff;padding:10px 12px;border-radius:10px;font-family:'Inter',sans-serif;border:1px solid ${hexToRgba(d.color, 0.55)};box-shadow:0 8px 20px rgba(0,0,0,0.18);"><div style="font-weight:800;font-size:14px;">${d.icon || '🌊'} ${d.name}</div><div style="margin-top:4px;font-size:12px;color:#cfe9ff;">${d.subtitle}</div></div>`)
+                .onPointHover(point => {
+                    globeContainer.style.cursor = point ? 'pointer' : (hoveredPolygon ? 'pointer' : 'grab');
+                })
+                .onPointClick(ocean => {
+                    if (!ocean) return;
+                    setSearchStatus(`Seçildi: ${ocean.name}`, false);
+                    showOceanDetails(ocean);
+                    focusOnCoordinates(ocean.lat, ocean.lng, 1.28, 1200);
+                })
+                .htmlElementsData(oceanProfiles)
+                .htmlLat('lat')
+                .htmlLng('lng')
+                .htmlAltitude(() => 0.03)
+                .htmlElement(d => createOceanNodeElement(d))
                 .onPolygonHover(hoverD => {
                     hoveredPolygon = hoverD || null;
                     updatePolygonHighlight();
@@ -5592,6 +5974,29 @@
                 });
 
             initOceanWavesLayer();
+
+            try {
+                const globeMaterial = world && typeof world.globeMaterial === 'function' ? world.globeMaterial() : null;
+                if (globeMaterial && typeof THREE !== 'undefined') {
+                    if ('color' in globeMaterial) globeMaterial.color = new THREE.Color('#FFFFFF');
+                    if ('emissive' in globeMaterial) globeMaterial.emissive = new THREE.Color('#0A2233');
+                    if ('emissiveIntensity' in globeMaterial) globeMaterial.emissiveIntensity = 0.015;
+                    if ('shininess' in globeMaterial) globeMaterial.shininess = 18;
+                    if ('specular' in globeMaterial) globeMaterial.specular = new THREE.Color('#4E83A8');
+                    if ('bumpMap' in globeMaterial) {
+                        const bumpLoader = new THREE.TextureLoader();
+                        if (typeof bumpLoader.setCrossOrigin === 'function') bumpLoader.setCrossOrigin('anonymous');
+                        const bumpTexture = bumpLoader.load(globeBumpTextureUrl);
+                        bumpTexture.wrapS = THREE.ClampToEdgeWrapping;
+                        bumpTexture.wrapT = THREE.ClampToEdgeWrapping;
+                        globeMaterial.bumpMap = bumpTexture;
+                    }
+                    if ('bumpScale' in globeMaterial) globeMaterial.bumpScale = 0.03;
+                    globeMaterial.needsUpdate = true;
+                }
+            } catch (err) {
+                console.warn('Küre materyali mavi tona çekilemedi:', err && err.message ? err.message : err);
+            }
 
             requestAnimationFrame(() => {
                 try {
@@ -5634,11 +6039,164 @@
         const foodImageCache = new Map();
         const clothingImageCache = new Map();
         const countryNamesByA3 = {};
+        let activeOcean = null;
         let currentAnimalRenderToken = 0;
         let currentFoodRenderToken = 0;
         let currentClothingRenderToken = 0;
 
         const globalUsedMediaUrls = new Set();
+        const defaultPanelStatLabels = {
+            officialNameValue: 'Resmi Adı',
+            capitalValue: 'Başkent',
+            animalStatValue: 'Sembolik Hayvan',
+            currencyValue: 'Para Birimi',
+            languageValue: 'Dil',
+            areaValue: 'Yüzölçümü',
+            phoneCodeValue: 'Telefon Kodu',
+            populationValue: 'Nüfus',
+            regionValue: 'Bölge',
+            continentValue: 'Kıta',
+            timezoneValue: 'Saat Dilimi',
+            domainValue: 'İnternet Alanı',
+            drivingSideValue: 'Trafik Akışı',
+            weekStartValue: 'Hafta Başlangıcı',
+            carSignsValue: 'Araç Kodları',
+            demonymValue: 'Halk Adı',
+            statusValue: 'Uluslararası Durum',
+            bordersValue: 'Komşu Ülkeler'
+        };
+        const oceanProfiles = [
+            {
+                id: 'pacific',
+                name: 'Pasifik Okyanusu',
+                shortType: 'Okyanus',
+                lat: -10,
+                lng: -145,
+                color: '#1D7BC1',
+                icon: '🌊',
+                species: 'Mavi balina',
+                speciesEmoji: '🐋',
+                surfaceArea: '165,25 milyon km²',
+                avgDepth: '4.280 m',
+                maxDepth: 'Mariana Çukuru, 10.984 m',
+                currents: 'Kuroshio, Humboldt ve California akıntıları',
+                climateRole: 'El Nino ve La Nina döngülerini yönlendirerek küresel hava desenlerini etkiler.',
+                coastalImpact: 'Asya, Okyanusya ve Amerika kıyılarında ticaret, balıkçılık ve iklim üzerinde belirleyicidir.',
+                region: 'Asya ile Amerika arasında uzanan dev su kütlesi',
+                continents: 'Asya, Okyanusya, Kuzey Amerika, Güney Amerika',
+                subtitle: 'Dünyanın en büyük ve en derin okyanusu',
+                description: 'Pasifik Okyanusu dünya yüzeyinin çok geniş bir bölümünü kaplar; ada zincirleri, derin hendekleri ve güçlü akıntılarıyla gezegenin iklim dengesinde başrol oynar.',
+                facts: [
+                    { title: 'Dalga Ritmi', text: 'Geniş yüzeyi sayesinde uzun süreli swell dalgaları üretir; bu nedenle okyanus yüzeyi uzaktan bile canlı görünür.' },
+                    { title: 'Yaşam Çeşitliliği', text: 'Mercan resiflerinden açık deniz balinalarına kadar son derece geniş bir ekosistem mozaiği barındırır.' },
+                    { title: 'Küresel Etki', text: 'Atmosferle sürekli ısı alışverişi yaparak yağış rejimleri ve fırtına hatları üzerinde doğrudan etkilidir.' }
+                ]
+            },
+            {
+                id: 'atlantic',
+                name: 'Atlas Okyanusu',
+                shortType: 'Okyanus',
+                lat: 8,
+                lng: -32,
+                color: '#2F8FD8',
+                icon: '🌊',
+                species: 'Kambur balina',
+                speciesEmoji: '🐋',
+                surfaceArea: '106,46 milyon km²',
+                avgDepth: '3.646 m',
+                maxDepth: 'Porto Riko Çukuru, 8.376 m',
+                currents: 'Gulf Stream, Kanarya ve Benguela akıntıları',
+                climateRole: 'Avrupa’nın ılıman kalmasına ve tropik fırtına oluşumlarına katkı verir.',
+                coastalImpact: 'Avrupa, Afrika ve Amerika kıtaları arasında tarih boyunca ana deniz yolu olmuştur.',
+                region: 'Amerika ile Avrupa-Afrika arasında',
+                continents: 'Avrupa, Afrika, Kuzey Amerika, Güney Amerika',
+                subtitle: 'Kıtaları birbirine bağlayan yoğun deniz koridoru',
+                description: 'Atlas Okyanusu ticaret yolları, sıcak-soğuk akıntı karşılaşmaları ve fırtına sistemleriyle hem iklim hem de insan hareketliliği açısından son derece stratejiktir.',
+                facts: [
+                    { title: 'Akıntı Gücü', text: 'Gulf Stream sıcak suyu kuzeye taşıyarak Batı Avrupa kıyılarının beklenenden ılıman olmasına yardım eder.' },
+                    { title: 'Tarihsel Bağ', text: 'Keşifler, göçler ve uluslararası ticaret için en belirleyici okyanus koridorlarından biri olmuştur.' },
+                    { title: 'Fırtına Üretimi', text: 'Tropikal Atlas üzerinde oluşan kasırga sistemleri mevsimsel olarak geniş bir coğrafyayı etkiler.' }
+                ]
+            },
+            {
+                id: 'indian',
+                name: 'Hint Okyanusu',
+                shortType: 'Okyanus',
+                lat: -18,
+                lng: 82,
+                color: '#1D9CBF',
+                icon: '🌊',
+                species: 'Manta vatozu',
+                speciesEmoji: '🐠',
+                surfaceArea: '70,56 milyon km²',
+                avgDepth: '3.741 m',
+                maxDepth: 'Java Çukuru, 7.258 m',
+                currents: 'Agulhas, Muson ve Batı Avustralya akıntıları',
+                climateRole: 'Muson sistemleriyle Asya ve Doğu Afrika yağış düzenlerini biçimlendirir.',
+                coastalImpact: 'Doğu Afrika, Güney Asya ve Avustralya arasında yoğun enerji ve ticaret trafiği taşır.',
+                region: 'Afrika, Asya ve Avustralya arasında',
+                continents: 'Afrika, Asya, Okyanusya',
+                subtitle: 'Muson düzeninin kalbinde yer alan sıcak okyanus',
+                description: 'Hint Okyanusu sıcak suları, mevsimsel rüzgarları ve stratejik boğaz bağlantılarıyla özellikle Güney Asya ve Doğu Afrika için yaşamsal bir deniz alanıdır.',
+                facts: [
+                    { title: 'Muson Etkisi', text: 'Rüzgar yönleri yıl içinde değiştiği için akıntı ve deniz ulaşımı ritmi de mevsimlere göre farklılaşır.' },
+                    { title: 'Mercan Kuşağı', text: 'Maldivler, Seyşeller ve çevresindeki resif sistemleri yüksek biyolojik çeşitlilik üretir.' },
+                    { title: 'Enerji Koridoru', text: 'Petrol ve konteyner taşımacılığının önemli bir bölümü bu okyanus üzerinden ilerler.' }
+                ]
+            },
+            {
+                id: 'arctic',
+                name: 'Arktik Okyanusu',
+                shortType: 'Okyanus',
+                lat: 78,
+                lng: 20,
+                color: '#7AB6E8',
+                icon: '❄️',
+                species: 'Narval',
+                speciesEmoji: '🐋',
+                surfaceArea: '14,06 milyon km²',
+                avgDepth: '1.205 m',
+                maxDepth: 'Molloy Deep, 5.550 m',
+                currents: 'Beaufort girdabı ve Transpolar Drift',
+                climateRole: 'Deniz buzu yansıtıcılığı sayesinde küresel ısı dengesinde kritik rol oynar.',
+                coastalImpact: 'Kuzey Kutbu çevresindeki ekosistemler ve yeni deniz yolları üzerinde belirleyicidir.',
+                region: 'Kuzey Kutbu çevresi',
+                continents: 'Kuzey Amerika, Avrupa, Asya',
+                subtitle: 'Deniz buzu ile tanımlanan kutup okyanusu',
+                description: 'Arktik Okyanusu yılın büyük bölümünde buzla kaplıdır; bu nedenle hem iklim araştırmaları hem de hassas kutup yaşamı açısından çok önemli bir doğal laboratuvardır.',
+                facts: [
+                    { title: 'Buz Örtüsü', text: 'Mevsimsel buz alanı güneş ışığını geri yansıtarak dünyanın enerji dengesini etkiler.' },
+                    { title: 'Kırılgan Ekosistem', text: 'Narval, fok, kutup ayısı ve plankton zinciri burada birbirine sıkı şekilde bağlıdır.' },
+                    { title: 'Değişen Rotalar', text: 'Buz erimesi arttıkça kuzey deniz yolları daha görünür hale gelir; bu da jeopolitik ilgiyi artırır.' }
+                ]
+            },
+            {
+                id: 'southern',
+                name: 'Güney Okyanusu',
+                shortType: 'Okyanus',
+                lat: -56,
+                lng: 25,
+                color: '#3E9ED6',
+                icon: '🌊',
+                species: 'İmparator penguen',
+                speciesEmoji: '🐧',
+                surfaceArea: '20,33 milyon km²',
+                avgDepth: '3.270 m',
+                maxDepth: 'South Sandwich Çukuru, 7.432 m',
+                currents: 'Antarktik Çevresel Akıntı',
+                climateRole: 'Soğuk ve besin yönünden zengin sularıyla küresel okyanus dolaşımının motorlarından biridir.',
+                coastalImpact: 'Antarktika çevresindeki buz kütleleri, deniz seviyesi ve karbon depolama üzerinde güçlü etki yapar.',
+                region: 'Antarktika çevresi',
+                continents: 'Antarktika çevresindeki dünya okyanus bağlantısı',
+                subtitle: 'Antarktika’yı çevreleyen güçlü akıntı kuşağı',
+                description: 'Güney Okyanusu, Antarktika’yı halka gibi saran kesintisiz akıntı sistemiyle derin okyanus dolaşımını besler ve küresel karbon döngüsünde önemli bir rol üstlenir.',
+                facts: [
+                    { title: 'Dev Akıntı Kuşağı', text: 'Antarktik Çevresel Akıntı doğudan batıya değil, batıdan doğuya kesintisiz dolaşarak su kütlelerini birbirine bağlar.' },
+                    { title: 'Soğuk Su Deposu', text: 'Derin ve soğuk sular karbon emilimi ile iklim sistemini yavaşlatıcı bir tampon gibi davranır.' },
+                    { title: 'Kutupsal Yaşam', text: 'Krill, fok, balina ve penguen toplulukları bu besin zinciri üzerinde yoğunlaşır.' }
+                ]
+            }
+        ];
 
         function getCultureKey(culture) {
             const entry = culture || defaultCulture;
@@ -6442,45 +7000,87 @@
             return chosen.slice(0, maxCount || 6);
         }
 
+        function parseSvgDimensionToken(token, fallback) {
+            const raw = String(token || '').trim();
+            if (!raw) return fallback;
+            const numeric = Number.parseFloat(raw);
+            if (!Number.isFinite(numeric)) return fallback;
+            return numeric;
+        }
+
+        function extractFlagLayoutFromSvgText(svgText) {
+            const text = String(svgText || '');
+            const viewBoxMatch = text.match(/viewBox=["']\s*([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)\s*["']/i);
+            const widthMatch = text.match(/\bwidth=["']([^"']+)["']/i);
+            const heightMatch = text.match(/\bheight=["']([^"']+)["']/i);
+            const svgWidth = viewBoxMatch ? parseSvgDimensionToken(viewBoxMatch[3], 1200) : parseSvgDimensionToken(widthMatch && widthMatch[1], 1200);
+            const svgHeight = viewBoxMatch ? parseSvgDimensionToken(viewBoxMatch[4], 800) : parseSvgDimensionToken(heightMatch && heightMatch[1], 800);
+            const rectMatches = text.match(/<rect\b[^>]*>/gi) || [];
+            const stripes = [];
+
+            rectMatches.forEach(rectTag => {
+                const fillMatch = rectTag.match(/\bfill=["']([^"']+)["']/i);
+                const color = normalizeColorToken(fillMatch && fillMatch[1]);
+                if (!color) return;
+
+                const width = parseSvgDimensionToken((rectTag.match(/\bwidth=["']([^"']+)["']/i) || [])[1], 0);
+                const height = parseSvgDimensionToken((rectTag.match(/\bheight=["']([^"']+)["']/i) || [])[1], 0);
+                const x = parseSvgDimensionToken((rectTag.match(/\bx=["']([^"']+)["']/i) || [])[1], 0);
+                const y = parseSvgDimensionToken((rectTag.match(/\by=["']([^"']+)["']/i) || [])[1], 0);
+                const spansFullWidth = svgWidth > 0 && width >= svgWidth * 0.82;
+                const spansFullHeight = svgHeight > 0 && height >= svgHeight * 0.82;
+                const isHorizontalStripe = spansFullWidth && height >= svgHeight * 0.12 && height <= svgHeight * 0.72;
+                const isVerticalStripe = spansFullHeight && width >= svgWidth * 0.12 && width <= svgWidth * 0.72;
+
+                if (!isHorizontalStripe && !isVerticalStripe) return;
+
+                stripes.push({
+                    color,
+                    orientation: isHorizontalStripe ? 'horizontal' : 'vertical',
+                    anchor: isHorizontalStripe ? y : x,
+                    area: width * height
+                });
+            });
+
+            const horizontal = stripes
+                .filter(item => item.orientation === 'horizontal')
+                .sort((a, b) => a.anchor - b.anchor || b.area - a.area);
+            const vertical = stripes
+                .filter(item => item.orientation === 'vertical')
+                .sort((a, b) => a.anchor - b.anchor || b.area - a.area);
+            const winner = horizontal.length >= vertical.length ? horizontal : vertical;
+
+            return {
+                orientation: winner === vertical ? 'vertical' : 'horizontal',
+                colors: distinctColors(winner.map(item => item.color), 6)
+            };
+        }
+
         function normalizeFlagPalette(colors, fallbackAccent) {
             const accentFallback = normalizeHexColor(fallbackAccent, '#B35C66');
             let palette = distinctColors(colors, 6);
             if (!palette.length) palette = [accentFallback];
 
-            const accent = palette.find(color => colorLuminance(color) < 236) || palette[0];
-            const ordered = [accent, ...palette.filter(color => color !== accent)];
-
-            while (ordered.length < 4) {
-                const previous = ordered[ordered.length - 1] || accent;
-                const blendBase = ordered.length % 2 === 0 ? '#FFFFFF' : '#14213D';
-                ordered.push(mixHexColors(previous, blendBase, ordered.length % 2 === 0 ? 0.62 : 0.22).toUpperCase());
+            while (palette.length < 4) {
+                const previous = palette[palette.length - 1] || accentFallback;
+                const blendBase = palette.length % 2 === 0 ? '#FFFFFF' : '#14213D';
+                palette.push(mixHexColors(previous, blendBase, palette.length % 2 === 0 ? 0.62 : 0.22).toUpperCase());
             }
 
-            return ordered.slice(0, 4);
+            return palette.slice(0, 4);
         }
 
         function extractFlagColorsFromSvgText(svgText) {
-            const counts = new Map();
             const regex = /(#[0-9a-fA-F]{3,8}|rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\))/g;
             const matches = String(svgText || '').match(regex) || [];
-
-            matches.forEach(match => {
-                const color = normalizeColorToken(match);
-                if (!color) return;
-                counts.set(color, (counts.get(color) || 0) + 1);
-            });
-
-            const ranked = [...counts.entries()]
-                .sort((a, b) => (b[1] - a[1]) || (colorLuminance(a[0]) - colorLuminance(b[0])))
-                .map(entry => entry[0]);
-
-            return distinctColors(ranked, 6);
+            return distinctColors(matches.map(match => normalizeColorToken(match)), 6);
         }
 
         function buildFlagPanelTheme(props, culture, palette) {
             const iso = normalizeIsoCode((props && props.ISO_NORM) || resolveCountryIso(props));
             const countryName = getDisplayCountryName(props);
-            const colors = normalizeFlagPalette(palette, (culture && culture.color) || '#B35C66');
+            const rawColors = palette && palette.colors ? palette.colors : palette;
+            const colors = normalizeFlagPalette(rawColors, (culture && culture.color) || '#B35C66');
             const accent = colors.find(color => colorLuminance(color) < 236) || colors[0];
 
             return {
@@ -6502,15 +7102,23 @@
             const cacheKey = iso || getDisplayCountryName(props);
             if (flagPaletteCache.has(cacheKey)) return flagPaletteCache.get(cacheKey);
 
-            let palette = (iso && flagColorOverrides[iso]) ? flagColorOverrides[iso] : [];
+            let palette = {
+                colors: (iso && flagColorOverrides[iso]) ? flagColorOverrides[iso] : [],
+                orientation: 'horizontal'
+            };
 
             if (iso) {
                 try {
                     const response = await fetch(flagSvgUrl(iso), { cache: 'force-cache' });
                     if (!response.ok) throw new Error(`HTTP ${response.status}`);
                     const svgText = await response.text();
+                    const layout = extractFlagLayoutFromSvgText(svgText);
                     const extracted = extractFlagColorsFromSvgText(svgText);
-                    if (extracted.length) palette = extracted;
+                    if (layout.colors.length) {
+                        palette = layout;
+                    } else if (extracted.length) {
+                        palette = { colors: extracted, orientation: 'horizontal' };
+                    }
                 } catch (err) {
                     console.warn('Bayrak renkleri çözümlenemedi:', err.message);
                 }
@@ -6563,7 +7171,25 @@
             panel.style.setProperty('--flag-color-4', theme.color4);
             panel.style.setProperty('--panel-outline', theme.outline);
             panel.style.boxShadow = `0 18px 44px ${theme.shadow}`;
-            renderFlagColorArt(theme);
+            panel.style.setProperty('--panel-flag-image', 'none');
+        }
+
+        function setPanelFlagBackground(panel, primaryUrl, fallbackUrl) {
+            if (!panel) return;
+            panel.style.setProperty('--panel-flag-image', 'none');
+            if (!primaryUrl && !fallbackUrl) return;
+
+            const preview = new Image();
+            preview.crossOrigin = 'anonymous';
+            preview.onload = () => {
+                panel.style.setProperty('--panel-flag-image', `url("${preview.src}")`);
+            };
+            preview.onerror = () => {
+                if (fallbackUrl && preview.src !== fallbackUrl) {
+                    preview.src = fallbackUrl;
+                }
+            };
+            preview.src = primaryUrl || fallbackUrl;
         }
 
         async function applyCountryPanelTheme(props, culture) {
@@ -6579,6 +7205,60 @@
             paintCountryPanelTheme(panel, resolvedTheme);
         }
 
+        function showOceanDetails(ocean) {
+            if (!ocean) return;
+            const panel = document.getElementById('infoPanel');
+            if (!panel) return;
+
+            activeOcean = ocean;
+            activePolygon = null;
+            updatePolygonHighlight();
+            setCountryPanelMode();
+            setOceanPanelMode(ocean);
+            resetAudio();
+
+            const flagImg = document.getElementById('flagImg');
+            const flagEmoji = document.getElementById('flagEmoji');
+            const animalImg = document.getElementById('animalImg');
+            const animalEmoji = document.getElementById('animalEmoji');
+            const anthemBtn = document.getElementById('anthemBtn');
+            const badge = document.getElementById('cultureBadge');
+
+            document.getElementById('countryName').innerText = ocean.name;
+            if (badge) {
+                badge.innerText = ocean.shortType || 'Okyanus';
+                badge.style.backgroundColor = hexToRgba(ocean.color, 0.15);
+                badge.style.color = ocean.color;
+                badge.style.border = `1px solid ${hexToRgba(ocean.color, 0.48)}`;
+            }
+
+            if (anthemBtn) {
+                anthemBtn.style.display = 'none';
+                anthemBtn.innerHTML = '🎵 Milli Marşı Çal';
+            }
+            if (flagImg) {
+                flagImg.style.display = 'none';
+                flagImg.removeAttribute('src');
+            }
+            if (flagEmoji) {
+                flagEmoji.textContent = ocean.icon || '🌊';
+                flagEmoji.style.display = 'flex';
+            }
+            if (animalImg) {
+                animalImg.style.display = 'none';
+                animalImg.removeAttribute('src');
+            }
+            if (animalEmoji) {
+                animalEmoji.textContent = ocean.speciesEmoji || '🐋';
+                animalEmoji.style.display = 'flex';
+            }
+
+            document.getElementById('animalNameValue').innerText = ocean.species;
+            document.getElementById('cultureDesc').innerText = ocean.description;
+            renderOceanFeatures(ocean);
+            panel.classList.add('visible');
+        }
+
         // ============================================================
         // ÜLKE DETAY PANELİ — BAYRAKLI
         // ============================================================
@@ -6588,6 +7268,8 @@
             const culture = props.culturalProfile || defaultCulture;
             const displayName = getDisplayCountryName(props);
 
+            activeOcean = null;
+            setCountryPanelMode();
             document.getElementById('countryName').innerText = displayName;
             applyCountryPanelTheme(props, culture);
 
@@ -6599,9 +7281,11 @@
             if (iso) {
                 const svgUrl = flagSvgUrl(iso);
                 const pngUrl = flagPngUrl(iso, 160);
+                const panelPngUrl = flagPngUrl(iso, 1000);
                 flagImg.style.display = 'block';
                 flagEmoji.style.display = 'none';
                 flagImg.src = svgUrl;
+                setPanelFlagBackground(panel, svgUrl, panelPngUrl);
                 flagImg.onerror = function () {
                     this.src = pngUrl;
                     this.onerror = function () {
@@ -6615,6 +7299,7 @@
                 };
             } else {
                 flagImg.style.display = 'none';
+                panel.style.setProperty('--panel-flag-image', 'none');
                 const emoji = props.FLAG_EMOJI || '';
                 if (emoji) { flagEmoji.textContent = emoji; flagEmoji.style.display = 'block'; }
                 else { flagEmoji.style.display = 'none'; }
@@ -6728,6 +7413,7 @@
 
         function closePanel() {
             document.getElementById('infoPanel').classList.remove('visible');
+            activeOcean = null;
             activePolygon = null;
             updatePolygonHighlight();
             resetAudio();
@@ -6758,6 +7444,14 @@
         document.addEventListener('keydown', e => {
             const targetTag = e.target && e.target.tagName ? e.target.tagName.toUpperCase() : '';
             if (targetTag === 'INPUT' || targetTag === 'TEXTAREA') return;
+            if (e.key === 'Escape') {
+                const infoPanel = document.getElementById('infoPanel');
+                if (infoPanel && infoPanel.classList.contains('visible')) {
+                    e.preventDefault();
+                    closePanel();
+                }
+                return;
+            }
             if (!selectedCultureKey || !selectedCultureFeatures.length) return;
 
             if (e.key === 'ArrowLeft') {
