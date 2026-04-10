@@ -364,41 +364,52 @@
         }
 
         .ocean-node {
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 999px;
-            padding: 8px 12px;
-            background: rgba(9, 32, 55, 0.72);
-            color: #f4fbff;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
+            border: 1px solid rgba(145, 170, 188, 0.78);
+            border-radius: var(--ocean-node-radius, 58% 42% 54% 46% / 46% 40% 60% 54%);
+            min-width: 104px;
+            max-width: 126px;
+            padding: 7px 10px 6px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 249, 252, 0.96));
+            color: #16384f;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 12px 24px rgba(17, 41, 57, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.96);
             font-family: 'Inter', sans-serif;
             cursor: pointer;
             pointer-events: auto;
-            white-space: nowrap;
-            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+            white-space: normal;
+            text-align: center;
+            line-height: 1.1;
+            transform: rotate(var(--ocean-node-tilt, -2deg));
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
         }
 
         .ocean-node:hover {
-            transform: translateY(-2px) scale(1.03);
-            background: rgba(13, 45, 77, 0.82);
-            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.28);
+            transform: translateY(-2px) scale(1.03) rotate(var(--ocean-node-tilt, -2deg));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(248, 251, 253, 0.98));
+            border-color: rgba(112, 151, 178, 0.92);
+            box-shadow: 0 16px 32px rgba(17, 41, 57, 0.20), inset 0 1px 0 rgba(255, 255, 255, 1);
+        }
+
+        .ocean-node:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(127, 177, 213, 0.32), 0 14px 28px rgba(17, 41, 57, 0.18);
         }
 
         .ocean-node-name {
             display: block;
-            font-size: 12px;
+            font-size: 9px;
             font-weight: 800;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.12px;
         }
 
         .ocean-node-meta {
             display: block;
             margin-top: 3px;
-            font-size: 10px;
-            color: rgba(234, 246, 255, 0.82);
+            font-size: 8px;
+            color: #567488;
             text-transform: uppercase;
-            letter-spacing: 0.7px;
+            letter-spacing: 0.55px;
         }
 
         .panel-flag-header {
@@ -1070,23 +1081,23 @@
             "Bolivya": { "name": "Yerli Miras", "color": "#A52A2A", "desc": "Bolivya'da yerli festivaller ve geleneksel kıyafetler kültürel kimliğin korunmasını sağlar; bayramlar ve kutlamalar topluluk üyelerinin bir araya gelmesine vesile olur." },
             "Bosna Hersek": { "name": "Tarih Bilinci", "color": "#800000", "desc": "Bosna-Hersek'te tarihi mekanların ziyaret edilmesi, anma törenlerine katılım ve geçmişin hatırlanması toplumda kültürel hafızayı canlı tutar." },
             "Botsvana": { "name": "Doğa ve Vahşi Yaşam", "color": "#006400", "desc": "Botsvana'da safari ve doğa koruma etkinlikleri hem turizm hem de yerel kültürün bir parçasıdır; insanlar vahşi yaşamın korunmasına aktif katılır." },
-            "Brezilya": { "name": "Karnaval & Neşe", "color": "#C8C800", "desc": "Brezilya'da sokak partileri ve samba dansları toplumsal bağları güçlendirir; karnaval kültürü halkın duygularını ve neşesini ifade etme biçimidir." },
+            "Brezilya": { "name": "Karnaval ve Neşe", "color": "#C8C800", "desc": "Brezilya'da müzik, dans ve kutlamalar gündelik yaşamın enerjisini yansıtır; toplumsal bağlar çoğu zaman neşe ve paylaşım üzerinden güçlenir." },
             "Cezayir": { "name": "Misafir Ağırlama", "color": "#D4A840", "desc": "Cezayir'de misafire çay ve tatlı sunmak, ev sahipliğinin saygı ve özen göstergesidir; toplumsal ilişkilerde misafirperverlik önemlidir." },
             "Çad": { "name": "Aile Bağları", "color": "#FF6347", "desc": "Çad'da büyük ailelerde birlikte yemek yemek ve karar almak yaygındır; aile bağları kültürel yaşamın merkezindedir." },
             "Çek Cumhuriyeti": { "name": "Bira Kültürü", "color": "#A0A0A0", "desc": "Çekya'da bira evleri sosyal buluşmaların vazgeçilmezidir; arkadaş ve aile ile birlikte bira içmek kültürel bir ritüeldir." },
-            "Danimarka": { "name": "Sadelik (Hygge)", "color": "#A0A0A0", "desc": "Danimarka'da evlerde rahatlık ve samimi sohbetler öne çıkar; hygge kültürü, huzurlu ve dengeli bir yaşamı destekler." },
+            "Danimarka": { "name": "Sadelik ve Konfor", "color": "#A0A0A0", "desc": "Danimarka'da huzurlu ev yaşamı, sade tasarım anlayışı ve günlük konforu önemseyen sakin bir toplumsal ritim öne çıkar." },
             "Haiti": { "name": "Müzik ve Dans", "color": "#CC00CC", "desc": "Haiti'de müzik ve dans günlük yaşamın ayrılmaz bir parçasıdır; Vodou ritüelleri, sokak etkinlikleri ve festivaller topluluk bağlarını güçlendirir." },
             "Hollanda": { "name": "Hoşgörü", "color": "#90EE90", "desc": "Hollanda'da farklı fikir ve yaşam tarzlarına saygı gösterilir; açık toplumsal tartışmalar ve kültürel çeşitliliğe önem verilir." },
             "Honduras": { "name": "Doğa ve Aile", "color": "#006400", "desc": "Honduras'ta doğa ile iç içe yaşam ve aile etkinlikleri ön plandadır; bayramlarda tüm aile bir araya gelir ve doğal alanlarda vakit geçirilir." },
             "Birleşik Krallık": { "name": "Gelenekçilik", "color": "#8B4513", "desc": "İngiltere'de çay saatleri, kraliyet törenleri ve tarihi gelenekler günlük yaşamda önemlidir; insanlar geçmişle bağlarını korur." },
             "İrlanda": { "name": "Müzik ve Hikâye", "color": "#32CD32", "desc": "İrlanda'da pub kültürü, halk hikâyeleri ve müzik toplumsal bağları güçlendirir; nesiller boyunca sözlü kültür aktarılır." },
-            "İspanya": { "name": "Rahat Yaşam", "color": "#6BB8D4", "desc": "İspanya'da öğle siestası, akşam geç yemek ve sokak kafeleri günlük yaşamın parçalarıdır; sosyal yaşam ve rahatlık ön plandadır." },
+            "İspanya": { "name": "Sosyal Sofra Kültürü", "color": "#6BB8D4", "desc": "İspanya'da uzun yemekler, canlı meydanlar ve birlikte geçirilen vakit sosyal yaşamın merkezinde yer alır." },
             "İsrail": { "name": "Cesaret & İnovasyon", "color": "#FF4500", "desc": "İsrailliler kriz ve fırsat anlarında hızlı çözüm üretir; teknoloji ve girişimcilik kültürü cesaretle birleşir." },
-            "İsveç": { "name": "Eşitlik", "color": "#A0A0A0", "desc": "İsveç'te toplumsal ve cinsiyet eşitliği günlük yaşamın normudur; okul ve iş yerlerinde fırsat eşitliği önemlidir." },
+            "İsveç": { "name": "Denge ve Sadelik", "color": "#A0A0A0", "desc": "İsveç'te ölçülülük, sade yaşam ve gündelik hayatta denge kurma anlayışı toplumsal kültürün belirgin parçalarındandır." },
             "İsviçre": { "name": "Tarafsızlık", "color": "#D4D4D4", "desc": "İsviçre'de siyasi ve sosyal konularda tarafsızlık değerli bir kültürel ilkedir; çatışmalarda arabuluculuk ve denge ön plandadır." },
-            "İtalya": { "name": "Aile & Yemek", "color": "#CC0000", "desc": "İtalya'da aile yemekleri ve akşam sofraları günlük yaşamın merkezindedir; yemek, kültürel mirasın ve aile bağlarının korunmasını sağlar." },
+            "İtalya": { "name": "Yaşam Keyfi", "color": "#CC0000", "desc": "İtalya'da yemek, sohbet, estetik ve gündelik hayatın tadını çıkarma kültürü güçlü bir yaşam keyfi anlayışıyla birleşir." },
             "Jamaika": { "name": "Müzik (Reggae)", "color": "#00BB00", "desc": "Jamaika'da reggae ve dans kültürü toplumsal kimliği yansıtır; festivaller ve sokak etkinlikleri bir araya gelmeyi teşvik eder." },
-            "Japonya": { "name": "Saygı & Gelenek", "color": "#5C4033", "desc": "Japonya'da yaşlılara saygı göstermek, selamlaşma kurallarına uymak ve gelenekleri korumak günlük yaşamın temelidir." },
+            "Japonya": { "name": "Saygı & Gelenek", "color": "#5C4033", "desc": "Japonya'da yaşlılara saygı göstermek, selamlaşma kurallarına uymak ve gelenekleri korumak günlük yaşamın temelidir; mottainai israf etmeme bilincini, kintsugi onarılanın da değerli olduğunu, wabi-sabi sadelikteki güzelliği ve ikigai ise yaşam amacını bulma fikrini öne çıkarır." },
             "Kamboçya": { "name": "Din ve Spiritüellik", "color": "#C8C8A0", "desc": "Kamboçya'da Budist tapınak ziyaretleri ve dini törenler günlük hayatın bir parçasıdır; toplumda manevi bağlılık önemlidir." },
             "Kamerun": { "name": "Topluluk Ruhu", "color": "#9ACD32", "desc": "Kamerun'da köy ve mahalle etkinlikleri topluluk dayanışmasını güçlendirir; düğün ve festival hazırlıkları ortak yapılır." },
             "Kanada": { "name": "Çok Kültürlülük", "color": "#E04A25", "desc": "Kanada'da farklı kültürlerden gelen insanlar bir arada yaşar; festival ve yemekler kültürel çeşitliliği kutlar." },
@@ -1122,7 +1133,7 @@
             "Tayland": { "name": "Güleryüz & Misafirperverlik", "color": "#D4A840", "desc": "Tayland'da misafire özenle yemek ve içecek sunulur; güleryüz kültürün önemli bir parçasıdır." },
             "Togo": { "name": "Aile Bağları", "color": "#CC0000", "desc": "Togo'da aile yemekleri ve bayram kutlamaları kültürel yaşamın merkezindedir; topluluk bağlılığı güçlenir." },
             "Tunus": { "name": "Mutfak & Tarih", "color": "#FF4500", "desc": "Tunus'ta geleneksel yemekler ve tarihsel festivaller kültürel kimliği korur." },
-            "Türkiye": { "name": "Misafirperverlik", "color": "#FFA500", "desc": "Türkiye'de misafir evine geldiğinde çay ve yiyecek ikram edilir; ev sahibi misafire özel ilgi gösterir." },
+            "Türkiye": { "name": "Misafirperverlik", "color": "#FFA500", "desc": "Türkiye'de misafire ikramda bulunmak, onu özenle ağırlamak ve ev sahibi olarak yakın ilgi göstermek güçlü bir kültürel değerdir." },
             "Ukrayna": { "name": "Müzik & Dayanıklılık", "color": "#00008B", "desc": "Ukrayna'da halk şarkıları ve dansları toplumsal bağları güçlendirir; zorluklarda dayanıklılık kültürel bir değer haline gelmiştir." },
             "Uganda": { "name": "Topluluk & Neşe", "color": "#D4A800", "desc": "Uganda'da topluluk etkinlikleri ve danslarla toplumsal birlik pekiştirilir; neşe kültürün önemli bir parçasıdır." },
             "Birleşik Arap Emirlikleri": { "name": "Misafirperverlik", "color": "#D4A840", "desc": "BAE'de misafire özenle yiyecek sunulur ve ev sahibi saygı gösterir; kültürel norm olarak kabul edilir." },
@@ -1133,19 +1144,19 @@
             "Zimbabve": { "name": "Müzik & Topluluk", "color": "#FF4500", "desc": "Zimbabve'de geleneksel müzik ve dans topluluk bağlarını güçlendirir; kültürel ifade önemlidir." },
             "Amerika Birleşik Devletleri": { "name": "Bireysellik ve İnovasyon", "color": "#1E90FF", "desc": "ABD'de bireysel özgürlükler, girişimcilik ve farklı kültürlerin bir arada yaşaması ön plandadır." },
             "Fransa": { "name": "Sanat ve Gastronomi", "color": "#4169E1", "desc": "Fransa'da felsefe, sanat ve zengin yemek kültürü günlük yaşantının ayrılmaz bir parçasıdır." },
-            "Çin": { "name": "Uyum ve Gelenek", "color": "#FF0000", "desc": "Çin'de Konfüçyüsçü değerler, aile bağı ve toplumsal uyum, köklü tarihi mirasla birleşir." },
+            "Çin": { "name": "Gelenek ve Ahenk", "color": "#FF0000", "desc": "Çin'de aile bağları, köklü gelenekler ve toplumsal uyum anlayışı gündelik yaşamın önemli belirleyicileri arasındadır." },
             "Hindistan": { "name": "Spiritüellik ve Çeşitlilik", "color": "#FF8C00", "desc": "Hindistan'da derin manevi inançlar, renkli festivaller ve binlerce dilden oluşan devasa bir kültürel mozaik vardır." },
             "Avustralya": { "name": "Açık Hava Kültürü", "color": "#32CD32", "desc": "Avustralya'da doğa ile iç içe, spor ve rahat sahil yaşam tarzı toplumsal karakteri belirler." },
-            "Güney Afrika": { "name": "Gökkuşağı Ulusu", "color": "#FFD700", "desc": "Güney Afrika, çok sayıda etnik grubun, dilin ve kültürün birleştiği, müzik ve toplumsal dayanışma değerlerine sahip bir ülkedir." },
+            "Güney Afrika": { "name": "Topluluk Ruhu", "color": "#FFD700", "desc": "Güney Afrika'da paylaşım, dayanışma ve birlikte var olma bilinci toplumsal yaşamın önemli kültürel dayanaklarındandır." },
             "Mısır": { "name": "Tarih ve Miras", "color": "#A52A2A", "desc": "Mısır'da binlerce yıllık Firavunlar dönemi ve İslami kültürün etkileri günlük yaşama yansır." },
             "Suudi Arabistan": { "name": "İslami Gelenekler", "color": "#006400", "desc": "Suudi Arabistan'da din, toplumsal kuralların ve aile yapısının temelini oluşturur; güçlü bedevi misafirperverliği yaygındır." },
             "Kolombiya": { "name": "Neşe ve Müzik", "color": "#FFD700", "desc": "Kolombiya'da sıcakkanlılık, salsa ve cumbia gibi müzik türleri toplumsal ilişkileri canlandırır." },
             "Şili": { "name": "Doğa ve Dayanıklılık", "color": "#DC143C", "desc": "Şili'de zorlu coğrafyaya uyum, güçlü aile bağları ve derin edebi bir kültür öne çıkar." },
-            "Güney Kore": { "name": "Teknoloji ve Nezaket", "color": "#0000CD", "desc": "Güney Kore'de teknolojik ilerleme ve popüler kültür (K-Pop), geleneksel saygı normlarıyla çatışmadan bir arada var olur." },
+            "Güney Kore": { "name": "Saygı ve Uyum", "color": "#0000CD", "desc": "Güney Kore'de hiyerarşiye saygı, toplumsal uyum ve başkalarını gözeten davranış biçimleri kültürel yaşamda güçlü biçimde hissedilir." },
             "Endonezya": { "name": "Birlik ve Çeşitlilik", "color": "#B22222", "desc": "Endonezya'da binlerce ada, farklı diller ve inançların bir araya geldiği zengin bir kültürel çeşitlilik sunar." },
             "Yunanistan": { "name": "Felsefe ve Deniz", "color": "#1E3A8A", "desc": "Yunanistan'da mitoloji, felsefe ve Akdeniz mutfağı etrafında şekillenen köklü bir deniz kültürü vardır." },
             "Fas": { "name": "Zanaat ve Baharat", "color": "#D2691E", "desc": "Fas'ta çarşı kültürü, göz alıcı mimari detaylar ve naneli çay ikramları toplumsal etkileşimin merkezindedir." },
-            "İran": { "name": "Şiir ve Misafirperverlik", "color": "#2E8B57", "desc": "İran'da edebi gelenekler (Hafız gibi şairler) ve eve gelen misafire en iyi ikramı sunma kültürü (Tarof) köklüdür." },
+            "İran": { "name": "Nezaket ve Zarafet", "color": "#2E8B57", "desc": "İran'da sözlü incelik, sosyal nezaket ve zarif davranış biçimleri ilişkilerin kurulmasında önemli bir yer tutar." },
             "Irak": { "name": "Mezopotamya Mirası", "color": "#8B4513", "desc": "Irak, insanlık tarihinin en eski medeniyetlerine ev sahipliği yapmış olup zengin bir tarihi ve dini kültüre sahiptir." },
             "Suriye": { "name": "Tarihi İhtişam", "color": "#A0522D", "desc": "Suriye, köklü çarşıları ve Şam ile Halep gibi dünyanın en eski kesintisiz yaşanan şehirleriyle derin bir kültüre sahiptir." },
             "Yeni Zelanda": { "name": "Doğa ve Maori Kültürü", "color": "#008000", "desc": "Yeni Zelanda, vahşi doğaya derin saygı duyar ve yerli Maori gelenekleri (Haka dansı gibi) günlük yaşama yansır." },
@@ -1271,7 +1282,7 @@
             "İran": [
                 { name: "Çelo kebap", page: "Chelow_kabab" },
                 { name: "Tahdig", page: "Tahdig" },
-                { name: "Fesenjan", page: "Fesenjān" },
+                { name: "Fesenjan", page: "Fesenjan" },
                 { name: "Ghormeh sabzi", page: "Ghormeh_sabzi" },
                 { name: "Safranlı pilav", page: "Persian_rice" }
             ],
@@ -1287,7 +1298,7 @@
                 { name: "Bánh mì", page: "Bánh_mì" },
                 { name: "Yaz rollu", page: "Gỏi_cuốn", fallbackPages: ["Spring_roll"] },
                 { name: "Bún chả", page: "Bún_chả" },
-                { name: "Cao lầu", page: "Cao_lầu" }
+                { name: "Cao láº§u", page: "Cao_láº§u" }
             ],
             "Tayland": [
                 { name: "Pad Thai", page: "Pad_thai" },
@@ -1509,9 +1520,9 @@
             "Polonya": [
                 { name: "Pierogi", page: "Pierogi" },
                 { name: "Bigos", page: "Bigos" },
-                { name: "Żurek", page: "Żurek" },
+                { name: "Zurek", page: "Zurek" },
                 { name: "Kielbasa", page: "Kielbasa" },
-                { name: "Gołąbki", page: "Gołąbki" }
+                { name: "Golabki", page: "Golabki" }
             ],
             "Macaristan": [
                 { name: "Gulyás", page: "Goulash" },
@@ -1522,17 +1533,17 @@
             ],
             "Çek Cumhuriyeti": [
                 { name: "Svíčková", page: "Svíčková" },
-                { name: "Vepřo knedlo zelo", page: "Vepřo_knedlo_zelo" },
+                { name: "Vepro knedlo zelo", page: "Vepro_knedlo_zelo" },
                 { name: "Guláš", page: "Goulash" },
                 { name: "Trdelník", page: "Trdelník" },
                 { name: "Bramboráky", page: "Potato_pancake" }
             ],
             "Romanya": [
                 { name: "Sarmale", page: "Sarma_(food)" },
-                { name: "Mămăligă", page: "Mămăligă" },
+                { name: "Mamaliga", page: "Mamaliga" },
                 { name: "Mici", page: "Mititei" },
-                { name: "Ciorbă", page: "Ciorbă" },
-                { name: "Papanăși", page: "Papanăși" }
+                { name: "Ciorba", page: "Ciorba" },
+                { name: "Papana?i", page: "Papana?i" }
             ],
             "Bulgaristan": [
                 { name: "Banitsa", page: "Banitsa" },
@@ -1542,16 +1553,16 @@
                 { name: "Lyutenitsa", page: "Lyutenitsa" }
             ],
             "Sırbistan": [
-                { name: "Ćevapi", page: "Ćevapi" },
+                { name: "Cevapi", page: "Cevapi" },
                 { name: "Pljeskavica", page: "Pljeskavica" },
                 { name: "Sarma", page: "Sarma_(food)" },
                 { name: "Gibanica", page: "Gibanica" },
                 { name: "Ajvar", page: "Ajvar" }
             ],
             "Hırvatistan": [
-                { name: "Crni rižot", page: "Black_risotto" },
+                { name: "Crni rizot", page: "Black_risotto" },
                 { name: "Peka", page: "Peka_(food)" },
-                { name: "Ćevapi", page: "Ćevapi" },
+                { name: "Cevapi", page: "Cevapi" },
                 { name: "Pašticada", page: "Dalmatinska_pašticada" },
                 { name: "Fritule", page: "Fritule" }
             ],
@@ -1689,7 +1700,7 @@
                 { name: "Shwe Yin Aye", page: "Shwe_yin_aye" }
             ],
             "Yeni Zelanda": [
-                { name: "Hāngī", page: "Hāngī" },
+                { name: "Hangi", page: "Hangi" },
                 { name: "Pavlova", page: "Pavlova_(cake)" },
                 { name: "Meat Pie", page: "Meat_pie_(Australia_and_New_Zealand)" },
                 { name: "Fish and Chips", page: "Fish_and_chips" },
@@ -1832,67 +1843,67 @@
 
         const regionalFoodProfiles = {
             "Western Europe": [
-                { name: "Peynir tabaÄŸÄ±", page: "Cheese" },
-                { name: "SoÄŸan Ã§orbasÄ±", page: "French_onion_soup" },
-                { name: "ElmalÄ± tart", page: "Apple_pie" }
+                { name: "Peynir tabağı", page: "Cheese" },
+                { name: "Soğan çorbası", page: "French_onion_soup" },
+                { name: "Elmalı tart", page: "Apple_pie" }
             ],
             "Eastern Europe": [
                 { name: "Pierogi", page: "Pierogi" },
-                { name: "GulaÅŸ", page: "Goulash" },
-                { name: "Lahana sarmasÄ±", page: "Stuffed_cabbage" }
+                { name: "Gulaş", page: "Goulash" },
+                { name: "Lahana sarması", page: "Stuffed_cabbage" }
             ],
             "Northern Europe": [
                 { name: "Somon", page: "Smoked_salmon" },
-                { name: "KÃ¶fte", page: "Meatball" },
-                { name: "Ã‡avdar ekmeÄŸi", page: "Rye_bread" }
+                { name: "Köfte", page: "Meatball" },
+                { name: "Çavdar ekmeği", page: "Rye_bread" }
             ],
             "Southern Europe": [
-                { name: "Izgara balÄ±k", page: "Grilled_fish" },
+                { name: "Izgara balık", page: "Grilled_fish" },
                 { name: "Dolma", page: "Dolma" },
                 { name: "Baklava", page: "Baklava" }
             ],
             "Western Asia": [
                 { name: "Kebap", page: "Kebab" },
-                { name: "Pide ekmeÄŸi", page: "Flatbread" },
+                { name: "Pide ekmeği", page: "Flatbread" },
                 { name: "Baklava", page: "Baklava" }
             ],
             "Central Asia": [
                 { name: "Pilav", page: "Pilaf" },
-                { name: "ÅaÅŸlÄ±k", page: "Shashlik" },
-                { name: "MantÄ±", page: "Manti_(food)" }
+                { name: "Şaşlık", page: "Shashlik" },
+                { name: "Mantı", page: "Manti_(food)" }
             ],
             "Eastern Asia": [
-                { name: "MantÄ±", page: "Dumpling" },
-                { name: "EriÅŸte Ã§orbasÄ±", page: "Noodle_soup" },
-                { name: "PirinÃ§ keki", page: "Rice_cake" }
+                { name: "Mantı", page: "Dumpling" },
+                { name: "Erişte çorbası", page: "Noodle_soup" },
+                { name: "Pirinç keki", page: "Rice_cake" }
             ],
             "Southern Asia": [
-                { name: "KÃ¶ri", page: "Curry" },
+                { name: "Köri", page: "Curry" },
                 { name: "Biryani", page: "Biryani" },
                 { name: "Naan", page: "Naan" }
             ],
             "South-Eastern Asia": [
-                { name: "PirinÃ§ eriÅŸtesi", page: "Rice_noodles" },
+                { name: "Pirinç eriştesi", page: "Rice_noodles" },
                 { name: "Satay", page: "Satay" },
-                { name: "KÃ¶ri", page: "Curry" }
+                { name: "Köri", page: "Curry" }
             ],
             "Northern Africa": [
                 { name: "Kuskus", page: "Couscous" },
                 { name: "Tajin", page: "Tajine" },
-                { name: "DÃ¼z ekmek", page: "Flatbread" }
+                { name: "Düz ekmek", page: "Flatbread" }
             ],
             "Western Africa": [
-                { name: "Jollof pilavÄ±", page: "Jollof_rice" },
-                { name: "Yer fÄ±stÄ±klÄ± yahni", page: "Peanut_stew" },
-                { name: "Izgara balÄ±k", page: "Grilled_fish" }
+                { name: "Jollof pilavı", page: "Jollof_rice" },
+                { name: "Yer fıstıklı yahni", page: "Peanut_stew" },
+                { name: "Izgara balık", page: "Grilled_fish" }
             ],
             "Middle Africa": [
                 { name: "Fufu", page: "Fufu" },
-                { name: "Manyok ekmeÄŸi", page: "Cassava_bread" },
-                { name: "Yer fÄ±stÄ±ÄŸÄ± sosu", page: "Peanut_sauce" }
+                { name: "Manyok ekmeği", page: "Cassava_bread" },
+                { name: "Yer fıstığı sosu", page: "Peanut_sauce" }
             ],
             "Eastern Africa": [
-                { name: "Ä°njera", page: "Injera" },
+                { name: "İnjera", page: "Injera" },
                 { name: "Ugali", page: "Ugali" },
                 { name: "Pilau", page: "Pilaf" }
             ],
@@ -1903,18 +1914,18 @@
             ],
             "Northern America": [
                 { name: "Hamburger", page: "Hamburger" },
-                { name: "BarbekÃ¼", page: "Barbecue" },
+                { name: "Barbekü", page: "Barbecue" },
                 { name: "Turta", page: "Pie" }
             ],
             "Central America": [
                 { name: "Tamale", page: "Tamale" },
-                { name: "PirinÃ§ ve fasulye", page: "Rice_and_beans" },
+                { name: "Pirinç ve fasulye", page: "Rice_and_beans" },
                 { name: "Ceviche", page: "Ceviche" }
             ],
             "Caribbean": [
                 { name: "Jerk tavuk", page: "Jerk_(cooking)" },
                 { name: "Roti", page: "Roti" },
-                { name: "PirinÃ§ ve bezelye", page: "Rice_and_peas" }
+                { name: "Pirinç ve bezelye", page: "Rice_and_peas" }
             ],
             "South America": [
                 { name: "Empanada", page: "Empanada" },
@@ -1929,16 +1940,16 @@
             "Melanesia": [
                 { name: "Taro", page: "Taro" },
                 { name: "Hindistancevizli pilav", page: "Coconut_rice" },
-                { name: "Izgara balÄ±k", page: "Grilled_fish" }
+                { name: "Izgara balık", page: "Grilled_fish" }
             ],
             "Micronesia": [
-                { name: "Ekmek aÄŸacÄ±", page: "Breadfruit" },
-                { name: "Ton balÄ±ÄŸÄ± yemeÄŸi", page: "Tuna" },
-                { name: "Hindistancevizli tatlÄ±", page: "Coconut_candy" }
+                { name: "Ekmek ağacı", page: "Breadfruit" },
+                { name: "Ton balığı yemeği", page: "Tuna" },
+                { name: "Hindistancevizli tatlı", page: "Coconut_candy" }
             ],
             "Polynesia": [
                 { name: "Poi", page: "Poi_(food)" },
-                { name: "FÄ±rÄ±n domuz", page: "Roast_pig" },
+                { name: "Fırın domuz", page: "Roast_pig" },
                 { name: "Hindistancevizli ekmek", page: "Coconut_bread" }
             ],
             "Africa": [
@@ -1948,8 +1959,8 @@
             ],
             "Asia": [
                 { name: "Pilav", page: "Pilaf" },
-                { name: "MantÄ±", page: "Dumpling" },
-                { name: "EriÅŸte", page: "Noodle" }
+                { name: "Mantı", page: "Dumpling" },
+                { name: "Erişte", page: "Noodle" }
             ],
             "Europe": [
                 { name: "Ekmek", page: "Bread" },
@@ -1958,12 +1969,12 @@
             ],
             "Americas": [
                 { name: "Empanada", page: "Empanada" },
-                { name: "BarbekÃ¼", page: "Barbecue" },
-                { name: "MÄ±sÄ±r ekmeÄŸi", page: "Cornbread" }
+                { name: "Barbekü", page: "Barbecue" },
+                { name: "Mısır ekmeği", page: "Cornbread" }
             ],
             "Oceania": [
-                { name: "Izgara balÄ±k", page: "Grilled_fish" },
-                { name: "Tropik meyve tabaÄŸÄ±", page: "Fruit_salad" },
+                { name: "Izgara balık", page: "Grilled_fish" },
+                { name: "Tropik meyve tabağı", page: "Fruit_salad" },
                 { name: "Hindistancevizli pilav", page: "Coconut_rice" }
             ]
         };
@@ -2255,7 +2266,7 @@
                 { name: "Torres Strait Islander attire", page: "Torres_Strait_Islanders" }
             ],
             "Yeni Zelanda": [
-                { name: "Māori dress", page: "Māori_clothing" },
+                { name: "Maori dress", page: "Maori_clothing" },
                 { name: "Piupiu", page: "Piupiu" },
                 { name: "Korowai", page: "Korowai" }
             ]
@@ -2355,7 +2366,7 @@
             "Australia and New Zealand": [
                 { name: "Lavalava", page: "Lavalava" },
                 { name: "Grass skirt", page: "Grass_skirt" },
-                { name: "Māori clothing", page: "Māori_clothing" }
+                { name: "Maori clothing", page: "Maori_clothing" }
             ],
             "Melanesia": [
                 { name: "Grass skirt", page: "Grass_skirt" },
@@ -2509,7 +2520,7 @@
             "birlesik krallik": [{ name: "Kilt", page: "Kilt" }, { name: "Morris dress", page: "Morris_dance" }, { name: "Bowler hat", page: "Bowler_hat" }],
             "amerika birlesik devletleri": [{ name: "Native American clothing", page: "Native_American_clothing" }, { name: "Cowboy attire", page: "Cowboy" }, { name: "Moccasin", page: "Moccasin" }],
             avustralya: [{ name: "Akubra", page: "Akubra" }, { name: "Australian bushwear", page: "Bushwear" }, { name: "Torres Strait attire", page: "Torres_Strait_Islanders" }],
-            "yeni zelanda": [{ name: "Māori dress", page: "Māori_clothing" }, { name: "Piupiu", page: "Piupiu" }, { name: "Korowai", page: "Korowai" }]
+            "yeni zelanda": [{ name: "Maori dress", page: "Maori_clothing" }, { name: "Piupiu", page: "Piupiu" }, { name: "Korowai", page: "Korowai" }]
         };
 
         const legacyCleanRegionalClothingProfiles = {
@@ -2531,7 +2542,7 @@
             "Central America": [{ name: "Huipil", page: "Huipil" }, { name: "Poncho", page: "Poncho" }, { name: "Sombrero", page: "Sombrero" }],
             "Caribbean": [{ name: "Madras", page: "Madras_(fabric)" }, { name: "Carnival costume", page: "Carnival" }, { name: "Headwrap", page: "Head_wrap" }],
             "South America": [{ name: "Poncho", page: "Poncho" }, { name: "Pollera", page: "Pollera" }, { name: "Chullo", page: "Chullo" }],
-            "Australia and New Zealand": [{ name: "Lavalava", page: "Lavalava" }, { name: "Grass skirt", page: "Grass_skirt" }, { name: "Māori clothing", page: "Māori_clothing" }],
+            "Australia and New Zealand": [{ name: "Lavalava", page: "Lavalava" }, { name: "Grass skirt", page: "Grass_skirt" }, { name: "Maori clothing", page: "Maori_clothing" }],
             "Melanesia": [{ name: "Grass skirt", page: "Grass_skirt" }, { name: "Lavalava", page: "Lavalava" }, { name: "Shell necklace", page: "Lei_(garland)" }],
             "Micronesia": [{ name: "Lavalava", page: "Lavalava" }, { name: "Grass skirt", page: "Grass_skirt" }, { name: "Shell necklace", page: "Lei_(garland)" }],
             "Polynesia": [{ name: "Lavalava", page: "Lavalava" }, { name: "Hula attire", page: "Hula" }, { name: "Lei", page: "Lei_(garland)" }],
@@ -4173,31 +4184,31 @@
 
         const symbolicAnimalProfiles = {
             "Afganistan": { name: "Kar leoparı", page: "Snow_leopard", emoji: "🐆" },
-            "Arnavutluk": { name: "Kartal", page: "Golden_eagle", emoji: "🦅" },
-            "Cezayir": { name: "Fennek tilkisi", page: "Fennec_fox", emoji: "🦊" },
+            "Arnavutluk": { name: "Kartal", page: "Golden_eagle", emoji: "ğŸ¦…" },
+            "Cezayir": { name: "Fennek tilkisi", page: "Fennec_fox", emoji: "ğŸ¦Š" },
             "Andorra": { name: "İnek", page: "Cattle", emoji: "🐄" },
-            "Angola": { name: "Dev samur", page: "Giant_otter", emoji: "🦦" },
-            "Antigua ve Barbuda": { name: "Geyik", page: "Deer", emoji: "🦌" },
+            "Angola": { name: "Dev samur", page: "Giant_otter", emoji: "ğŸ¦¦" },
+            "Antigua ve Barbuda": { name: "Geyik", page: "Deer", emoji: "ğŸ¦Œ" },
             "Arjantin": { name: "Puma", page: "Cougar", emoji: "🐆" },
-            "Ermenistan": { name: "Kartal", page: "Golden_eagle", emoji: "🦅" },
-            "Avustralya": { name: "Kanguru", page: "Red_kangaroo", emoji: "🦘" },
-            "Avusturya": { name: "Kartal", page: "Golden_eagle", emoji: "🦅" },
+            "Ermenistan": { name: "Kartal", page: "Golden_eagle", emoji: "ğŸ¦…" },
+            "Avustralya": { name: "Kanguru", page: "Red_kangaroo", emoji: "ğŸ¦˜" },
+            "Avusturya": { name: "Kartal", page: "Golden_eagle", emoji: "ğŸ¦…" },
             "Azerbaycan": { name: "Karabağ atı", page: "Karabakh_horse", emoji: "🐎" },
-            "Bahamalar": { name: "Flamingo", page: "American_flamingo", emoji: "🦩" },
-            "Bahreyn": { name: "Arap oriksi", page: "Arabian_oryx", emoji: "🦌" },
+            "Bahamalar": { name: "Flamingo", page: "American_flamingo", emoji: "ğŸ¦©" },
+            "Bahreyn": { name: "Arap oriksi", page: "Arabian_oryx", emoji: "ğŸ¦Œ" },
             "Bangladeş": { name: "Bengal kaplanı", page: "Bengal_tiger", emoji: "🐅" },
-            "Barbados": { name: "Pelikan", page: "Pelican", emoji: "🪿" },
+            "Barbados": { name: "Pelikan", page: "Pelican", emoji: "ğŸª¿" },
             "Belarus": { name: "Avrupa bizonu", page: "European_bison", emoji: "🐃" },
             "Belçika": { name: "Aslan", page: "Lion", emoji: "🦁" },
-            "Belize": { name: "Tapir", page: "Baird's_tapir", emoji: "🦛" },
+            "Belize": { name: "Tapir", page: "Baird's_tapir", emoji: "ğŸ¦›" },
             "Benin": { name: "Aslan", page: "Lion", emoji: "🦁" },
             "Bhutan": { name: "Takin", page: "Takin", emoji: "🐐" },
             "Butan": { name: "Takin", page: "Takin", emoji: "🐐" },
-            "Bolivya": { name: "Lama", page: "Llama", emoji: "🦙" },
+            "Bolivya": { name: "Lama", page: "Llama", emoji: "ğŸ¦™" },
             "Bosna Hersek": { name: "Kurt", page: "Gray_wolf", emoji: "🐺" },
             "Bosna-Hersek": { name: "Kurt", page: "Gray_wolf", emoji: "🐺" },
-            "Botsvana": { name: "Zebra", page: "Plains_zebra", emoji: "🦓" },
-            "Brezilya": { name: "Jaguar", page: "Jaguar", emoji: "🐆" },
+            "Botsvana": { name: "Zebra", page: "Plains_zebra", emoji: "ğŸ¦“" },
+            "Brezilya": { "name": "Karnaval & Neşe", "color": "#C8C800", "desc": "Brezilya'da sokak partileri ve samba dansları toplumsal bağları güçlendirir; karnaval kültürü halkın duygularını ve neşesini ifade etme biçimidir." },
             "Brunei": { name: "Kaplan", page: "Tiger", emoji: "🐅" },
             "Bulgaristan": { name: "Aslan", page: "Lion", emoji: "🦁" },
             "Burkina Faso": { name: "Aslan", page: "Lion", emoji: "🦁" },
@@ -4206,26 +4217,26 @@
             "Cabo Verde": { name: "Kaplumbağa", page: "Loggerhead_sea_turtle", emoji: "🐢" },
             "Kamboçya": { name: "Kouprey", page: "Kouprey", emoji: "🐂" },
             "Kamerun": { name: "Aslan", page: "Lion", emoji: "🦁" },
-            "Kanada": { name: "Kunduz", page: "North_American_beaver", emoji: "🦫" },
+            "Kanada": { name: "Kunduz", page: "North_American_beaver", emoji: "ğŸ¦«" },
             "Orta Afrika Cumhuriyeti": { name: "Fil", page: "African_bush_elephant", emoji: "🐘" },
             "Çad": { name: "Keçi", page: "Goat", emoji: "🐐" },
             "Şili": { name: "Huemul", page: "South_Andean_deer", emoji: "🦌" },
             "Çin": { name: "Panda", page: "Giant_panda", emoji: "🐼" },
-            "Kolombiya": { name: "And kondoru", page: "Andean_condor", emoji: "🦅" },
+            "Kolombiya": { name: "And kondoru", page: "Andean_condor", emoji: "ğŸ¦…" },
             "Komor": { name: "Deniz kaplumbağası", page: "Green_sea_turtle", emoji: "🐢" },
             "Komorlar": { name: "Deniz kaplumbağası", page: "Green_sea_turtle", emoji: "🐢" },
             "Kongo": { name: "Goril", page: "Gorilla", emoji: "🦍" },
-            "Costa Rica": { name: "Geyik", page: "Deer", emoji: "🦌" },
-            "Kosta Rika": { name: "Geyik", page: "Deer", emoji: "🦌" },
+            "Costa Rica": { name: "Geyik", page: "Deer", emoji: "ğŸ¦Œ" },
+            "Kosta Rika": { name: "Geyik", page: "Deer", emoji: "ğŸ¦Œ" },
             "Hırvatistan": { name: "Sansar", page: "European_pine_marten", emoji: "🦦" },
             "Küba": { name: "Timsah", page: "Cuban_crocodile", emoji: "🐊" },
             "Kıbrıs": { name: "Yaban koyunu", page: "Cyprus_mouflon", emoji: "🐏" },
-            "Danimarka": { name: "Aslan", page: "Lion", emoji: "🦁" },
-            "Cibuti": { name: "Ceylan", page: "Gazelle", emoji: "🦌" },
-            "Djibouti": { name: "Ceylan", page: "Gazelle", emoji: "🦌" },
+            "Danimarka": { "name": "Sadelik (Hygge)", "color": "#A0A0A0", "desc": "Danimarka'da evlerde rahatlık ve samimi sohbetler öne çıkar; hygge kültürü, huzurlu ve dengeli bir yaşamı destekler." },
+            "Cibuti": { name: "Ceylan", page: "Gazelle", emoji: "ğŸ¦Œ" },
+            "Djibouti": { name: "Ceylan", page: "Gazelle", emoji: "ğŸ¦Œ" },
             "Dominica": { name: "Papağan", page: "Sisserou_parrot", emoji: "🦜" },
             "Dominik Cumhuriyeti": { name: "Palmiye kargası", page: "Palmchat", emoji: "🐦" },
-            "Ekvador": { name: "And kondoru", page: "Andean_condor", emoji: "🦅" },
+            "Ekvador": { name: "And kondoru", page: "Andean_condor", emoji: "ğŸ¦…" },
             "Mısır": { name: "Kartal", page: "Golden_eagle", emoji: "🦅" },
             "El Salvador": { name: "Torogoz kuşu", page: "Turquoise-browed_motmot", emoji: "🐦" },
             "Ekvator Ginesi": { name: "Leopar", page: "Leopard", emoji: "🐆" },
@@ -4240,9 +4251,9 @@
             "Gabon": { name: "Panter", page: "Black_panther", fallbackPages: ["Leopard"], emoji: "🐆" },
             "Gambiya": { name: "At", page: "Horse", emoji: "🐎" },
             "Gürcistan": { name: "Kurt", page: "Gray_wolf", emoji: "🐺" },
-            "Almanya": { name: "Kartal", page: "Golden_eagle", emoji: "🦅" },
-            "Gana": { name: "Kartal", page: "Eagle", emoji: "🦅" },
-            "Yunanistan": { name: "Yunus", page: "Dolphin", emoji: "🐬" },
+            "Almanya": { "name": "Disiplin", "color": "#808080", "desc": "Almanya'da zamanlama ve düzen çok önemlidir; toplantılara dakik gelmek, kurallara uymak ve görevleri planlı şekilde yerine getirmek, bireylerin ve toplumun verimli çalışmasının temelini oluşturur." },
+            "Gana": { name: "Kartal", page: "Eagle", emoji: "ğŸ¦…" },
+            "Yunanistan": { "name": "Felsefe ve Deniz", "color": "#1E3A8A", "desc": "Yunanistan'da mitoloji, felsefe ve Akdeniz mutfağı etrafında şekillenen köklü bir deniz kültürü vardır." },
             "Grenada": { name: "Güvercin", page: "Grenada_dove", emoji: "🕊️" },
             "Guatemala": { name: "Quetzal kuşu", page: "Resplendent_quetzal", emoji: "🐦" },
             "Gine": { name: "Fil", page: "African_bush_elephant", emoji: "🐘" },
@@ -4250,19 +4261,19 @@
             "Guinea-Bissau": { name: "Su aygırı", page: "Hippopotamus", emoji: "🦛" },
             "Guyana": { name: "Jaguar", page: "Jaguar", emoji: "🐆" },
             "Haiti": { name: "Hispanyola trogonu", page: "Hispaniolan_trogon", emoji: "🐦" },
-            "Honduras": { name: "Beyaz kuyruklu geyik", page: "White-tailed_deer", emoji: "🦌" },
+            "Honduras": { name: "Beyaz kuyruklu geyik", page: "White-tailed_deer", emoji: "ğŸ¦Œ" },
             "Macaristan": { name: "Turul kuşu", page: "Turul", emoji: "🦅" },
             "İzlanda": { name: "Şahin", page: "Gyrfalcon", emoji: "🦅" },
-            "Hindistan": { name: "Bengal kaplanı", page: "Bengal_tiger", emoji: "🐅" },
+            "Hindistan": { "name": "Spiritüellik ve Çeşitlilik", "color": "#FF8C00", "desc": "Hindistan'da derin manevi inançlar, renkli festivaller ve binlerce dilden oluşan devasa bir kültürel mozaik vardır." },
             "Endonezya": { name: "Komodo ejderi", page: "Komodo_dragon", emoji: "🦎" },
             "İran": { name: "Aslan", page: "Lion", emoji: "🦁" },
-            "Irak": { name: "Kartal", page: "Eagle", emoji: "🦅" },
+            "Irak": { name: "Kartal", page: "Eagle", emoji: "ğŸ¦…" },
             "İrlanda": { name: "Geyik", page: "Red_deer", emoji: "🦌" },
             "İsrail": { name: "Ceylan", page: "Mountain_gazelle", emoji: "🦌" },
             "İtalya": { name: "Kurt", page: "Gray_wolf", emoji: "🐺" },
             "Jamaika": { name: "Doktor kuşu", page: "Red-billed_streamertail", emoji: "🐦" },
-            "Japonya": { name: "Turna", page: "Red-crowned_crane", emoji: "🪽" },
-            "Kazakistan": { name: "Kartal", page: "Golden_eagle", emoji: "🦅" },
+            "Japonya": { name: "Turna", page: "Red-crowned_crane", emoji: "ğŸª½" },
+            "Kazakistan": { name: "Kartal", page: "Golden_eagle", emoji: "ğŸ¦…" },
             "Kenya": { name: "Aslan", page: "Lion", emoji: "🦁" },
             "Kiribati": { name: "Fregat kuşu", page: "Frigatebird", emoji: "🐦" },
             "North Korea": { name: "Kaplan", page: "Tiger", emoji: "🐅" },
@@ -4271,42 +4282,42 @@
             "Kuveyt": { name: "Deve", page: "Camel", emoji: "🐪" },
             "Kırgızistan": { name: "Kar leoparı", page: "Snow_leopard", emoji: "🐆" },
             "Laos": { name: "Fil", page: "Asian_elephant", emoji: "🐘" },
-            "Letonya": { name: "Beyaz kuyruklu geyik", page: "White-tailed_deer", emoji: "🦌" },
+            "Letonya": { name: "Beyaz kuyruklu geyik", page: "White-tailed_deer", emoji: "ğŸ¦Œ" },
             "Lübnan": { name: "Aslan", page: "Lion", emoji: "🦁" },
             "Lesoto": { name: "Kara at", page: "Basuto_pony", fallbackPages: ["Horse"], emoji: "🐎" },
             "Liberya": { name: "Aslan", page: "Lion", emoji: "🦁" },
             "Libya": { name: "Aslan", page: "Lion", emoji: "🦁" },
             "Lihtenştayn": { name: "Kartal", page: "Eagle", emoji: "🦅" },
-            "Litvanya": { name: "Leylek", page: "White_stork", emoji: "🪶" },
+            "Litvanya": { name: "Leylek", page: "White_stork", emoji: "ğŸª¶" },
             "Lüksemburg": { name: "Aslan", page: "Lion", emoji: "🦁" },
             "Madagaskar": { name: "Lemur", page: "Ring-tailed_lemur", emoji: "🐒" },
             "Malavi": { name: "Aslan", page: "Lion", emoji: "🦁" },
             "Malezya": { name: "Kaplan", page: "Malayan_tiger", emoji: "🐅" },
             "Maldivler": { name: "Orkinos", page: "Tuna", emoji: "🐟" },
-            "Mali": { name: "Antilop", page: "Antelope", emoji: "🦌" },
+            "Mali": { name: "Antilop", page: "Antelope", emoji: "ğŸ¦Œ" },
             "Malta": { name: "Firavun Tazısı", page: "Pharaoh_Hound", emoji: "🐕" },
             "Marshall Adaları": { name: "Köpekbalığı", page: "Shark", emoji: "🦈" },
             "Moritanya": { name: "Deve", page: "Camel", emoji: "🐪" },
-            "Mauritius": { name: "Dodo", page: "Dodo", emoji: "🦤" },
-            "Meksika": { name: "Kartal", page: "Golden_eagle", emoji: "🦅" },
+            "Mauritius": { name: "Dodo", page: "Dodo", emoji: "ğŸ¦¤" },
+            "Meksika": { name: "Kartal", page: "Golden_eagle", emoji: "ğŸ¦…" },
             "Mikronezya": { name: "Yunus", page: "Dolphin", emoji: "🐬" },
             "Moldova": { name: "Yaban öküzü", page: "Aurochs", emoji: "🐂" },
-            "Monako": { name: "Kirpi", page: "Hedgehog", emoji: "🦔" },
-            "Monaco": { name: "Kirpi", page: "Hedgehog", emoji: "🦔" },
+            "Monako": { name: "Kirpi", page: "Hedgehog", emoji: "ğŸ¦”" },
+            "Monaco": { name: "Kirpi", page: "Hedgehog", emoji: "ğŸ¦”" },
             "Moğolistan": { name: "At", page: "Mongolian_horse", emoji: "🐎" },
             "Karadağ": { name: "Kartal", page: "Eagle", emoji: "🦅" },
             "Fas": { name: "Aslan", page: "Barbary_lion", emoji: "🦁" },
             "Mozambik": { name: "Fil", page: "African_bush_elephant", emoji: "🐘" },
             "Myanmar": { name: "Kaplan", page: "Tiger", emoji: "🐅" },
-            "Namibya": { name: "Oryx", page: "Gemsbok", emoji: "🦌" },
+            "Namibya": { name: "Oryx", page: "Gemsbok", emoji: "ğŸ¦Œ" },
             "Nauru": { name: "Fırkateyn kuşu", page: "Great_frigatebird", emoji: "🐦" },
             "Nepal": { name: "İnek", page: "Cattle", emoji: "🐄" },
-            "Hollanda": { name: "Aslan", page: "Lion", emoji: "🦁" },
+            "Hollanda": { "name": "Hoşgörü", "color": "#90EE90", "desc": "Hollanda'da farklı fikir ve yaşam tarzlarına saygı gösterilir; açık toplumsal tartışmalar ve kültürel çeşitliliğe önem verilir." },
             "Yeni Zelanda": { name: "Kivi", page: "Kiwi_(bird)", emoji: "🐦" },
             "Nicaragua": { name: "Jaguar", page: "Jaguar", emoji: "🐆" },
             "Nikaragua": { name: "Jaguar", page: "Jaguar", emoji: "🐆" },
             "Nijer": { name: "Aslan", page: "Lion", emoji: "🦁" },
-            "Nijerya": { name: "Kartal", page: "Eagle", emoji: "🦅" },
+            "Nijerya": { name: "Kartal", page: "Eagle", emoji: "ğŸ¦…" },
             "Kuzey Makedonya": { name: "Vaşak", page: "Balkan_lynx", emoji: "🐈" },
             "Makedonya": { name: "Vaşak", page: "Balkan_lynx", emoji: "🐈" },
             "Norveç": { name: "Aslan", page: "Lion", emoji: "🦁" },
@@ -4315,12 +4326,12 @@
             "Palau": { name: "Denizanası", page: "Golden_jellyfish", emoji: "🪼" },
             "Panama": { name: "Harpy kartalı", page: "Harpy_eagle", emoji: "🦅" },
             "Papua Yeni Gine": { name: "Cennet kuşu", page: "Bird-of-paradise", emoji: "🐦" },
-            "Paraguay": { name: "Tilki", page: "Fox", emoji: "🦊" },
+            "Paraguay": { name: "Tilki", page: "Fox", emoji: "ğŸ¦Š" },
             "Peru": { name: "Vikunya", page: "Vicuña", emoji: "🦙" },
             "Filipinler": { name: "Carabao", page: "Carabao", emoji: "🐃" },
-            "Polonya": { name: "Kartal", page: "White-tailed_eagle", emoji: "🦅" },
-            "Portekiz": { name: "Horoz", page: "Rooster", emoji: "🐓" },
-            "Katar": { name: "Arap oriksi", page: "Arabian_oryx", emoji: "🦌" },
+            "Polonya": { name: "Kartal", page: "White-tailed_eagle", emoji: "ğŸ¦…" },
+            "Portekiz": { "name": "Denizcilik Kültürü", "color": "#1E3A8A", "desc": "Portekiz'de denizcilik gelenekleri ve festivaller kültürel yaşamın parçasıdır; topluluk denizle iç içedir." },
+            "Katar": { name: "Arap oriksi", page: "Arabian_oryx", emoji: "ğŸ¦Œ" },
             "Romanya": { name: "Vaşak", page: "Eurasian_lynx", emoji: "🐈" },
             "Rusya": { name: "Ayı", page: "Brown_bear", emoji: "🐻" },
             "Ruanda": { name: "Aslan", page: "Lion", emoji: "🦁" },
@@ -4330,7 +4341,7 @@
             "Samoa": { name: "Deniz kaplumbağası", page: "Sea_turtle", emoji: "🐢" },
             "San Marino": { name: "At", page: "Horse", emoji: "🐎" },
             "Sao Tome ve Principe": { name: "Papağan", page: "Parrot", emoji: "🦜" },
-            "Suudi Arabistan": { name: "Deve", page: "Camel", emoji: "🐪" },
+            "Suudi Arabistan": { "name": "İslami Gelenekler", "color": "#006400", "desc": "Suudi Arabistan'da din, toplumsal kuralların ve aile yapısının temelini oluşturur; güçlü bedevi misafirperverliği yaygındır." },
             "Senegal": { name: "Aslan", page: "Lion", emoji: "🦁" },
             "Sırbistan": { name: "Kartal", page: "Eagle", emoji: "🦅" },
             "Seyşeller": { name: "Dev kaplumbağa", page: "Aldabra_giant_tortoise", emoji: "🐢" },
@@ -4344,12 +4355,12 @@
             "Güney Sudan": { name: "Kob antilobu", page: "Kob", emoji: "🦌" },
             "İspanya": { name: "Boğa", page: "Bull", emoji: "🐂" },
             "Sri Lanka": { name: "Aslan", page: "Lion", emoji: "🦁" },
-            "Sudan": { name: "Leylek", page: "White_stork", emoji: "🪶" },
+            "Sudan": { name: "Leylek", page: "White_stork", emoji: "ğŸª¶" },
             "Suriname": { name: "Jaguar", page: "Jaguar", emoji: "🐆" },
             "Surinam": { name: "Jaguar", page: "Jaguar", emoji: "🐆" },
             "İsveç": { name: "Aslan", page: "Lion", emoji: "🦁" },
             "İsviçre": { name: "İnek", page: "Cattle", emoji: "🐄" },
-            "Suriye": { name: "Kartal", page: "Eagle", emoji: "🦅" },
+            "Suriye": { name: "Kartal", page: "Eagle", emoji: "ğŸ¦…" },
             "Taiwan": { name: "Formosa kara ayısı", page: "Formosan_black_bear", emoji: "🐻" },
             "Tacikistan": { name: "Kar leoparı", page: "Snow_leopard", emoji: "🐆" },
             "Tanzanya": { name: "Zürafa", page: "Giraffe", emoji: "🦒" },
@@ -4363,7 +4374,7 @@
             "Türkiye": { name: "Bozkurt", page: "Gray_wolf", fallbackPages: ["Wolf"], emoji: "🐺" },
             "Türkmenistan": { name: "Ahal Teke atı", page: "Akhal-Teke", emoji: "🐎" },
             "Tuvalu": { name: "Deniz kuşu", page: "Sooty_tern", emoji: "🐦" },
-            "Uganda": { name: "Turna", page: "Grey_crowned_crane", emoji: "🦩" },
+            "Uganda": { name: "Turna", page: "Grey_crowned_crane", emoji: "ğŸ¦©" },
             "Ukrayna": { name: "Bülbül", page: "Common_nightingale", emoji: "🐦" },
             "Birleşik Arap Emirlikleri": { name: "Şahin", page: "Falcon", emoji: "🦅" },
             "Birleşik Krallık": { name: "Aslan", page: "Lion", emoji: "🦁" },
@@ -4375,9 +4386,9 @@
             "Vatican": { name: "Güvercin", page: "Dove", emoji: "🕊️" },
             "Venezuela": { name: "Troupial kuşu", page: "Venezuelan_troupial", emoji: "🐦" },
             "Vietnam": { name: "Su mandası", page: "Water_buffalo", emoji: "🐃" },
-            "Yemen": { name: "Kartal", page: "Eagle", emoji: "🦅" },
-            "Zambiya": { name: "Kartal", page: "Eagle", emoji: "🦅" },
-            "Zimbabve": { name: "Samur antilobu", page: "Sable_antelope", emoji: "🦌" }
+            "Yemen": { name: "Kartal", page: "Eagle", emoji: "ğŸ¦…" },
+            "Zambiya": { name: "Kartal", page: "Eagle", emoji: "ğŸ¦…" },
+            "Zimbabve": { name: "Samur antilobu", page: "Sable_antelope", emoji: "ğŸ¦Œ" }
         };
 
         Object.assign(symbolicAnimalProfiles, {
@@ -4432,6 +4443,13 @@
                 fallbackPages: ["Huma", "Mythological bird"],
                 searchTerms: ["Huma bird Uzbekistan", "Humo bird Uzbekistan"]
             })
+        });
+
+        Object.keys(symbolicAnimalProfiles).forEach(key => {
+            const profile = symbolicAnimalProfiles[key];
+            if (!profile || typeof profile !== 'object' || !profile.page) {
+                delete symbolicAnimalProfiles[key];
+            }
         });
 
         const symbolicAnimalProfileIndex = (() => {
@@ -4560,7 +4578,7 @@
                 const markers = (s.match(/[ÃÂâÄÅÐÑ]/g) || []).length;
                 const viet = (s.match(/á[»º]/g) || []).length;
                 const controls = (s.match(/[\u0080-\u009F]/g) || []).length;
-                const replacement = (s.match(/ /g) || []).length;
+                const replacement = (s.match(/\uFFFD/g) || []).length;
                 return markers + viet + controls + replacement;
             }
 
@@ -4570,35 +4588,8 @@
             }
 
             function encodeWindows1252(str) {
-                // Only the special range 0x80-0x9F differs from ISO-8859-1.
                 const map = {
-                    '€': 0x80,
-                    '‚': 0x82,
-                    'ƒ': 0x83,
-                    '„': 0x84,
-                    '…': 0x85,
-                    '†': 0x86,
-                    '‡': 0x87,
-                    'ˆ': 0x88,
-                    '‰': 0x89,
-                    'Š': 0x8A,
-                    '‹': 0x8B,
-                    'Œ': 0x8C,
-                    'Ž': 0x8E,
-                    '‘': 0x91,
-                    '’': 0x92,
-                    '“': 0x93,
-                    '”': 0x94,
-                    '•': 0x95,
-                    '–': 0x96,
-                    '—': 0x97,
-                    '˜': 0x98,
-                    '™': 0x99,
-                    'š': 0x9A,
-                    '›': 0x9B,
-                    'œ': 0x9C,
-                    'ž': 0x9E,
-                    'Ÿ': 0x9F
+                    '€': 0x80, '‚': 0x82, 'ƒ': 0x83, '„': 0x84, '…': 0x85, '†': 0x86, '‡': 0x87, 'ˆ': 0x88, '‰': 0x89, 'Š': 0x8A, '‹': 0x8B, 'Œ': 0x8C, 'Ž': 0x8E, '‘': 0x91, '’': 0x92, '“': 0x93, '”': 0x94, '•': 0x95, '–': 0x96, '—': 0x97, '˜': 0x98, '™': 0x99, 'š': 0x9A, '›': 0x9B, 'œ': 0x9C, 'ž': 0x9E, 'Ÿ': 0x9F
                 };
 
                 const bytes = new Uint8Array(str.length);
@@ -4636,6 +4627,65 @@
             return text;
         }
 
+        function normalizeMojibakeInPlace(target, seen = new WeakSet()) {
+            if (!target || typeof target !== 'object') return target;
+            if (seen.has(target)) return target;
+            seen.add(target);
+
+            if (Array.isArray(target)) {
+                for (let i = 0; i < target.length; i++) {
+                    const value = target[i];
+                    if (typeof value === 'string') target[i] = fixMojibake(value);
+                    else normalizeMojibakeInPlace(value, seen);
+                }
+                return target;
+            }
+
+            Object.keys(target).forEach(key => {
+                const value = target[key];
+                if (typeof value === 'string') target[key] = fixMojibake(value);
+                else normalizeMojibakeInPlace(value, seen);
+
+                const fixedKey = fixMojibake(key);
+                if (fixedKey && fixedKey !== key) {
+                    target[fixedKey] = target[key];
+                    delete target[key];
+                }
+            });
+
+            return target;
+        }
+
+        function fixMojibakeDomText(root) {
+            if (!root || typeof document === 'undefined' || typeof NodeFilter === 'undefined') return;
+
+            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    const parentTag = node.parentElement && node.parentElement.tagName;
+                    if (parentTag && /^(SCRIPT|STYLE|NOSCRIPT)$/i.test(parentTag)) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            });
+
+            let currentNode = walker.nextNode();
+            while (currentNode) {
+                const fixedText = fixMojibake(currentNode.nodeValue);
+                if (fixedText !== currentNode.nodeValue) currentNode.nodeValue = fixedText;
+                currentNode = walker.nextNode();
+            }
+
+            root.querySelectorAll('[placeholder],[title],[alt],[aria-label]').forEach(element => {
+                ['placeholder', 'title', 'alt', 'aria-label'].forEach(attr => {
+                    if (!element.hasAttribute(attr)) return;
+                    const currentValue = element.getAttribute(attr) || '';
+                    const fixedValue = fixMojibake(currentValue);
+                    if (fixedValue !== currentValue) element.setAttribute(attr, fixedValue);
+                });
+            });
+        }
+
         function normalizeKey(value) {
             return normalizeSearchText(fixMojibake(value));
         }
@@ -4659,7 +4709,7 @@
         function toAsciiDisplayText(value) {
             return String(value || '')
                 .replace(/İ/g, 'I')
-                .replace(/İ/g, 'I')
+                .replace(/IÌ‡/g, 'I')
                 .replace(/ı/g, 'i')
                 .replace(/ß/g, 'ss')
                 .replace(/Æ/g, 'Ae')
@@ -4668,10 +4718,10 @@
                 .replace(/œ/g, 'oe')
                 .replace(/Ø/g, 'O')
                 .replace(/ø/g, 'o')
-                .replace(/Đ/g, 'D')
-                .replace(/đ/g, 'd')
-                .replace(/Ł/g, 'L')
-                .replace(/ł/g, 'l')
+                .replace(/D/g, 'D')
+                .replace(/d/g, 'd')
+                .replace(/L/g, 'L')
+                .replace(/l/g, 'l')
                 .normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')
                 .replace(/[^\x00-\x7F]/g, '');
@@ -4681,89 +4731,257 @@
             const cleaned = fixMojibake(value);
             if (cleaned !== value) value = cleaned;
             const exact = {
-                'MantÃ„Â±': 'Mantı',
-                'DÃƒÂ¶ner kebap': 'Doner kebap',
-                'SuÃ…Å¸i': 'Suşi',
-                'Krem brÃƒÂ¼le': 'Krem brüle',
-                'Ãƒâ€¡urro': 'Çurro',
-                'TereyaÃ„Å¸lÃ„Â± tavuk': 'Tereyağlı tavuk',
-                'Pekin ÃƒÂ¶rdeÃ„Å¸i': 'Pekin ördeği',
-                'Ay ÃƒÂ§ÃƒÂ¶reÃ„Å¸i': 'Ay çöreği',
-                'BarbekÃƒÂ¼': 'Barbekü',
-                'ElmalÃ„Â± turta': 'Elmalı turta',
-                'KÃ„Â±zarmÃ„Â±Ã…Å¸ tavuk': 'Kızarmış tavuk',
-                'AcarajÃƒÂ©': 'Acarajé',
-                'ChoripÃƒÂ¡n': 'Choripán',
-                'Lahana turÃ…Å¸usu': 'Lahana turşusu',
-                'Ã…Ânitzel': 'Şnitzel',
-                'Karaorman pastasÃ„Â±': 'Karaorman pastası',
-                'Ã„Â°spanyol omleti': 'İspanyol omleti',
-                'JamÃƒÂ³n': 'Jamón',
-                'BorÃ…Å¸': 'Borş',
-                'Ãƒâ€¡elo kebap': 'Çelo kebap',
-                'SafranlÃ„Â± pilav': 'Safranlı pilav',
-                'KimÃƒÂ§i': 'Kimçi',
-                'YeÃ…Å¸il kÃƒÂ¶ri': 'Yeşil köri',
-                'BÃƒÂ¡nh mÃƒÂ¬': 'Bánh mì',
+                'Mantı': 'Mantı',
+                'Döner kebap': 'Doner kebap',
+                'Suşi': 'Suşi',
+                'Krem brüle': 'Krem brüle',
+                'Çurro': 'Çurro',
+                'Tereyağlı tavuk': 'Tereyağlı tavuk',
+                'Pekin ördeği': 'Pekin ördeği',
+                'Ay çöreği': 'Ay çöreği',
+                'Barbekü': 'Barbekü',
+                'Elmalı turta': 'Elmalı turta',
+                'Kızarmış tavuk': 'Kızarmış tavuk',
+                'Acarajé': 'Acarajé',
+                'Choripán': 'Choripán',
+                'Lahana turşusu': 'Lahana turşusu',
+                'Şnitzel': 'Şnitzel',
+                'Karaorman pastası': 'Karaorman pastası',
+                'İspanyol omleti': 'İspanyol omleti',
+                'Jamón': 'Jamón',
+                'Borş': 'Borş',
+                'Çelo kebap': 'Çelo kebap',
+                'Safranlı pilav': 'Safranlı pilav',
+                'Kimçi': 'Kimçi',
+                'Yeşil köri': 'Yeşil köri',
+                'Bánh mì': 'Bánh mì',
                 'Yaz rollu': 'Yaz rulosu',
-                'BÃƒÂºn chÃ¡ÂºÂ£': 'Bún chả',
-                'Cao lÃ¡ÂºÂ§u': 'Cao lầu',
-                'Tom yum Ã§orbasÄ±': 'Tom yum çorbası',
-                'Tavuk kÃ¶risi': 'Tavuk körisi',
-                'Yer fÄ±stÄ±ÄŸÄ± Ã§orbasÄ±': 'Yer fıstığı çorbası',
-                'FÄ±rÄ±n domuz': 'Fırın domuz',
-                'Yer elmasÄ±': 'Yer elması',
-                'ÅakÅŸuka': 'Şakşuka',
-                'BÃ¶rek': 'Börek',
-                'PabellÃ³n criollo': 'Pabellón criollo',
-                'TequeÃ±o': 'Tequeño',
-                'Peynir tabaÃ„Å¸Ã„Â±': 'Peynir tabağı',
-                'SoÃ„Å¸an ÃƒÂ§orbasÃ„Â±': 'Soğan çorbası',
-                'ElmalÃ„Â± tart': 'Elmalı tart',
-                'GulaÃ…Å¸': 'Gulaş',
-                'Pide ekmeÄŸi': 'Pide ekmeği',
-                'PirinÃ§ eriÅŸtesi': 'Pirinç eriştesi',
-                'DÃ¼z ekmek': 'Düz ekmek',
-                'Jollof pilavÄ±': 'Jollof pilavı',
-                'Yer fÄ±stÄ±klÄ± yahni': 'Yer fıstıklı yahni',
-                'Manyok ekmeÄŸi': 'Manyok ekmeği',
-                'Yer fÄ±stÄ±ÄŸÄ± sosu': 'Yer fıstığı sosu',
-                'MÄ±sÄ±r ekmeÄŸi': 'Mısır ekmeği',
-                'Tropik meyve tabaÄŸÄ±': 'Tropik meyve tabağı',
-                'Hindistancevizli pilav': 'Hindistancevizli pilav',
-                'Hindistancevizli tatlÄ±': 'Hindistancevizli tatlı',
-                'Hindistancevizli ekmek': 'Hindistancevizli ekmek',
-                'Ekmek aÄŸacÄ±': 'Ekmek ağacı',
-                'Izgara balÄ±k': 'Izgara balık',
-                'PirinÃ§ ve fasulye': 'Pirinç ve fasulye',
-                'PirinÃ§ ve bezelye': 'Pirinç ve bezelye',
-                'ÅakÅŸuka': 'Şakşuka',
-                'BÃ¶rek': 'Börek',
-                'Tavuk kÃ¶risi': 'Tavuk körisi',
-                'Tom yum Ã§orbasÄ±': 'Tom yum çorbası',
-                'Yer fÄ±stÄ±ÄŸÄ± Ã§orbasÄ±': 'Yer fıstığı çorbası',
-                'FÄ±rÄ±n domuz': 'Fırın domuz',
-                'Yer elmasÄ±': 'Yer elması'
+                'Bún chả': 'Bún chả',
+                'Cao lầu': 'Cao lầu',
+                'Tom yum çorbası': 'Tom yum çorbası',
+                'Tavuk körisi': 'Tavuk körisi',
+                'Yer fıstığı çorbası': 'Yer fıstığı çorbası',
+                'Fırın domuz': 'Fırın domuz',
+                'Yer elması': 'Yer elması'
             };
             if (exact[value]) return exact[value];
             return String(value || '')
-                .replace(/Ãƒâ€¡/g, 'Ç')
-                .replace(/Ãƒâ€“/g, 'Ö')
-                .replace(/ÃƒÅ“/g, 'Ü')
-                .replace(/ÃƒÂ¼/g, 'ü')
-                .replace(/ÃƒÂ¶/g, 'ö')
-                .replace(/ÃƒÂ§/g, 'ç')
-                .replace(/Ã„Â±/g, 'ı')
-                .replace(/Ã„Â°/g, 'İ')
-                .replace(/Ã„Å¸/g, 'ğ')
-                .replace(/Ã…Å¸/g, 'ş')
-                .replace(/Ã…Â/g, 'Ş')
-                .replace(/Ã©/g, 'é')
-                .replace(/Ã³/g, 'ó')
-                .replace(/Ã¡/g, 'á')
+                .replace(/Ç/g, 'Ç')
+                .replace(/Ö/g, 'Ö')
+                .replace(/Ü/g, 'Ü')
+                .replace(/ü/g, 'ü')
+                .replace(/ö/g, 'ö')
+                .replace(/ç/g, 'ç')
+                .replace(/ı/g, 'ı')
+                .replace(/İ/g, 'İ')
+                .replace(/ğ/g, 'ğ')
+                .replace(/ş/g, 'ş')
+                .replace(/Ş/g, 'Ş')
+                .replace(/é/g, 'é')
+                .replace(/ó/g, 'ó')
+                .replace(/á/g, 'á')
                 .replace(/Ã¬/g, 'ì')
-                .replace(/Ãº/g, 'ú')
-                .replace(/Ã£/g, 'ã');
+                .replace(/ú/g, 'ú')
+                .replace(/ã/g, 'ã');
+        }
+
+        function legacyFormatClothingDisplayName(value) {
+            return legacyFormatFoodDisplayName(value);
+        }
+
+        function formatFoodDisplayName(value) {
+            const cleaned = fixMojibake(value).trim();
+            const legacyFixed = legacyFormatFoodDisplayName(cleaned).trim();
+            const normalized = normalizeSearchText(legacyFixed);
+            const exact = {
+                "manti": "Mant\u0131",
+                "dumpling": "Mantı",
+                "doner kebap": "Döner kebap",
+                "doner kebab": "Döner kebap",
+                "kebab": "Kebap",
+                "sushi": "Su\u015fi",
+                "krem brule": "Krem br\u00fble",
+                "tereyagli tavuk": "Tereya\u011fl\u0131 tavuk",
+                "pekin ordegi": "Pekin \u00f6rde\u011fi",
+                "elmali turta": "Elmal\u0131 turta",
+                "etli noodle corbasi": "Etli noodle \u00e7orbas\u0131",
+                "yesil soganli pankek": "Ye\u015fil so\u011fanl\u0131 pankek",
+                "tom yum corbasi": "Tom yum \u00e7orbas\u0131",
+                "yesil kori": "Ye\u015fil k\u00f6ri",
+                "jollof pilavi": "Jollof pilav\u0131",
+                "yer fistigi corbasi": "Yer f\u0131st\u0131\u011f\u0131 \u00e7orbas\u0131",
+                "surpa": "\u015eurpa",
+                "shurpa": "Şurpa",
+                "izgara balik": "Izgara bal\u0131k",
+                "ekmek agaci": "Ekmek a\u011fac\u0131",
+                "bors": "Bor\u015f",
+                "pabellon criollo": "Pabell\u00f3n criollo",
+                "pho": "Ph\u1edf",
+                "banh mi": "B\u00e1nh m\u00ec",
+                "goi cuon": "G\u1ecfi cu\u1ed1n",
+                "tatli patates": "Tatl\u0131 patates",
+                "barbeku": "Barbek\u00fc",
+                "misir ekmegi": "M\u0131s\u0131r ekme\u011fi",
+                "tropik meyve tabagi": "Tropik meyve taba\u011f\u0131",
+                "cavdar ekmegi": "\u00c7avdar ekme\u011fi",
+                "gulas": "Gula\u015f",
+                "pirinc eristesi": "Pirin\u00e7 eri\u015ftesi",
+                "duz ekmek": "D\u00fcz ekmek",
+                "firin domuz": "F\u0131r\u0131n domuz",
+                "mopane kurdu": "Mopane kurdu",
+                "osso buco": "Osso buco",
+                "fokaca": "Fokaça",
+                "buyabes": "Buyabes",
+                "quiche lorraine": "Kiş Loren",
+                "kish loren": "Kiş Loren",
+                "escargot": "Escargot",
+                "nogada soslu biber": "Nogada soslu biber",
+                "guakamole": "Guakamole",
+                "sicak tencere": "Sıcak tencere",
+                "clam chowder": "Clam chowder",
+                "sosis ve pure": "Sosis ve püre",
+                "hamurlu sosis": "Hamurlu sosis",
+                "skon": "Skon",
+                "konigsberger koftesi": "Konigsberger köftesi",
+                "maultasen": "Maultaşen",
+                "karaorman pastasi": "Karaorman pastası",
+                "acaraje": "Acaraje",
+                "koksinya": "Koksinya",
+                "patatesli ispanyol omleti": "Patatesli İspanyol omleti",
+                "stroganof": "Stroganof",
+                "sirniki": "Sırniki",
+                "pirojki": "Pirojki",
+                "ispanakli borek": "Ispanaklı börek",
+                "lukumades": "Lukumades",
+                "bun ca": "Bun Ça",
+                "kusari": "Kuşari",
+                "taamiye": "Taamiye",
+                "mahsi": "Mahşi",
+                "zaluk": "Zaluk",
+                "briuat": "Briuat",
+                "sebakiye": "Şebakiye",
+                "tourtiere": "Tourtiere",
+                "nanaimo bar": "Nanaimo bar",
+                "bannok": "Bannok",
+                "renkli ekmek": "Renkli ekmek",
+                "surstroming": "Surstroming",
+                "gravlaks": "Gravlaks",
+                "jollof rice": "Jollof pilavı",
+                "jollof pilavi": "Jollof pilavı",
+                "dovulmus yam": "Dövülmüş yam",
+                "uc sutlu kek": "Üç sütlü kek",
+            };
+            const displayValue = exact[normalized] || legacyFixed || cleaned;
+            return displayValue;
+        }
+        function toAsciiDisplayText(value) {
+            return String(value || '')
+                .replace(/İ/g, 'I')
+                .replace(/IÌ‡/g, 'I')
+                .replace(/ı/g, 'i')
+                .replace(/ß/g, 'ss')
+                .replace(/Æ/g, 'Ae')
+                .replace(/æ/g, 'ae')
+                .replace(/Œ/g, 'Oe')
+                .replace(/œ/g, 'oe')
+                .replace(/Ø/g, 'O')
+                .replace(/ø/g, 'o')
+                .replace(/D/g, 'D')
+                .replace(/d/g, 'd')
+                .replace(/L/g, 'L')
+                .replace(/l/g, 'l')
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^\x00-\x7F]/g, '');
+        }
+
+        function legacyFormatFoodDisplayName(value) {
+            const cleaned = fixMojibake(value);
+            if (cleaned !== value) value = cleaned;
+            const exact = {
+                'Mantı': 'Mantı',
+                'Döner kebap': 'Doner kebap',
+                'Suşi': 'Suşi',
+                'Krem brüle': 'Krem brüle',
+                'Çurro': 'Çurro',
+                'Tereyağlı tavuk': 'Tereyağlı tavuk',
+                'Pekin ördeği': 'Pekin ördeği',
+                'Ay çöreği': 'Ay çöreği',
+                'Barbekü': 'Barbekü',
+                'Elmalı turta': 'Elmalı turta',
+                'Kızarmış tavuk': 'Kızarmış tavuk',
+                'Acarajé': 'Acarajé',
+                'Choripán': 'Choripán',
+                'Lahana turşusu': 'Lahana turşusu',
+                'Şnitzel': 'Şnitzel',
+                'Karaorman pastası': 'Karaorman pastası',
+                'İspanyol omleti': 'İspanyol omleti',
+                'Jamón': 'Jamón',
+                'Borş': 'Borş',
+                'Çelo kebap': 'Çelo kebap',
+                'Safranlı pilav': 'Safranlı pilav',
+                'Kimçi': 'Kimçi',
+                'Yeşil köri': 'Yeşil köri',
+                'Bánh mì': 'Bánh mì',
+                'Yaz rollu': 'Yaz rulosu',
+                'Bún chả': 'Bún chả',
+                'Cao lầu': 'Cao lầu',
+                'Tom yum çorbası': 'Tom yum çorbası',
+                'Tavuk körisi': 'Tavuk körisi',
+                'Yer fıstığı çorbası': 'Yer fıstığı çorbası',
+                'Fırın domuz': 'Fırın domuz',
+                'Yer elması': 'Yer elması',
+                'Şakşuka': 'Şakşuka',
+                'Börek': 'Börek',
+                'Pabellón criollo': 'Pabellón criollo',
+                'Tequeño': 'Tequeño',
+                'Peynir tabağı': 'Peynir tabağı',
+                'Soğan çorbası': 'Soğan çorbası',
+                'Elmalı tart': 'Elmalı tart',
+                'Gulaş': 'Gulaş',
+                'Pide ekmeği': 'Pide ekmeği',
+                'Pirinç eriştesi': 'Pirinç eriştesi',
+                'Düz ekmek': 'Düz ekmek',
+                'Jollof pilavı': 'Jollof pilavı',
+                'Yer fıstıklı yahni': 'Yer fıstıklı yahni',
+                'Manyok ekmeği': 'Manyok ekmeği',
+                'Yer fıstığı sosu': 'Yer fıstığı sosu',
+                'Mısır ekmeği': 'Mısır ekmeği',
+                'Tropik meyve tabağı': 'Tropik meyve tabağı',
+                'Hindistancevizli pilav': 'Hindistancevizli pilav',
+                'Hindistancevizli tatlı': 'Hindistancevizli tatlı',
+                'Hindistancevizli ekmek': 'Hindistancevizli ekmek',
+                'Ekmek ağacı': 'Ekmek ağacı',
+                'Izgara balık': 'Izgara balık',
+                'Pirinç ve fasulye': 'Pirinç ve fasulye',
+                'Pirinç ve bezelye': 'Pirinç ve bezelye',
+                'Şakşuka': 'Şakşuka',
+                'Börek': 'Börek',
+                'Tavuk körisi': 'Tavuk körisi',
+                'Tom yum çorbası': 'Tom yum çorbası',
+                'Yer fıstığı çorbası': 'Yer fıstığı çorbası',
+                'Fırın domuz': 'Fırın domuz',
+                'Yer elması': 'Yer elması'
+            };
+            if (exact[value]) return exact[value];
+            return String(value || '')
+                .replace(/Ç/g, 'Ç')
+                .replace(/Ö/g, 'Ö')
+                .replace(/Ü/g, 'Ü')
+                .replace(/ü/g, 'ü')
+                .replace(/ö/g, 'ö')
+                .replace(/ç/g, 'ç')
+                .replace(/ı/g, 'ı')
+                .replace(/İ/g, 'İ')
+                .replace(/ğ/g, 'ğ')
+                .replace(/ş/g, 'ş')
+                .replace(/Ş/g, 'Ş')
+                .replace(/é/g, 'é')
+                .replace(/ó/g, 'ó')
+                .replace(/á/g, 'á')
+                .replace(/Ã¬/g, 'ì')
+                .replace(/ú/g, 'ú')
+                .replace(/ã/g, 'ã');
         }
 
         function legacyFormatClothingDisplayName(value) {
@@ -5163,6 +5381,162 @@
             return `${displayName}, ${regionText.toLowerCase()} çevresiyle kurduğu temas sayesinde hem yerel geleneklerini hem de bölgesel etkileri birlikte taşır.`;
         }
 
+        function getCountrySpecificCultureFeatures(displayName) {
+            const key = normalizeForCompare(displayName);
+            if (key === 'japonya' || key === 'japan') {
+                return [
+                    {
+                        title: 'Mottainai',
+                        text: 'Mottainai, bir şeyin değerini boşa harcamamayı anlatır; yiyecekten eşyaya kadar kaynaklara saygılı, tutumlu ve özenli davranmayı teşvik eder.'
+                    },
+                    {
+                        title: 'Kintsugi',
+                        text: 'Kintsugi, kırılan seramikleri altınla onarma anlayışıdır; kusurları gizlemek yerine geçmişin izlerini görünür kılar ve onarılmış halin de kıymetli olduğunu vurgular.'
+                    },
+                    {
+                        title: 'Wabi-sabi',
+                        text: 'Wabi-sabi, sade, geçici ve kusurlu olanda güzellik görme yaklaşımıdır; gösteriş yerine dinginlik, doğallık ve yaşanmışlık hissini öne çıkarır.'
+                    },
+                    {
+                        title: 'Ikigai',
+                        text: 'Ikigai, insanın yaşamına anlam veren nedeni bulmasıdır; kişinin sevdiği, iyi yaptığı ve topluma katkı sunduğu alanların kesişiminde amaç duygusu oluşturur.'
+                    }
+                ];
+            }
+            if (key === 'danimarka' || key === 'denmark') {
+                return [{ title: 'Hygge', text: 'Hygge; rahatlık, huzur ve sıcaklık hissidir. Sevdikleriyle birlikte olma, mum ışığı ve basit zevklerden mutluluk duyma felsefesidir.' }];
+            }
+            if (key === 'güney afrika' || key === 'south africa') {
+                return [{ title: 'Ubuntu', text: '\'Ben, biz olduğumuz için benim\' anlayışıdır. Yardımlaşma, paylaşma ve insanı insan yapan ortak bağlara odaklanan bir topluluk felsefesidir.' }];
+            }
+            if (key === 'isveç' || key === 'sweden') {
+                return [{ title: 'Lagom', text: 'Lagom, ne az ne fazla anlayışını anlatır; dengeli, ölçülü ve sade bir yaşam sürme fikrini öne çıkarır.' }];
+            }
+            if (key === 'norveç' || key === 'norway') {
+                return [{ title: 'Friluftsliv', text: '\'Açık hava yaşamı\' demektir. Doğada vakit geçirmenin, manevi bir yenilenme ve sağlık kaynağı olduğu inancını ve doğayla iç içe olma tutkusunu simgeler.' }];
+            }
+            if (key === 'almanya' || key === 'germany') {
+                return [{ title: 'Waldeinsamkeit', text: '\'Ormandaki yalnızlık\' demektir. Ormanda tek başına yürürken hissedilen o derin huzuru ve doğayla baş başa kalmanın verdiği meditatif sessizliği ifade eder.' }];
+            }
+            if (key === 'hollanda' || key === 'netherlands') {
+                return [{ title: 'Gezelligheid', text: 'Sevdikleriyle bir arada olmanın verdiği sosyal aidiyet, samimiyet ve konforun yarattığı o eşsiz atmosferi ve keyifli bir sosyal ortamı ifade eder.' }];
+            }
+            if (key === 'galler' || key === 'wales') {
+                return [{ title: 'Hiraeth', text: 'Geçmişe veya artık var olmayan bir yere, bir eve duyulan derin özlem ve hüzünlü aidiyet duygusunu ifade eden Galler\'e özgü bir kavramdır.' }];
+            }
+            if (key === 'ispanya' || key === 'spain') {
+                return [{ title: 'Sobremesa', text: 'Yemek bittikten sonra masadan kalkmadan yapılan o uzun ve keyifli sohbetlerdir. Paylaşılan yemeğin ardından sosyal bağları güçlendirme vaktidir.' }];
+            }
+            if (key === 'italya' || key === 'italy') {
+                return [{ title: 'Dolce Far Niente', text: '\'Hiçbir şey yapmamanın tatlılığı\' demektir. Anın tadını çıkararak, hiçbir suçluluk duymadan dinlenmenin ve keyif çatmanın sanatıdır.' }];
+            }
+            if (key === 'portekiz' || key === 'portugal') {
+                return [{ title: 'Saudade', text: 'Birine veya bir yere duyulan, içinde hem hüzün hem de sevgi barındıran o derin ve yakıcı özlemdir. Melankolinin en güzel ifadesidir.' }];
+            }
+            if (key === 'yunanistan' || key === 'greece') {
+                return [{ title: 'Meraki', text: 'Bir işi sevgiyle, ruhunu katarak ve yaratıcılıkla yapmaktır. Yapılan her şeye kişinin kendinden bir parçayı ve tutkusunu bırakmasıdır.' }];
+            }
+            if (key === 'brezilya' || key === 'brazil') {
+                return [{ title: 'Cafuné', text: 'Sevdiklerinin saçları arasında parmakları gezdirerek yapılan o sevgi dolu ve rahatlatıcı okşama eylemidir; sessiz bir şefkat gösterisidir.' }];
+            }
+            if (key === 'güney kore' || key === 'south korea') {
+                return [{ title: 'Nunchi', text: '\'Göz ölçüsü\' demektir. Başkalarının duygularını ve ortamın havasını hızla sezip ona göre uyumlu ve ince bir davranış sergileme yeteneğidir.' }];
+            }
+            if (key === 'çin' || key === 'china') {
+                return [{ title: 'Yuanfen', text: 'İnsanları bir araya getiren \'kaderin cilvesidir\'. Rastlantısal görünen ancak aslında gizli bir anlam taşıyan kaçınılmaz buluşmaların enerjisidir.' }];
+            }
+            if (key === 'hindistan' || key === 'india') {
+                return [{ title: 'Jugaad', text: 'Kısıtlı imkanlarla yaratıcı ve pratik çözümler üretme sanatıdır. Zor durumları zekice ve alışılmışın dışındaki yöntemlerle aşma yeteneğidir.' }];
+            }
+            if (key === 'türkiye' || key === 'turkey') {
+                return [{ title: 'Gönül', text: 'Gönül; sevginin, inancın ve derin duyguların merkezidir. Türk kültürü için yaşamın ve insan ilişkilerinin kalbi olan manevi bir derinliği simgeler.' }];
+            }
+            if (key === 'iran') {
+                return [{ title: 'Taarof', text: 'Karşıdaki kişiye aşırı saygı, nezaket ve cömertlik göstermeye dayalı, sosyal uyumu koruyan incelikli bir davranış protokolü ve nezaket geleneğidir.' }];
+            }
+            if (key === 'suudi arabistan' || key === 'arabistan' || key === 'saudi arabia') {
+                return [{ title: 'Tarab', text: 'Müziğin, şiirin veya sanatın ruh üzerindeki efsunlu etkisidir. Sanatla gelen derin bir duygusal coşku ve vecd halini ifade eder.' }];
+            }
+            return [];
+        }
+
+        function formatJoinedList(items, fallback, mapper) {
+            const values = Array.isArray(items) ? items.filter(Boolean) : [];
+            if (!values.length) return fallback || 'Bilgi Yok';
+            return values.map(value => mapper ? mapper(value) : value).filter(Boolean).join(', ');
+        }
+
+        function translateDrivingSide(side) {
+            const value = String(side || '').toLowerCase();
+            if (value === 'left') return 'Soldan trafik';
+            if (value === 'right') return 'Sağdan trafik';
+            return 'Bilgi Yok';
+        }
+
+        function translateWeekStart(day) {
+            const map = {
+                monday: 'Pazartesi', tuesday: 'Salı', wednesday: 'Çarşamba',
+                thursday: 'Perşembe', friday: 'Cuma', saturday: 'Cumartesi', sunday: 'Pazar'
+            };
+            return map[String(day || '').toLowerCase()] || 'Bilgi Yok';
+        }
+
+        function formatBorders(borders) {
+            if (!Array.isArray(borders)) return 'Bilgi Yok';
+            if (!borders.length) return 'Sınır komşusu yok';
+            return borders.map(code => countryNamesByA3[normalizeA3Code(code)] || code).join(', ');
+        }
+
+        function formatCountryStatus(data) {
+            if (!data) return 'Bilgi Yok';
+            const parts = [];
+            if (typeof data.independent === 'boolean') parts.push(data.independent ? 'Bağımsız devlet' : 'Bağımsız değil');
+            if (typeof data.unMember === 'boolean') parts.push(data.unMember ? 'Birleşmiş Milletler üyesi' : 'BM üyesi değil');
+            if (data.status) {
+                const statusMap = { officially_assigned: 'resmen tanınmış', user_assigned: 'kullanıcı atamalı' };
+                parts.push(statusMap[data.status] || data.status);
+            }
+            return parts.join(', ') || 'Bilgi Yok';
+        }
+
+        function formatDemonym(data) {
+            if (!data || !data.demonyms) return 'Bilgi Yok';
+            const male = data.demonyms.eng && data.demonyms.eng.m;
+            const female = data.demonyms.eng && data.demonyms.eng.f;
+            if (male && female && male !== female) return `${male} / ${female}`;
+            return male || female || 'Bilgi Yok';
+        }
+
+        function formatCarSigns(data) {
+            return data && data.car && Array.isArray(data.car.signs) && data.car.signs.length
+                ? data.car.signs.filter(Boolean).join(', ')
+                : 'Bilgi Yok';
+        }
+
+        function getSocialInsight(cultureName, displayName) {
+            const key = normalizeForCompare(cultureName);
+            if (key.includes('misafir')) return `${displayName}'da misafir ağırlama, ikram ve sıcak karşılama günlük sosyal ilişkilerde güçlü biçimde hissedilir.`;
+            if (key.includes('aile')) return `${displayName}'da aile bağları, ortak sofralar ve kuşaklar arası dayanışma toplumsal hayatın merkezindedir.`;
+            if (key.includes('topluluk') || key.includes('dayanisma')) return `${displayName}'da birlikte hareket etme, komşuluk desteği ve ortak kutlamalar kültürel dokuyu belirler.`;
+            if (key.includes('disiplin') || key.includes('saygi')) return `${displayName}'da düzen, nezaket ve sosyal kurallara uyum kamusal yaşamda belirgin bir yer tutar.`;
+            if (key.includes('doga')) return `${displayName}'da doğayla kurulan bağ, gündelik ritmi ve boş zaman alışkanlıklarını doğrudan etkiler.`;
+            if (key.includes('muzik') || key.includes('ritim') || key.includes('dans') || key.includes('festival') || key.includes('nese')) return `${displayName}'da müzik, dans ve kutlama kültürü insanların bir araya gelme biçimlerini canlı tutar.`;
+            if (key.includes('spirit') || key.includes('din')) return `${displayName}'da manevi pratikler, ritüeller ve inanç dünyası gündelik hayata görünür biçimde yansır.`;
+            if (key.includes('tarih') || key.includes('gelenek')) return `${displayName}'da geçmişe bağlılık, anma biçimleri ve geleneksel ritüeller ortak hafızayı canlı tutar.`;
+            if (key.includes('cesitlilik') || key.includes('mozaik') || key.includes('cok kulturluluk')) return `${displayName}'da farklı toplulukların birlikte yaşaması kültürel ifadeyi çeşitlendirir ve gündelik hayatı renklendirir.`;
+            return `${displayName}'da kültürel yaşam, yerel gelenekler ile çağdaş günlük pratiklerin birlikte şekillendirdiği dengeli bir yapı gösterir.`;
+        }
+
+        function getTraditionInsight(cultureName, displayName, regionText) {
+            const key = normalizeForCompare(cultureName);
+            if (key.includes('mutfak') || key.includes('yemek')) return `${displayName}'da mutfak kültürü, paylaşımın ve aile etkileşiminin en görünür taşıyıcılarından biridir.`;
+            if (key.includes('gocebe')) return `${displayName}'da hareketli yaşam hafızası, atlı gelenekler ve açık alan kültürü kimlik anlatısında önemli yer tutar.`;
+            if (key.includes('doga')) return `${displayName}'ın ${regionText.toLowerCase()} coğrafyası, doğa merkezli semboller ve açık hava yaşamı üzerinden kültürel kimliği besler.`;
+            if (key.includes('tarih') || key.includes('gelenek')) return `${displayName}'da törenler, anıtlar ve tarihsel semboller kültürel devamlılığı güçlendiren başlıca araçlardandır.`;
+            return `${displayName}, ${regionText.toLowerCase()} çevresiyle kurduğu temas sayesinde hem yerel geleneklerini hem de bölgesel etkileri birlikte taşır.`;
+        }
+
+
         function buildCultureFeatures(details) {
             const displayName = details.displayName;
             const animalText = details.animalText || 'Bilgi Yok';
@@ -5179,7 +5553,7 @@
                 { title: 'Semboller', text: `${animalText} sembolü, bayrak ve marşla birlikte ${displayName}'ın ulusal kimliğini görünür kılan güçlü simgeler arasında yer alır.` },
                 { title: 'Gündelik Ritim', text: dailyRhythm },
                 { title: 'Bölgesel Bağlam', text: getTraditionInsight(details.culture.name, displayName, details.regionText || details.continentText || 'bölgesel') }
-            ];
+            ].concat(getCountrySpecificCultureFeatures(displayName));
         }
 
         function renderCultureFeatures(features) {
@@ -5195,8 +5569,8 @@
             
                         setSearchStatus(
                             selectedCultureKey
-                                ? 'SeÃ§ilen kÃ¼ltÃ¼rel Ã¶zelliÄŸe sahip Ã¼lkeler siyah Ã§erÃ§eve ile vurgulanÄ±yor.'
-                                : "KÃ¼ltÃ¼rel vurgu temizlendi. Tam Ã¼lke adÄ±nÄ± yazÄ±p Enter'a basÄ±n ya da butona tÄ±klayÄ±n.",
+                                ? 'Seçilen kültürel özelliğe sahip ülkeler siyah çerçeve ile vurgulanıyor.'
+                                : "Kültürel vurgu temizlendi. Tam ülke adını yazıp Enter'a basın ya da butona tıklayın.",
                             false
                         );
                     });
@@ -5211,9 +5585,9 @@
             if (!row) return;
             row.style.display = visible === false ? 'none' : '';
             const labelNode = row.querySelector('.stat-label');
-            if (labelNode && label) labelNode.textContent = label;
+            if (labelNode && label) labelNode.textContent = fixMojibake(label);
             if (visible === false) return;
-            valueNode.innerText = value || 'Bilgi Yok';
+            valueNode.innerText = fixMojibake(value || 'Bilgi Yok');
         }
 
         function resetPanelRowsToCountryDefaults() {
@@ -5299,17 +5673,27 @@
         }
 
         function createOceanNodeElement(ocean) {
+            const islandShapes = [
+                { radius: '58% 42% 55% 45% / 46% 39% 61% 54%', tilt: '-4deg' },
+                { radius: '46% 54% 44% 56% / 52% 41% 59% 48%', tilt: '3deg' },
+                { radius: '54% 46% 60% 40% / 43% 54% 46% 57%', tilt: '-2deg' },
+                { radius: '49% 51% 42% 58% / 58% 45% 55% 42%', tilt: '4deg' }
+            ];
+            const shape = islandShapes[Math.abs(hashString((ocean && (ocean.id || ocean.name)) || 'ocean')) % islandShapes.length];
             const button = document.createElement('button');
             button.type = 'button';
             button.className = 'ocean-node';
+            button.style.setProperty('--ocean-node-radius', shape.radius);
+            button.style.setProperty('--ocean-node-tilt', shape.tilt);
+            button.setAttribute('aria-label', `${ocean.name} detaylarını aç`);
 
             const name = document.createElement('span');
             name.className = 'ocean-node-name';
-            name.textContent = `${ocean.icon || '🌊'} ${ocean.name}`;
+            name.textContent = `${ocean.icon || 'ğŸŒŠ'} ${ocean.name}`;
 
             const meta = document.createElement('span');
             meta.className = 'ocean-node-meta';
-            meta.textContent = 'Kısa bilgi';
+            meta.textContent = 'Tıkla ve aç';
 
             button.appendChild(name);
             button.appendChild(meta);
@@ -5428,6 +5812,7 @@
         function buildAnimalImageCandidates(profile) {
             const candidates = [];
             if (!profile) return candidates;
+            const contextName = profile.contextName || profile.countryName || '';
 
             if (profile.imageUrl) candidates.push(profile.imageUrl);
             if (profile.page) candidates.push(profile.page);
@@ -5445,8 +5830,25 @@
             } else if (profile.countryName) {
                 candidates.push(`${profile.countryName} national animal`);
             }
+            if (contextName && profile.name) {
+                candidates.push(`${contextName} ${profile.name}`);
+                candidates.push(`${contextName} wildlife ${profile.name}`);
+                candidates.push(`${contextName} animal ${profile.name}`);
+            }
 
             return [...new Set(candidates.filter(Boolean))];
+        }
+
+        function getOceanAnimalProfile(ocean) {
+            if (!ocean || !ocean.species) return null;
+            return {
+                contextName: ocean.name,
+                name: ocean.species,
+                emoji: ocean.speciesEmoji || '🐾',
+                page: ocean.speciesPage || '',
+                fallbackPages: Array.isArray(ocean.speciesFallbackPages) ? ocean.speciesFallbackPages : [],
+                searchTerms: Array.isArray(ocean.speciesSearchTerms) ? ocean.speciesSearchTerms : []
+            };
         }
 
         function uniqueFoodEntries(items) {
@@ -5825,10 +6227,10 @@
                         float diffuse = max(dot(normalDir, sunDir), 0.0);
                         float latitudeCool = smoothstep(0.18, 0.46, abs(vUv.y - 0.5) * 2.0);
 
-                        vec3 deepColor = mix(vec3(0.02, 0.18, 0.33), vec3(0.04, 0.32, 0.54), 1.0 - latitudeCool);
-                        vec3 surfaceColor = mix(deepColor, vec3(0.14, 0.47, 0.67), 0.28 + diffuse * 0.18);
-                        vec3 fresnelColor = mix(vec3(0.60, 0.79, 0.86), vec3(0.96, 0.99, 1.0), spec);
-                        vec3 foamColor = vec3(0.93, 0.97, 1.0);
+                        vec3 deepColor = mix(vec3(0.06, 0.28, 0.45), vec3(0.12, 0.42, 0.63), 1.0 - latitudeCool);
+                        vec3 surfaceColor = mix(deepColor, vec3(0.32, 0.68, 0.84), 0.34 + diffuse * 0.18);
+                        vec3 fresnelColor = mix(vec3(0.74, 0.88, 0.94), vec3(0.98, 0.995, 1.0), spec);
+                        vec3 foamColor = vec3(0.95, 0.98, 1.0);
                         vec3 waveColor = surfaceColor;
                         waveColor = mix(waveColor, fresnelColor, fresnel * 0.32 + spec * 0.18);
                         waveColor = mix(waveColor, foamColor, foam);
@@ -5912,7 +6314,7 @@
                 .backgroundColor('#ffffff')
                 .globeImageUrl(globeOceanTextureUrl)
                 .showAtmosphere(true)
-                .atmosphereColor('#8fcbff')
+                .atmosphereColor('#b7dcff')
                 .atmosphereAltitude(0.16)
                 .polygonsData(countriesData.features)
                 .polygonAltitude(0.015)
@@ -5941,7 +6343,7 @@
                 .pointRadius(() => 0.55)
                 .pointResolution(18)
                 .pointColor(d => hexToRgba(d.color, 0.95))
-                .pointLabel(d => `<div style="background:rgba(8,22,37,0.92);color:#fff;padding:10px 12px;border-radius:10px;font-family:'Inter',sans-serif;border:1px solid ${hexToRgba(d.color, 0.55)};box-shadow:0 8px 20px rgba(0,0,0,0.18);"><div style="font-weight:800;font-size:14px;">${d.icon || '🌊'} ${d.name}</div><div style="margin-top:4px;font-size:12px;color:#cfe9ff;">${d.subtitle}</div></div>`)
+                .pointLabel(d => `<div style="background:rgba(8,22,37,0.92);color:#fff;padding:10px 12px;border-radius:10px;font-family:'Inter',sans-serif;border:1px solid ${hexToRgba(d.color, 0.55)};box-shadow:0 8px 20px rgba(0,0,0,0.18);"><div style="font-weight:800;font-size:14px;">${d.icon || 'ğŸŒŠ'} ${d.name}</div><div style="margin-top:4px;font-size:12px;color:#cfe9ff;">${d.subtitle}</div></div>`)
                 .onPointHover(point => {
                     globeContainer.style.cursor = point ? 'pointer' : (hoveredPolygon ? 'pointer' : 'grab');
                 })
@@ -5979,10 +6381,10 @@
                 const globeMaterial = world && typeof world.globeMaterial === 'function' ? world.globeMaterial() : null;
                 if (globeMaterial && typeof THREE !== 'undefined') {
                     if ('color' in globeMaterial) globeMaterial.color = new THREE.Color('#FFFFFF');
-                    if ('emissive' in globeMaterial) globeMaterial.emissive = new THREE.Color('#0A2233');
-                    if ('emissiveIntensity' in globeMaterial) globeMaterial.emissiveIntensity = 0.015;
-                    if ('shininess' in globeMaterial) globeMaterial.shininess = 18;
-                    if ('specular' in globeMaterial) globeMaterial.specular = new THREE.Color('#4E83A8');
+                    if ('emissive' in globeMaterial) globeMaterial.emissive = new THREE.Color('#174764');
+                    if ('emissiveIntensity' in globeMaterial) globeMaterial.emissiveIntensity = 0.026;
+                    if ('shininess' in globeMaterial) globeMaterial.shininess = 20;
+                    if ('specular' in globeMaterial) globeMaterial.specular = new THREE.Color('#83B6D6');
                     if ('bumpMap' in globeMaterial) {
                         const bumpLoader = new THREE.TextureLoader();
                         if (typeof bumpLoader.setCrossOrigin === 'function') bumpLoader.setCrossOrigin('anonymous');
@@ -6073,9 +6475,12 @@
                 lat: -10,
                 lng: -145,
                 color: '#1D7BC1',
-                icon: '🌊',
+                icon: 'ğŸŒŠ',
                 species: 'Mavi balina',
                 speciesEmoji: '🐋',
+                speciesPage: 'Blue_whale',
+                speciesFallbackPages: ['Balaenoptera_musculus', 'Whale'],
+                speciesSearchTerms: ['Pacific Ocean blue whale', 'blue whale open ocean'],
                 surfaceArea: '165,25 milyon km²',
                 avgDepth: '4.280 m',
                 maxDepth: 'Mariana Çukuru, 10.984 m',
@@ -6099,9 +6504,12 @@
                 lat: 8,
                 lng: -32,
                 color: '#2F8FD8',
-                icon: '🌊',
+                icon: 'ğŸŒŠ',
                 species: 'Kambur balina',
                 speciesEmoji: '🐋',
+                speciesPage: 'Humpback_whale',
+                speciesFallbackPages: ['Whale'],
+                speciesSearchTerms: ['Atlantic Ocean humpback whale', 'humpback whale Atlantic'],
                 surfaceArea: '106,46 milyon km²',
                 avgDepth: '3.646 m',
                 maxDepth: 'Porto Riko Çukuru, 8.376 m',
@@ -6125,9 +6533,12 @@
                 lat: -18,
                 lng: 82,
                 color: '#1D9CBF',
-                icon: '🌊',
+                icon: 'ğŸŒŠ',
                 species: 'Manta vatozu',
                 speciesEmoji: '🐠',
+                speciesPage: 'Manta_ray',
+                speciesFallbackPages: ['Manta', 'Ray_(fish)'],
+                speciesSearchTerms: ['Indian Ocean manta ray', 'manta ray Indian Ocean'],
                 surfaceArea: '70,56 milyon km²',
                 avgDepth: '3.741 m',
                 maxDepth: 'Java Çukuru, 7.258 m',
@@ -6154,6 +6565,9 @@
                 icon: '❄️',
                 species: 'Narval',
                 speciesEmoji: '🐋',
+                speciesPage: 'Narwhal',
+                speciesFallbackPages: ['Monodon_monoceros', 'Whale'],
+                speciesSearchTerms: ['Arctic Ocean narwhal', 'narwhal Arctic'],
                 surfaceArea: '14,06 milyon km²',
                 avgDepth: '1.205 m',
                 maxDepth: 'Molloy Deep, 5.550 m',
@@ -6177,9 +6591,12 @@
                 lat: -56,
                 lng: 25,
                 color: '#3E9ED6',
-                icon: '🌊',
+                icon: 'ğŸŒŠ',
                 species: 'İmparator penguen',
                 speciesEmoji: '🐧',
+                speciesPage: 'Emperor_penguin',
+                speciesFallbackPages: ['Penguin'],
+                speciesSearchTerms: ['Southern Ocean emperor penguin', 'emperor penguin Antarctica'],
                 surfaceArea: '20,33 milyon km²',
                 avgDepth: '3.270 m',
                 maxDepth: 'South Sandwich Çukuru, 7.432 m',
@@ -6497,6 +6914,51 @@
             animalImg.src = imageUrl;
         }
 
+        async function renderOceanAnimal(ocean) {
+            const renderToken = ++currentAnimalRenderToken;
+            const profile = getOceanAnimalProfile(ocean);
+            const animalImg = document.getElementById('animalImg');
+            const animalEmoji = document.getElementById('animalEmoji');
+            const animalName = document.getElementById('animalNameValue');
+            const animalStat = document.getElementById('animalStatValue');
+
+            if (!animalImg || !animalEmoji || !animalName || !animalStat) return;
+
+            if (!profile) {
+                animalImg.style.display = 'none';
+                animalImg.removeAttribute('src');
+                animalEmoji.style.display = 'flex';
+                animalEmoji.textContent = (ocean && ocean.speciesEmoji) || '🐾';
+                animalName.textContent = (ocean && ocean.species) || 'Canlı bilgisi yok';
+                animalStat.textContent = (ocean && ocean.species) || 'Bu okyanus için canlı bilgisi eklenmedi.';
+                return;
+            }
+
+            animalName.textContent = profile.name;
+            animalStat.textContent = profile.name;
+            animalEmoji.textContent = profile.emoji || '🐾';
+            animalEmoji.style.display = 'flex';
+            animalImg.style.display = 'none';
+            animalImg.alt = `${profile.name} görseli`;
+            animalImg.removeAttribute('src');
+
+            const imageUrl = await resolveAnimalImage(profile);
+            if (renderToken !== currentAnimalRenderToken) return;
+            if (!imageUrl) return;
+
+            animalImg.onload = function () {
+                if (renderToken !== currentAnimalRenderToken) return;
+                animalImg.style.display = 'block';
+                animalEmoji.style.display = 'none';
+            };
+            animalImg.onerror = function () {
+                if (renderToken !== currentAnimalRenderToken) return;
+                animalImg.style.display = 'none';
+                animalEmoji.style.display = 'flex';
+            };
+            animalImg.src = imageUrl;
+        }
+
         const wikiSummaryCache = new Map();
 
         async function fetchWikipediaSummary(page, fallbackName) {
@@ -6632,14 +7094,14 @@
         function setSearchStatus(message, isError) {
             const el = document.getElementById('searchStatus');
             if (!el) return;
-            el.textContent = message || '';
+            el.textContent = fixMojibake(message || '');
             el.classList.toggle('error', !!isError);
         }
 
         function syncSearchInput(props) {
             const input = document.getElementById('countrySearchInput');
             if (!input || !props) return;
-            input.value = props.TR_NAME || props.NAME || props.ADMIN || '';
+            input.value = fixMojibake(props.TR_NAME || props.NAME || props.ADMIN || '');
         }
 
         function collectCoordinatePairs(coords, pairs = []) {
@@ -7241,7 +7703,7 @@
                 flagImg.removeAttribute('src');
             }
             if (flagEmoji) {
-                flagEmoji.textContent = ocean.icon || '🌊';
+                flagEmoji.textContent = ocean.icon || 'ğŸŒŠ';
                 flagEmoji.style.display = 'flex';
             }
             if (animalImg) {
@@ -7253,10 +7715,11 @@
                 animalEmoji.style.display = 'flex';
             }
 
-            document.getElementById('animalNameValue').innerText = ocean.species;
+            renderOceanAnimal(ocean);
             document.getElementById('cultureDesc').innerText = ocean.description;
             renderOceanFeatures(ocean);
             panel.classList.add('visible');
+            fixMojibakeDomText(panel);
         }
 
         // ============================================================
@@ -7337,6 +7800,7 @@
 
             setAnthemCandidates(buildAnthemCandidates(isoCode), isoCode);
             panel.classList.add('visible');
+            fixMojibakeDomText(panel);
 
             try {
                 const searchTerm = apiCode || props.NAME || '';
@@ -7409,6 +7873,7 @@
                 console.warn('API hatası:', err.message);
                 fields.forEach(id => { document.getElementById(id).innerText = 'Veri Yok'; });
             }
+            fixMojibakeDomText(panel);
         }
 
         function closePanel() {
@@ -7421,6 +7886,38 @@
             const btn = document.getElementById('anthemBtn');
             if (btn) btn.innerHTML = '🎵 Milli Marşı Çal';
         }
+
+        [
+            countryProfiles,
+            countryFoodProfiles,
+            foodProfileOverrides,
+            regionalFoodProfiles,
+            culturalZones,
+            defaultCulture,
+            engToTr,
+            isoNameOverrides,
+            isoA3Overrides,
+            inferredCountryProfiles,
+            inferredRegionalProfiles,
+            countryClothingProfiles,
+            regionalClothingProfiles,
+            legacyCleanCountryFoodProfiles,
+            legacyCleanRegionalFoodProfiles,
+            legacyCleanCountryClothingProfiles,
+            legacyCleanRegionalClothingProfiles,
+            cleanCountryFoodProfiles,
+            cleanCountryClothingProfiles,
+            regionTranslations,
+            languageNameFallbacks,
+            languageCodeAliases,
+            symbolicAnimalProfiles,
+            defaultPanelStatLabels,
+            oceanProfiles,
+            flagColorOverrides
+        ].forEach(item => normalizeMojibakeInPlace(item));
+
+        document.title = fixMojibake(document.title);
+        fixMojibakeDomText(document.body);
 
         const searchInput = document.getElementById('countrySearchInput');
         if (searchInput) {
@@ -7472,3 +7969,4 @@
 </body>
 
 </html>
+
