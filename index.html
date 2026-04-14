@@ -32,6 +32,7 @@
             height: 100vh;
             cursor: grab;
             z-index: 1;
+            transition: width 0.38s ease, height 0.38s ease, top 0.38s ease, left 0.38s ease, transform 0.38s ease, border-radius 0.38s ease, box-shadow 0.38s ease, border 0.38s ease;
         }
 
         #globeViz:active {
@@ -44,6 +45,7 @@
             left: 40px;
             z-index: 10;
             pointer-events: none;
+            transition: left 0.32s ease, top 0.32s ease, opacity 0.32s ease;
         }
 
         .title-overlay h1 {
@@ -63,6 +65,369 @@
             font-size: 15px;
             max-width: 320px;
             line-height: 1.6;
+        }
+
+        #phoneModeToggle {
+            position: relative;
+            width: 100%;
+            min-height: 0;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            margin-top: 14px;
+            padding: 14px 16px;
+            border: 1px solid rgba(17, 24, 39, 0.08);
+            border-radius: 22px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(244, 247, 255, 0.94) 100%);
+            color: #172033;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 22px 52px rgba(15, 23, 42, 0.14);
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease, color 0.28s ease, border-color 0.28s ease;
+        }
+
+        #phoneModeToggle::before {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            border-radius: 20px;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(255, 166, 77, 0.22), transparent 42%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.08));
+            opacity: 0.95;
+        }
+
+        #phoneModeToggle>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        #phoneModeToggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 28px 60px rgba(15, 23, 42, 0.18);
+        }
+
+        #phoneModeToggle.active {
+            background:
+                linear-gradient(180deg, rgba(20, 31, 50, 0.98) 0%, rgba(37, 52, 84, 0.96) 100%);
+            color: #f8fbff;
+            border-color: rgba(255, 165, 98, 0.32);
+            box-shadow: 0 30px 72px rgba(17, 24, 39, 0.34);
+        }
+
+        #phoneModeToggle.active::before {
+            background:
+                radial-gradient(circle at 50% 12%, rgba(255, 156, 79, 0.28), transparent 40%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+        }
+
+        .phone-toggle-device {
+            position: relative;
+            width: 30px;
+            height: 52px;
+            border-radius: 11px;
+            background: linear-gradient(180deg, #101725 0%, #2d3b54 100%);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 10px 18px rgba(17, 24, 39, 0.18);
+        }
+
+        .phone-toggle-device::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            width: 12px;
+            height: 3px;
+            transform: translateX(-50%);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.34);
+        }
+
+        .phone-toggle-device::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            width: 22px;
+            height: 32px;
+            transform: translateX(-50%);
+            border-radius: 7px;
+            background:
+                linear-gradient(180deg, rgba(101, 181, 255, 0.82), rgba(255, 145, 77, 0.86));
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+        }
+
+        .phone-toggle-text {
+            writing-mode: initial;
+            text-orientation: initial;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.45px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .phone-toggle-state {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 62px;
+            min-height: 34px;
+            margin-left: auto;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(23, 32, 51, 0.06);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.45px;
+            text-transform: uppercase;
+        }
+
+        #phoneModeToggle.active .phone-toggle-state {
+            background: rgba(255, 255, 255, 0.10);
+        }
+
+        #phoneFrameDecor {
+            display: none;
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            width: min(412px, calc(100vw - 12px));
+            height: min(842px, calc(100vh - 16px));
+            transform: translateX(-50%);
+            z-index: 3;
+            pointer-events: none;
+            border-radius: 54px;
+            background:
+                linear-gradient(145deg, #0b1220 0%, #1e293d 28%, #2f3d56 52%, #111827 100%);
+            box-shadow:
+                0 42px 96px rgba(15, 23, 42, 0.34),
+                inset 0 1px 0 rgba(255, 255, 255, 0.10),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+        }
+
+        #phoneFrameDecor::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border-radius: 46px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            opacity: 0.85;
+        }
+
+        #phoneFrameDecor::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background:
+                radial-gradient(circle at 26% 8%, rgba(255, 255, 255, 0.16), transparent 28%),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05), transparent 16%, transparent 84%, rgba(255, 255, 255, 0.04));
+            opacity: 0.55;
+        }
+
+        .phone-frame-notch {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            width: 40%;
+            height: 34px;
+            transform: translateX(-50%);
+            border-radius: 0 0 20px 20px;
+            background: linear-gradient(180deg, #060b14 0%, #101827 100%);
+            box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .phone-frame-notch::before {
+            content: '';
+            position: absolute;
+            top: 11px;
+            left: 50%;
+            width: 54px;
+            height: 6px;
+            transform: translateX(-50%);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .phone-frame-notch::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 22px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(85, 183, 255, 0.44);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.03);
+        }
+
+        .phone-frame-side {
+            position: absolute;
+            width: 4px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.08));
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+        }
+
+        .phone-frame-side.left.top {
+            top: 140px;
+            left: -2px;
+            height: 64px;
+        }
+
+        .phone-frame-side.left.bottom {
+            top: 224px;
+            left: -2px;
+            height: 92px;
+        }
+
+        .phone-frame-side.right {
+            top: 192px;
+            right: -2px;
+            height: 108px;
+        }
+
+        .phone-frame-home {
+            position: absolute;
+            left: 50%;
+            bottom: 16px;
+            width: 118px;
+            height: 5px;
+            transform: translateX(-50%);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.34);
+        }
+
+        body.phone-mode {
+            background:
+                radial-gradient(circle at 18% 16%, rgba(255, 163, 92, 0.18), transparent 28%),
+                radial-gradient(circle at 82% 14%, rgba(98, 163, 255, 0.12), transparent 24%),
+                linear-gradient(180deg, #eef3fb 0%, #f7f9fd 44%, #f4f6fb 100%);
+        }
+
+        body.phone-mode #phoneFrameDecor {
+            display: block;
+        }
+
+        body.phone-mode #globeViz {
+            top: 34px;
+            left: 50%;
+            width: min(382px, calc(100vw - 42px));
+            height: min(806px, calc(100vh - 52px));
+            transform: translateX(-50%);
+            border: none;
+            border-radius: 36px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+            box-shadow:
+                0 18px 44px rgba(15, 23, 42, 0.12),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        body.phone-mode .title-overlay {
+            top: 34px;
+            left: max(32px, calc(50% - 432px));
+            max-width: 260px;
+            padding: 18px 20px;
+            border-radius: 26px;
+            background: rgba(255, 255, 255, 0.76);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(17, 24, 39, 0.06);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
+        }
+
+        body.phone-mode .title-overlay p {
+            max-width: none;
+            margin-top: 10px;
+        }
+
+        body.phone-mode #controlPanel {
+            top: 30px;
+            right: max(24px, calc(50% + 258px));
+            width: min(320px, calc(100vw - 48px));
+            max-height: calc(100vh - 60px);
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        body.phone-mode .control-card {
+            background: rgba(255, 255, 255, 0.82);
+            border-color: rgba(17, 24, 39, 0.06);
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.10);
+        }
+
+        body.phone-mode #infoPanel {
+            top: 34px;
+            left: 50%;
+            right: auto;
+            width: min(382px, calc(100vw - 42px));
+            min-width: 0;
+            max-width: none;
+            max-height: calc(100vh - 52px);
+            padding: 34px 24px 28px;
+            border-radius: 36px;
+            transform: translate(-50%, 20px);
+            box-shadow: 0 24px 54px rgba(15, 23, 42, 0.18);
+        }
+
+        body.phone-mode #infoPanel.visible {
+            transform: translate(-50%, 0);
+        }
+
+        body.phone-mode .panel-flag-header {
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        body.phone-mode .panel-visual-stack {
+            width: 100%;
+            gap: 16px;
+        }
+
+        body.phone-mode .visual-card {
+            width: calc(50% - 8px);
+        }
+
+        body.phone-mode #flagImg,
+        body.phone-mode #animalImg {
+            width: 100%;
+            height: 138px;
+        }
+
+        body.phone-mode #animalImg {
+            height: 168px;
+        }
+
+        body.phone-mode #flagEmoji,
+        body.phone-mode #animalEmoji {
+            min-height: 138px;
+            font-size: 74px;
+        }
+
+        body.phone-mode #animalEmoji {
+            min-height: 168px;
+            font-size: 88px;
+        }
+
+        body.phone-mode .panel-header {
+            font-size: 28px;
+        }
+
+        body.phone-mode .stats-grid,
+        body.phone-mode .feature-grid,
+        body.phone-mode .food-grid,
+        body.phone-mode .clothing-grid {
+            grid-template-columns: 1fr;
+        }
+
+        body.phone-mode .stat-row.full-width {
+            grid-column: auto;
         }
 
         #controlPanel {
@@ -786,6 +1151,15 @@
         }
 
         @media (max-width: 1024px) {
+            .title-overlay {
+                left: 28px;
+            }
+
+            #phoneModeToggle {
+                width: 100%;
+                min-height: 0;
+            }
+
             #controlPanel {
                 right: 20px;
                 width: 340px;
@@ -827,6 +1201,26 @@
                 min-height: 158px;
                 font-size: 104px;
             }
+
+            body.phone-mode .title-overlay {
+                left: 24px;
+                max-width: calc(100vw - 132px);
+            }
+
+            body.phone-mode #phoneFrameDecor {
+                width: min(404px, calc(100vw - 16px));
+                height: min(828px, calc(100vh - 18px));
+            }
+
+            body.phone-mode #controlPanel {
+                top: auto;
+                right: auto;
+                bottom: 24px;
+                left: 50%;
+                width: min(390px, calc(100vw - 48px));
+                max-height: 30vh;
+                transform: translateX(-50%);
+            }
         }
 
         @media (max-width: 768px) {
@@ -834,6 +1228,12 @@
                 top: 20px;
                 left: 20px;
                 right: 20px;
+            }
+
+            #phoneModeToggle {
+                gap: 10px;
+                padding: 14px 14px;
+                border-radius: 18px;
             }
 
             #controlPanel {
@@ -913,6 +1313,48 @@
             .clothing-grid {
                 grid-template-columns: 1fr;
             }
+
+            body.phone-mode #globeViz {
+                width: calc(100vw - 36px);
+                height: calc(100vh - 44px);
+                top: 22px;
+                border-radius: 32px;
+            }
+
+            body.phone-mode #phoneFrameDecor {
+                top: 10px;
+                width: calc(100vw - 12px);
+                height: calc(100vh - 12px);
+                border-radius: 42px;
+            }
+
+            body.phone-mode .title-overlay {
+                top: 20px;
+                left: 20px;
+                right: 20px;
+                max-width: calc(100vw - 40px);
+                padding: 14px 16px;
+                border-radius: 22px;
+            }
+
+            body.phone-mode #controlPanel {
+                bottom: 12px;
+                width: calc(100vw - 24px);
+                max-height: 28vh;
+            }
+
+            body.phone-mode #infoPanel {
+                top: 12px;
+                bottom: 12px;
+                width: calc(100vw - 24px);
+                max-height: calc(100vh - 24px);
+                padding: 24px 18px 22px;
+                border-radius: 30px;
+            }
+
+            body.phone-mode .panel-header {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -929,6 +1371,13 @@
             görmek için haritayı döndürün ve detaylar için ülkelere tıklayın.</p>
     </div>
     <div id="globeViz"></div>
+    <div id="phoneFrameDecor" aria-hidden="true">
+        <span class="phone-frame-notch"></span>
+        <span class="phone-frame-side left top"></span>
+        <span class="phone-frame-side left bottom"></span>
+        <span class="phone-frame-side right"></span>
+        <span class="phone-frame-home"></span>
+    </div>
     <div id="controlPanel">
         <div class="control-card">
             <h2 class="control-title">Ülke Arama</h2>
@@ -937,6 +1386,11 @@
                 <button id="countrySearchBtn" type="button" onclick="searchCountry()">Yakınlaş</button>
             </div>
             <div id="searchStatus" class="search-status">Tam ülke adını yazıp Enter'a basın ya da butona tıklayın.</div>
+            <button id="phoneModeToggle" type="button" aria-pressed="false" onclick="togglePhoneMode()">
+                <span class="phone-toggle-device" aria-hidden="true"></span>
+                <span class="phone-toggle-text">Telefon Modu</span>
+                <span class="phone-toggle-state">Kapalı</span>
+            </button>
         </div>
         <div class="control-card">
             <h2 class="control-title">Renk Rehberi</h2>
@@ -6996,10 +7450,11 @@
 
             document.getElementById('loader').style.display = 'none';
             const globeContainer = document.getElementById('globeViz');
+            const initialViewport = getGlobeViewportSize();
 
             world = Globe()(globeContainer)
-                .width(window.innerWidth)
-                .height(window.innerHeight)
+                .width(initialViewport.width)
+                .height(initialViewport.height)
                 .backgroundColor('#ffffff')
                 .globeImageUrl(globeOceanTextureUrl)
                 .showAtmosphere(true)
@@ -8608,6 +9063,50 @@
             if (btn) btn.innerHTML = '🎵 Milli Marşı Çal';
         }
 
+        function getGlobeViewportSize() {
+            const globeContainer = document.getElementById('globeViz');
+            if (!globeContainer) {
+                return { width: window.innerWidth, height: window.innerHeight };
+            }
+
+            const rect = globeContainer.getBoundingClientRect();
+            return {
+                width: Math.max(320, Math.round(rect.width || window.innerWidth)),
+                height: Math.max(480, Math.round(rect.height || window.innerHeight))
+            };
+        }
+
+        function resizeGlobeToViewport() {
+            if (!world) return;
+            const viewport = getGlobeViewportSize();
+            world.width(viewport.width);
+            world.height(viewport.height);
+        }
+
+        function updatePhoneModeButton(enabled) {
+            const toggle = document.getElementById('phoneModeToggle');
+            if (!toggle) return;
+
+            toggle.classList.toggle('active', enabled);
+            toggle.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+
+            const state = toggle.querySelector('.phone-toggle-state');
+            if (state) state.textContent = enabled ? 'Açık' : 'Kapalı';
+        }
+
+        function togglePhoneMode(forceState) {
+            const enable = typeof forceState === 'boolean'
+                ? forceState
+                : !document.body.classList.contains('phone-mode');
+
+            document.body.classList.toggle('phone-mode', enable);
+            updatePhoneModeButton(enable);
+
+            requestAnimationFrame(resizeGlobeToViewport);
+            setTimeout(resizeGlobeToViewport, 220);
+            setTimeout(resizeGlobeToViewport, 420);
+        }
+
         [
             countryProfiles,
             countryFoodProfiles,
@@ -8639,6 +9138,7 @@
 
         document.title = fixMojibake(document.title);
         fixMojibakeDomText(document.body);
+        updatePhoneModeButton(document.body.classList.contains('phone-mode'));
 
         const searchInput = document.getElementById('countrySearchInput');
         if (searchInput) {
@@ -8684,7 +9184,7 @@
         updateCultureNavigator();
 
         window.addEventListener('resize', () => {
-            if (world) { world.width(window.innerWidth); world.height(window.innerHeight); }
+            resizeGlobeToViewport();
         });
     </script>
 </body>
