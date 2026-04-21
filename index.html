@@ -67,6 +67,253 @@
             line-height: 1.6;
         }
 
+        .title-signature {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #FF512F 0%, #F09819 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .weather-widget {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: min(340px, calc(100vw - 80px));
+            margin-top: 18px;
+            padding: 14px 16px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 245, 219, 0.92) 100%);
+            border: 1px solid rgba(240, 152, 25, 0.2);
+            box-shadow: 0 18px 34px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+
+        .weather-widget::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(140deg, rgba(255, 255, 255, 0.42), transparent 48%);
+            pointer-events: none;
+        }
+
+        .weather-visual {
+            position: relative;
+            width: 82px;
+            height: 64px;
+            flex-shrink: 0;
+        }
+
+        .weather-orb {
+            position: absolute;
+            top: 4px;
+            left: 8px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff8bc 0%, #ffd966 45%, #ff9f1c 100%);
+            box-shadow: 0 0 0 10px rgba(255, 204, 64, 0.18), 0 0 34px rgba(255, 186, 73, 0.4);
+            transition: transform 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+        }
+
+        .weather-orb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .weather-cloud {
+            position: absolute;
+            right: 2px;
+            bottom: 10px;
+            width: 44px;
+            height: 18px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: -16px -6px 0 3px rgba(255, 255, 255, 0.9), -3px -12px 0 4px rgba(255, 255, 255, 0.98), 8px -8px 0 1px rgba(255, 255, 255, 0.88);
+            opacity: 0.26;
+            transform: translateX(8px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .weather-cloud.cloud-back {
+            right: 18px;
+            bottom: 22px;
+            width: 34px;
+            opacity: 0.14;
+            transform: scale(0.8);
+        }
+
+        .weather-particles {
+            position: absolute;
+            left: 22px;
+            right: 0;
+            bottom: -2px;
+            height: 28px;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .weather-copy {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .weather-label {
+            color: #7c654d;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .weather-time {
+            color: #1c1c24;
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .weather-summary {
+            color: #303542;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .weather-detail {
+            color: #5d6576;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .weather-widget.is-night {
+            background: linear-gradient(135deg, rgba(15, 28, 54, 0.92) 0%, rgba(44, 70, 115, 0.88) 100%);
+            border-color: rgba(151, 184, 255, 0.28);
+            box-shadow: 0 18px 34px rgba(4, 12, 24, 0.24);
+        }
+
+        .weather-widget.is-night .weather-label,
+        .weather-widget.is-night .weather-summary {
+            color: #f1f5ff;
+        }
+
+        .weather-widget.is-night .weather-time {
+            color: #ffffff;
+        }
+
+        .weather-widget.is-night .weather-detail {
+            color: #d4def2;
+        }
+
+        .weather-widget.is-night .weather-orb {
+            background: radial-gradient(circle at 30% 30%, #f8fbff 0%, #d9e4ff 56%, #9bb4ff 100%);
+            box-shadow: 0 0 0 10px rgba(172, 191, 255, 0.12), 0 0 28px rgba(144, 174, 255, 0.34);
+        }
+
+        .weather-widget.is-night .weather-orb::after {
+            opacity: 1;
+            background: radial-gradient(circle at 35% 35%, rgba(61, 87, 130, 0.16) 0 14%, transparent 16%), radial-gradient(circle at 66% 42%, rgba(61, 87, 130, 0.18) 0 10%, transparent 12%), radial-gradient(circle at 46% 68%, rgba(61, 87, 130, 0.14) 0 12%, transparent 14%);
+        }
+
+        .weather-widget.weather-clear .weather-cloud {
+            opacity: 0.12;
+        }
+
+        .weather-widget.weather-clear .weather-cloud.cloud-back {
+            opacity: 0.08;
+        }
+
+        .weather-widget.weather-partly-cloudy .weather-cloud,
+        .weather-widget.weather-cloudy .weather-cloud,
+        .weather-widget.weather-rain .weather-cloud,
+        .weather-widget.weather-snow .weather-cloud,
+        .weather-widget.weather-fog .weather-cloud,
+        .weather-widget.weather-storm .weather-cloud {
+            opacity: 0.95;
+            transform: translateX(0);
+        }
+
+        .weather-widget.weather-cloudy .weather-orb,
+        .weather-widget.weather-fog .weather-orb {
+            transform: translate(-4px, 6px) scale(0.92);
+            opacity: 0.85;
+        }
+
+        .weather-widget.weather-cloudy .weather-cloud.cloud-back,
+        .weather-widget.weather-fog .weather-cloud.cloud-back,
+        .weather-widget.weather-rain .weather-cloud.cloud-back,
+        .weather-widget.weather-snow .weather-cloud.cloud-back,
+        .weather-widget.weather-storm .weather-cloud.cloud-back {
+            opacity: 0.54;
+        }
+
+        .weather-widget.weather-rain .weather-particles,
+        .weather-widget.weather-storm .weather-particles {
+            opacity: 1;
+            background: repeating-linear-gradient(90deg, transparent 0 10px, rgba(113, 166, 255, 0.98) 10px 12px);
+            transform: skewX(-18deg);
+            animation: weather-drizzle 1.05s linear infinite;
+        }
+
+        .weather-widget.weather-snow .weather-particles {
+            opacity: 1;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.96) 0 2px, transparent 2.4px), radial-gradient(circle, rgba(255, 255, 255, 0.92) 0 1.8px, transparent 2.2px);
+            background-size: 18px 18px, 24px 24px;
+            background-position: 0 0, 8px 6px;
+            animation: weather-snowfall 6s linear infinite;
+        }
+
+        .weather-widget.weather-fog .weather-particles {
+            opacity: 0.65;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.68) 34%, rgba(255, 255, 255, 0) 68%), linear-gradient(180deg, rgba(255, 255, 255, 0) 14%, rgba(255, 255, 255, 0.58) 44%, rgba(255, 255, 255, 0) 78%);
+            background-size: 100% 12px;
+            background-repeat: repeat-y;
+        }
+
+        .weather-widget.weather-storm .weather-visual::after {
+            content: '⚡';
+            position: absolute;
+            right: 6px;
+            top: 6px;
+            font-size: 24px;
+            line-height: 1;
+            filter: drop-shadow(0 0 10px rgba(255, 214, 79, 0.38));
+        }
+
+        @keyframes weather-drizzle {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 0 18px;
+            }
+        }
+
+        @keyframes weather-snowfall {
+            from {
+                background-position: 0 0, 8px 6px;
+            }
+
+            to {
+                background-position: 0 28px, 8px 36px;
+            }
+        }
+
 
         #controlPanel {
             position: absolute;
@@ -245,6 +492,456 @@
         .culture-nav-btn:disabled {
             opacity: 0.45;
             cursor: not-allowed;
+        }
+
+        .country-quiz {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .quiz-launch-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 16px;
+            border-radius: 18px;
+            border: 1px solid rgba(240, 152, 25, 0.18);
+            background: linear-gradient(135deg, rgba(255, 247, 236, 0.98), rgba(255, 255, 255, 0.98));
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94);
+        }
+
+        .quiz-launch-copy {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .quiz-title {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 800;
+            color: #1a1a24;
+        }
+
+        .quiz-note {
+            margin: 4px 0 0 0;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #5d6474;
+        }
+
+        .quiz-launch-btn,
+        .quiz-refresh {
+            flex-shrink: 0;
+            padding: 11px 16px;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        .quiz-launch-btn {
+            background: linear-gradient(135deg, #FF512F 0%, #F09819 100%);
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(240, 152, 25, 0.24);
+        }
+
+        .quiz-refresh {
+            border: 1px solid rgba(240, 152, 25, 0.26);
+            background: #fff4e7;
+            color: #9a550e;
+        }
+
+        .quiz-launch-btn:hover,
+        .quiz-refresh:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(240, 152, 25, 0.18);
+        }
+
+        #quizPanel {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 388px;
+            transform: translateX(-24px);
+            min-width: 700px;
+            max-width: 1320px;
+            min-height: 420px;
+            max-height: calc(100vh - 24px);
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(18px) saturate(118%);
+            -webkit-backdrop-filter: blur(18px) saturate(118%);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 34px;
+            padding: 44px 42px 40px;
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.12);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 22;
+            isolation: isolate;
+        }
+
+        #quizPanel.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        #quizPanel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background:
+                radial-gradient(circle at top left, rgba(255, 204, 128, 0.22), transparent 34%),
+                radial-gradient(circle at bottom right, rgba(255, 81, 47, 0.12), transparent 32%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.96));
+            opacity: 1;
+        }
+
+        #quizPanel>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .quiz-panel-shell {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+            gap: 18px;
+        }
+
+        .quiz-panel-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            padding-right: 34px;
+        }
+
+        .quiz-panel-kicker {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #d66d1b;
+        }
+
+        .quiz-panel-title {
+            margin: 8px 0 0 0;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: #1a1a24;
+        }
+
+        .quiz-panel-note {
+            max-width: 520px;
+        }
+
+        .quiz-progress-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        .quiz-progress-text,
+        .quiz-score-text {
+            font-size: 13px;
+            font-weight: 700;
+            color: #313646;
+        }
+
+        .quiz-progress-track {
+            position: relative;
+            flex: 1;
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .quiz-progress-fill {
+            display: block;
+            width: 0%;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(135deg, #FF512F 0%, #F09819 100%);
+            transition: width 0.32s ease;
+        }
+
+        .quiz-list {
+            display: flex;
+            flex: 1;
+            align-items: stretch;
+        }
+
+        .quiz-card {
+            width: 100%;
+            padding: 28px;
+            border-radius: 28px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            background: linear-gradient(180deg, rgba(255, 250, 244, 0.98), rgba(255, 255, 255, 0.98));
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94);
+        }
+
+        .quiz-card.quiz-card-question {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100%;
+        }
+
+        .quiz-card.quiz-card-result {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 14px;
+            text-align: center;
+        }
+
+        .quiz-step-label {
+            margin: 0 0 12px 0;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #d66d1b;
+        }
+
+        .quiz-question {
+            margin: 0 0 18px 0;
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.35;
+            color: #232533;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 14px 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            background: #fff;
+            color: #263040;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+            transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+
+        .quiz-option:hover:not(:disabled) {
+            transform: translateY(-1px);
+            border-color: rgba(240, 152, 25, 0.42);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        .quiz-option:disabled {
+            cursor: default;
+            opacity: 1;
+        }
+
+        .quiz-option.correct {
+            border-color: rgba(46, 139, 87, 0.48);
+            background: #eaf8f0;
+            color: #17633f;
+        }
+
+        .quiz-option.wrong {
+            border-color: rgba(195, 58, 58, 0.42);
+            background: #fdeeee;
+            color: #8b2e2e;
+        }
+
+        .quiz-feedback {
+            min-height: 44px;
+            margin-top: 14px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #5b6071;
+        }
+
+        .quiz-summary {
+            display: none;
+            margin-top: auto;
+            padding: 14px 16px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255, 241, 220, 0.92), rgba(255, 250, 240, 0.98));
+            color: #704310;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.6;
+        }
+
+        .quiz-summary.perfect {
+            background: linear-gradient(135deg, rgba(255, 232, 158, 0.98), rgba(255, 248, 222, 0.98));
+            color: #7a4300;
+            box-shadow: 0 16px 32px rgba(240, 152, 25, 0.18);
+        }
+
+        .quiz-result-title {
+            margin: 0;
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: #1d2029;
+        }
+
+        .quiz-result-text {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #4d5568;
+        }
+
+        .quiz-result-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 6px;
+        }
+
+        .quiz-result-btn {
+            min-width: 160px;
+            justify-content: center;
+        }
+
+        .quiz-confetti {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .quiz-confetti-piece {
+            position: absolute;
+            top: -16%;
+            width: var(--piece-width, 10px);
+            height: var(--piece-height, 26px);
+            border-radius: 999px;
+            background: var(--piece-color, #ff512f);
+            opacity: 0;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.34);
+            animation: quiz-confetti-fall var(--fall-duration, 2200ms) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: var(--fall-delay, 0ms);
+        }
+
+        @keyframes quiz-confetti-fall {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 0, 0) rotate(0deg);
+            }
+
+            8% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate3d(var(--drift-x, 0px), 108vh, 0) rotate(var(--piece-rotate, 540deg));
+            }
+        }
+
+        .quiz-fireworks {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        .quiz-firework {
+            position: absolute;
+            left: var(--burst-left, 50%);
+            top: var(--burst-top, 50%);
+            width: 22px;
+            height: 22px;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            animation: quiz-firework-bloom var(--burst-duration, 1400ms) ease-out forwards;
+            animation-delay: var(--burst-delay, 0ms);
+        }
+
+        .quiz-firework-core {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.98) 0%, var(--burst-color, #ffd166) 45%, rgba(255, 255, 255, 0) 72%);
+            box-shadow: 0 0 26px var(--burst-glow, rgba(255, 209, 102, 0.55));
+        }
+
+        .quiz-firework-ray {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 6px;
+            height: 44px;
+            margin-left: -3px;
+            margin-top: -22px;
+            transform: rotate(var(--ray-rotate, 0deg)) scaleY(0.12);
+            transform-origin: center center;
+            opacity: 0;
+            animation: quiz-firework-ray-bloom var(--ray-duration, 1400ms) ease-out forwards;
+            animation-delay: var(--ray-delay, 0ms);
+        }
+
+        .quiz-firework-ray::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--burst-color, #ffd166) 28%, rgba(255, 255, 255, 0.96) 50%, var(--burst-color, #ffd166) 72%, rgba(255, 255, 255, 0) 100%);
+            box-shadow: 0 0 16px var(--burst-glow, rgba(255, 209, 102, 0.46));
+        }
+
+        @keyframes quiz-firework-bloom {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.18);
+            }
+
+            12% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1.18);
+            }
+        }
+
+        @keyframes quiz-firework-ray-bloom {
+            0% {
+                opacity: 0;
+                transform: rotate(var(--ray-rotate, 0deg)) scaleY(0.1);
+            }
+
+            18% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: rotate(var(--ray-rotate, 0deg)) scaleY(1.22);
+            }
         }
 
         #infoPanel {
@@ -665,6 +1362,90 @@
             box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
         }
 
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 16px;
+        }
+
+        .architecture-card {
+            display: block;
+            padding: 22px 24px;
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(245, 247, 251, 0.98));
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        .architecture-body {
+            max-width: 100%;
+        }
+
+        .architecture-media {
+            position: relative;
+            min-height: 240px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255, 239, 214, 0.98), rgba(255, 250, 243, 0.98));
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .architecture-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            background: linear-gradient(180deg, #ffffff, #eef3f9);
+        }
+
+        .architecture-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: #b36b1e;
+            font-size: 92px;
+            line-height: 1;
+        }
+
+        .architecture-kicker {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #c46b17;
+        }
+
+        .architecture-title {
+            margin: 0 0 12px 0;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #1a1a24;
+        }
+
+        .architecture-text {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.75;
+            color: #4d5568;
+        }
+
+        .architecture-source {
+            margin-top: 14px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #7b6470;
+        }
+
         .clothing-img {
             width: 100%;
             height: 168px;
@@ -794,6 +1575,17 @@
                 width: 340px;
             }
 
+            #quizPanel {
+                top: 16px;
+                left: 16px;
+                right: 364px;
+                min-width: 0;
+                width: auto;
+                max-width: none;
+                max-height: calc(100vh - 32px);
+                padding: 36px 32px 32px;
+            }
+
             #infoPanel {
                 top: 16px;
                 left: 16px;
@@ -857,6 +1649,42 @@
                 margin-top: 8px;
                 max-width: 260px;
                 font-size: 12px;
+            }
+
+            .title-signature {
+                margin-top: 8px;
+                font-size: 12px;
+                letter-spacing: 0.14em;
+            }
+
+            .weather-widget {
+                width: min(290px, calc(100vw - 32px));
+                margin-top: 14px;
+                padding: 12px 14px;
+                gap: 12px;
+                border-radius: 18px;
+            }
+
+            .weather-visual {
+                width: 72px;
+                height: 56px;
+            }
+
+            .weather-orb {
+                width: 36px;
+                height: 36px;
+            }
+
+            .weather-time {
+                font-size: 24px;
+            }
+
+            .weather-summary {
+                font-size: 12px;
+            }
+
+            .weather-detail {
+                font-size: 11px;
             }
 
             #controlPanel {
@@ -929,6 +1757,50 @@
                 padding: 9px 10px;
                 font-size: 12px;
                 border-radius: 10px;
+            }
+
+            .quiz-launch-card {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .quiz-panel-head {
+                flex-direction: column;
+                padding-right: 0;
+            }
+
+            .quiz-panel-title {
+                font-size: 22px;
+            }
+
+            .quiz-question {
+                font-size: 18px;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-progress-row {
+                flex-wrap: wrap;
+            }
+
+            #quizPanel {
+                top: auto;
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                min-width: 0;
+                width: auto;
+                min-height: 0;
+                max-height: min(62dvh, 560px);
+                padding: 18px 14px 16px;
+                border-radius: 22px;
+                transform: translateY(20px);
+            }
+
+            #quizPanel.visible {
+                transform: translateY(0);
             }
 
             #infoPanel {
@@ -1045,9 +1917,18 @@
 
             .feature-card,
             .food-card,
-            .clothing-card {
+            .clothing-card,
+            .architecture-card {
                 padding: 12px;
                 border-radius: 14px;
+            }
+
+            .architecture-title {
+                font-size: 20px;
+            }
+
+            .architecture-text {
+                font-size: 13px;
             }
         }
 
@@ -1067,6 +1948,22 @@
                 font-size: 11px;
             }
 
+            .title-signature {
+                max-width: 220px;
+                font-size: 11px;
+                line-height: 1.5;
+            }
+
+            .weather-widget {
+                width: min(250px, calc(100vw - 24px));
+                padding: 11px 12px;
+                gap: 10px;
+            }
+
+            .weather-time {
+                font-size: 22px;
+            }
+
             #controlPanel {
                 top: 96px;
                 left: 10px;
@@ -1076,6 +1973,34 @@
 
             .control-card {
                 padding: 12px;
+            }
+
+            #quizPanel {
+                left: 8px;
+                right: 8px;
+                bottom: 8px;
+                max-height: min(66dvh, 520px);
+                padding: 16px 12px 14px;
+                border-radius: 18px;
+            }
+
+            .quiz-card {
+                padding: 16px;
+                border-radius: 18px;
+            }
+
+            .quiz-question {
+                font-size: 17px;
+            }
+
+            .quiz-option {
+                padding: 11px 12px;
+                font-size: 12px;
+                border-radius: 12px;
+            }
+
+            .quiz-result-title {
+                font-size: 26px;
             }
 
             #infoPanel {
@@ -1108,6 +2033,7 @@
         <h1>Kültürel Mozaik</h1>
         <p>Dünyanın kültürel bölgelerini keşfedin. Ülkelerin benzer kültürel özelliklerine göre nasıl gruplandığını
             görmek için haritayı döndürün ve detaylar için ülkelere tıklayın.</p>
+        <div class="title-signature">Designed by Umut Şahin and Ramazan Çanta</div>
     </div>
     <div id="globeViz"></div>
     <div id="controlPanel">
@@ -1129,7 +2055,40 @@
                     <button id="cultureNextBtn" type="button" class="culture-nav-btn">İleri →</button>
                 </div>
             </div>
+            <div id="countryQuiz" class="country-quiz">
+                <div class="quiz-launch-card">
+                    <div class="quiz-launch-copy">
+                        <h3 class="quiz-title">Mini Ülke Testi</h3>
+                        <p class="quiz-note">Test butonuna bas, 5 soru tek tek açılsın. Aşağı kaydırma yok.</p>
+                    </div>
+                    <button id="quizLaunchBtn" type="button" class="quiz-launch-btn">Test</button>
+                </div>
+            </div>
         </div>
+    </div>
+    <div id="quizPanel" aria-hidden="true">
+        <button class="close-btn" type="button" onclick="closeQuizPanel()">&times;</button>
+        <div class="quiz-panel-shell">
+            <div class="quiz-panel-head">
+                <div>
+                    <div class="quiz-panel-kicker">Mini Ülke Testi</div>
+                    <h2 class="quiz-panel-title">5 soru, tek tek ilerle</h2>
+                    <p class="quiz-note quiz-panel-note">Her sorudan sonra otomatik olarak bir sonraki soruya geçilir.</p>
+                </div>
+                <button id="quizRefreshBtn" type="button" class="quiz-refresh">Baştan Başla</button>
+            </div>
+            <div class="quiz-progress-row">
+                <div id="quizProgressText" class="quiz-progress-text">Soru 1 / 5</div>
+                <div id="quizScoreText" class="quiz-score-text">Doğru 0</div>
+            </div>
+            <div class="quiz-progress-track">
+                <span id="quizProgressFill" class="quiz-progress-fill"></span>
+            </div>
+            <div id="quizList" class="quiz-list"></div>
+            <div id="quizSummary" class="quiz-summary"></div>
+        </div>
+        <div id="quizConfetti" class="quiz-confetti" aria-hidden="true"></div>
+        <div id="quizFireworks" class="quiz-fireworks" aria-hidden="true"></div>
     </div>
     <div id="infoPanel">
         <button class="close-btn" onclick="closePanel()">&times;</button>
@@ -1163,6 +2122,8 @@
                     class="stat-value">-</span></div>
             <div class="stat-row"><span class="stat-label">Sembolik Hayvan</span><span id="animalStatValue"
                     class="stat-value">-</span></div>
+            <div class="stat-row"><span class="stat-label">Refah Dilimi</span><span id="prosperityValue"
+                    class="stat-value">-</span></div>
             <div class="stat-row"><span class="stat-label">Para Birimi</span><span id="currencyValue"
                     class="stat-value">-</span></div>
             <div class="stat-row"><span class="stat-label">Dil</span><span id="languageValue"
@@ -1177,8 +2138,6 @@
                     class="stat-value">-</span></div>
             <div class="stat-row"><span class="stat-label">K&#305;ta</span><span id="continentValue"
                     class="stat-value">-</span></div>
-            <div class="stat-row"><span class="stat-label">Saat Dilimi</span><span id="timezoneValue"
-                    class="stat-value">-</span></div>
             <div class="stat-row"><span class="stat-label">&#304;nternet Alan&#305;</span><span id="domainValue"
                     class="stat-value">-</span></div>
             <div class="stat-row"><span class="stat-label">Trafik Ak&#305;&#351;&#305;</span><span id="drivingSideValue"
@@ -1191,12 +2150,18 @@
                     class="stat-value">-</span></div>
             <div class="stat-row"><span class="stat-label">Uluslararas&#305; Durum</span><span id="statusValue"
                     class="stat-value">-</span></div>
+            <div class="stat-row full-width"><span class="stat-label">Öne Çıkan Mimari</span><span id="architectureValue"
+                    class="stat-value">-</span></div>
             <div class="stat-row full-width"><span class="stat-label">Kom&#351;u &#220;lkeler</span><span
                     id="bordersValue" class="stat-value">-</span></div>
         </div>
         <div id="cultureSection" class="detail-section">
             <h3 id="cultureSectionTitle" class="section-title">K&#252;lt&#252;rel &#214;zellikler</h3>
             <div id="cultureFeatures" class="feature-grid"></div>
+        </div>
+        <div id="architectureSection" class="detail-section">
+            <h3 id="architectureSectionTitle" class="section-title">Öne Çıkan Mimari</h3>
+            <div id="architectureGallery" class="architecture-grid"></div>
         </div>
         <div id="foodSection" class="detail-section">
             <h3 id="foodSectionTitle" class="section-title">Geleneksel Yemekler</h3>
@@ -2248,6 +3213,56 @@
             "Equatorial Guinea": "Ekvator Ginesi", "Angola": "Angola",
             "Nauru": "Nauru", "Palau": "Palau", "Samoa": "Samoa",
             "Saint Lucia": "Saint Lucia", "Liberia": "Liberya"
+        };
+
+        const countryIsoDisplayOverrides = {
+            BA: "Bosna Hersek",
+            CD: "Kongo Demokratik Cumhuriyeti",
+            CG: "Kongo",
+            CI: "Fildişi Sahili",
+            CV: "Yeşilburun",
+            CZ: "Çek Cumhuriyeti",
+            GB: "Birleşik Krallık",
+            KP: "Kuzey Kore",
+            KR: "Güney Kore",
+            MK: "Makedonya",
+            PS: "Filistin",
+            SZ: "Esvatini",
+            TL: "Doğu Timor",
+            TR: "Türkiye",
+            TW: "Tayvan",
+            US: "Amerika Birleşik Devletleri",
+            VA: "Vatikan"
+        };
+
+        const countryNameDisplayOverrides = {
+            "Bosnia and Herz.": "Bosna Hersek",
+            "Bosnia and Herzegovina": "Bosna Hersek",
+            "Cabo Verde": "Yeşilburun",
+            "Cape Verde": "Yeşilburun",
+            "Czech Rep.": "Çek Cumhuriyeti",
+            "Czech Republic": "Çek Cumhuriyeti",
+            "Czechia": "Çek Cumhuriyeti",
+            "Democratic Republic of the Congo": "Kongo Demokratik Cumhuriyeti",
+            "Dem. Rep. Congo": "Kongo Demokratik Cumhuriyeti",
+            "East Timor": "Doğu Timor",
+            "Eq. Guinea": "Ekvator Ginesi",
+            "Eswatini": "Esvatini",
+            "eSwatini": "Esvatini",
+            "Holy See": "Vatikan",
+            "North Korea": "Kuzey Kore",
+            "North Macedonia": "Makedonya",
+            "Republic of Korea": "Güney Kore",
+            "Republic of North Macedonia": "Makedonya",
+            "Republic of the Congo": "Kongo",
+            "Russian Federation": "Rusya",
+            "South Korea": "Güney Kore",
+            "State of Palestine": "Filistin",
+            "Syrian Arab Republic": "Suriye",
+            "Taiwan": "Tayvan",
+            "Timor-Leste": "Doğu Timor",
+            "United States": "Amerika Birleşik Devletleri",
+            "Vatican City": "Vatikan"
         };
 
         const isoNameOverrides = {
@@ -4333,6 +5348,44 @@
             ]
         };
 
+        Object.assign(cleanCountryFoodProfiles, {
+            angola: [
+                { name: "Muamba de Galinha", page: "Muamba_de_galinha", description: "Palmiye yağı, bamya ve sarımsakla pişirilen Angola'nın en bilinen tavuk yahnisi." },
+                { name: "Funje", page: "Funge", description: "Manyok veya mısır unundan yapılan, Angola sofralarında sık görülen yoğun kıvamlı temel yemek." },
+                { name: "Calulu", page: "Calulu", description: "Kurutulmuş balık, sebze ve baharatlarla hazırlanan geleneksel Angola yemeği." }
+            ],
+            paraguay: [
+                { name: "Sopa Paraguaya", page: "Sopa_paraguaya", description: "Mısır unu, peynir ve soğanla yapılan, Paraguay mutfağının en ikonik fırın yemeği." },
+                { name: "Chipa", page: "Chipa_(bread)", description: "Manyok nişastası ve peynirle hazırlanan, Paraguay'da günlük hayatın parçası olan geleneksel ekmek." },
+                { name: "Mbejú", page: "Mbeju", description: "Manyok unu ve peynirle tavada pişirilen, Paraguay'a özgü yassı hamur işi." }
+            ],
+            yemen: [
+                { name: "Saltah", page: "Saltah", description: "Etli yahni, hulbah ve baharatlı sosla tamamlanan, Yemen'in ulusal yemeği sayılan tabak." },
+                { name: "Mandi", page: "Mandi_(food)", description: "Baharatlı etin pirinçle birlikte geleneksel fırında pişirildiği meşhur Yemen yemeği." },
+                { name: "Bint al-Sahn", page: "Bint_al-sahn", description: "Bal ve tereyağı ile servis edilen, özellikle kutlamalarda öne çıkan Yemen tatlısı." }
+            ]
+        });
+
+        Object.assign(cleanCountryClothingProfiles, {
+            andorra: [
+                { name: "Andorran Folk Costume", page: "Culture_of_Andorra", description: "Andorra'nın dağ kültürünü yansıtan, koyu yün kumaşlar ve geleneksel yeleklerle tamamlanan tören giysisi." }
+            ],
+            angola: [
+                { name: "Samakaka Attire", page: "Culture_of_Angola", description: "Angola'nın ayırt edici samakaka desenli kumaşından dikilen canlı renkli geleneksel tören giysileri." },
+                { name: "Pano", page: "Culture_of_Angola", description: "Angolalı kadınların bel veya omuz çevresine sardığı, yerel desenlerle zenginleştirilen geleneksel kumaş giysi." }
+            ],
+            paraguay: [
+                { name: "Ao Po'i", page: "Ao_po'i", description: "Paraguay'ın ince pamuklu kumaşından üretilen, el nakışlı hafif geleneksel gömlek ve elbise türü." },
+                { name: "Ñandutí Dress", page: "Nandutí", description: "Paraguay'a özgü dantel işçiliğiyle süslenen, festivallerde kullanılan gösterişli geleneksel elbise." },
+                { name: "Poncho de 60 Listas", page: "Poncho", description: "Paraguay kimliğiyle özdeşleşen, ince şeritli desenleriyle bilinen geleneksel panço." }
+            ],
+            yemen: [
+                { name: "Jambiya Belt", page: "Jambiya", description: "Yemenli erkeklerin geleneksel kıyafetini tamamlayan, kavisli hançeri taşıyan geniş işlemeli kuşak." },
+                { name: "Ma'waz", page: "Culture_of_Yemen", description: "Yemen'de erkeklerin beline sardığı, desenli ve hafif kumaştan yapılan geleneksel alt giysi." },
+                { name: "Sana'ani Dress", page: "Culture_of_Yemen", description: "Özellikle kutlamalarda görülen, işlemeleriyle öne çıkan geleneksel Yemen kadın elbisesi." }
+            ]
+        });
+
         const regionTranslations = {
             "Africa": "Afrika", "Americas": "Amerika", "Asia": "Asya", "Europe": "Avrupa", "Oceania": "Okyanusya", "Antarctic": "Antarktika",
             "Northern Africa": "Kuzey Afrika", "Western Africa": "Batı Afrika", "Middle Africa": "Orta Afrika", "Eastern Africa": "Doğu Afrika", "Southern Africa": "Güney Afrika",
@@ -4362,6 +5415,7 @@
 
         const currencyDisplay = typeof Intl !== 'undefined' && Intl.DisplayNames ? new Intl.DisplayNames(['tr'], { type: 'currency' }) : null;
         const languageDisplay = typeof Intl !== 'undefined' && Intl.DisplayNames ? new Intl.DisplayNames(['tr'], { type: 'language' }) : null;
+        const countryDisplay = typeof Intl !== 'undefined' && Intl.DisplayNames ? new Intl.DisplayNames(['tr'], { type: 'region' }) : null;
 
         const symbolicAnimalProfiles = {
             "Afganistan": { name: "Kar leoparı", page: "Snow_leopard", emoji: "🐆" },
@@ -4573,6 +5627,62 @@
         };
 
         Object.assign(symbolicAnimalProfiles, {
+            "Almanya": {
+                name: "Kartal",
+                page: "Golden_eagle",
+                fallbackPages: ["Eagle"],
+                searchTerms: ["Germany golden eagle", "German eagle symbol"],
+                emoji: "🦅"
+            },
+            "Brezilya": {
+                name: "Jaguar",
+                page: "Jaguar",
+                fallbackPages: ["Panthera_onca"],
+                searchTerms: ["Brazil jaguar", "Brazil symbolic animal jaguar"],
+                emoji: "🐆"
+            },
+            "Danimarka": {
+                name: "Kuğu",
+                page: "Mute_swan",
+                fallbackPages: ["Swan"],
+                searchTerms: ["Denmark mute swan", "Danish swan symbol"],
+                emoji: "🦢"
+            },
+            "Hindistan": {
+                name: "Bengal kaplanı",
+                page: "Bengal_tiger",
+                fallbackPages: ["Tiger"],
+                searchTerms: ["India Bengal tiger", "India symbolic animal tiger"],
+                emoji: "🐅"
+            },
+            "Hollanda": {
+                name: "Aslan",
+                page: "Lion",
+                fallbackPages: ["Panthera_leo"],
+                searchTerms: ["Netherlands lion symbol", "Dutch lion"],
+                emoji: "🦁"
+            },
+            "Portekiz": {
+                name: "Horoz",
+                page: "Rooster",
+                fallbackPages: ["Chicken"],
+                searchTerms: ["Portugal rooster symbol", "Barcelos rooster"],
+                emoji: "🐓"
+            },
+            "Suudi Arabistan": {
+                name: "Arap oriksi",
+                page: "Arabian_oryx",
+                fallbackPages: ["Oryx"],
+                searchTerms: ["Saudi Arabia Arabian oryx", "Saudi oryx symbol"],
+                emoji: "🦌"
+            },
+            "Yunanistan": {
+                name: "Küçük baykuş",
+                page: "Little_owl",
+                fallbackPages: ["Owl"],
+                searchTerms: ["Greece little owl", "Athena owl Greece"],
+                emoji: "🦉"
+            },
             "Grönland": {
                 name: "Kutup ayısı",
                 page: "Polar_bear",
@@ -4801,6 +5911,51 @@
             })
         });
 
+        Object.assign(symbolicAnimalProfiles, {
+            "Andorra": {
+                name: "İzard (Pirene güderisi)",
+                page: "Pyrenean_chamois",
+                fallbackPages: ["Chamois"],
+                searchTerms: ["Andorra chamois symbol", "Andorra isard"],
+                emoji: "🐐"
+            },
+            "Angola": {
+                name: "Dev siyah samur antilobu",
+                page: "Giant_sable_antelope",
+                fallbackPages: ["Sable_antelope"],
+                searchTerms: ["Angola giant sable antelope", "Angola national animal giant sable"],
+                emoji: "🦌"
+            },
+            "Paraguay": {
+                name: "Pampas tilkisi",
+                page: "Pampas_fox",
+                fallbackPages: ["Fox"],
+                searchTerms: ["Paraguay pampas fox", "Paraguay national animal pampas fox"],
+                emoji: "🦊"
+            },
+            "Sudan": {
+                name: "Sekreter kuşu",
+                page: "Secretarybird",
+                fallbackPages: ["Secretary_bird", "Bird_of_prey"],
+                searchTerms: ["Sudan secretarybird emblem", "Sudan secretary bird symbol"],
+                emoji: "🐦"
+            },
+            "İsveç": {
+                name: "Sığın (Mus)",
+                page: "Moose",
+                fallbackPages: ["Alces_alces"],
+                searchTerms: ["Sweden moose national symbol", "Sweden elk symbol"],
+                emoji: "🦌"
+            },
+            "Yemen": {
+                name: "Arap leoparı",
+                page: "Arabian_leopard",
+                fallbackPages: ["Leopard"],
+                searchTerms: ["Yemen Arabian leopard", "Yemen national animal Arabian leopard"],
+                emoji: "🐆"
+            }
+        });
+
         const symbolicAnimalImageUrls = {
             "Afganistan": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Irbis4.JPG",
             "Amerika Birleşik Devletleri": "https://upload.wikimedia.org/wikipedia/commons/d/db/Bald_eagle_about_to_fly_in_Alaska_%282016%29.jpg",
@@ -5020,6 +6175,12 @@
             "Zambiya": "https://upload.wikimedia.org/wikipedia/commons/6/60/Eagles_together.jpg"
         };
 
+        ["Andorra", "Angola", "Paraguay", "Sudan", "Yemen", "İsveç"].forEach(key => {
+            if (Object.prototype.hasOwnProperty.call(symbolicAnimalImageUrls, key)) {
+                delete symbolicAnimalImageUrls[key];
+            }
+        });
+
         Object.entries(symbolicAnimalImageUrls).forEach(([country, url]) => {
             if (symbolicAnimalProfiles[country] && !symbolicAnimalProfiles[country].imageUrl) {
                 symbolicAnimalProfiles[country].imageUrl = url;
@@ -5130,8 +6291,27 @@
             return fallbackName || code || 'Bilgi Yok';
         }
 
+        function translateCountryName(value, props) {
+            const raw = fixMojibake(value || (props && (props.TR_NAME || props.NAME || props.ADMIN)) || '');
+            const iso = resolveCountryIso(props || {});
+
+            if (iso && countryIsoDisplayOverrides[iso]) return countryIsoDisplayOverrides[iso];
+
+            if (iso && countryDisplay) {
+                try {
+                    const translated = fixMojibake(countryDisplay.of(iso));
+                    if (translated && translated !== iso) {
+                        return countryNameDisplayOverrides[translated] || translated;
+                    }
+                } catch (e) { }
+            }
+
+            return countryNameDisplayOverrides[raw] || engToTr[raw] || raw || 'Bilinmiyor';
+        }
+
         function getDisplayCountryName(props) {
-            return (props && (props.TR_NAME || props.NAME || props.ADMIN)) || 'Bilinmiyor';
+            if (!props) return 'Bilinmiyor';
+            return translateCountryName(props.TR_NAME || props.NAME || props.ADMIN, props);
         }
 
         function normalizeForCompare(value) {
@@ -5290,6 +6470,258 @@
                     if (fixedValue !== currentValue) element.setAttribute(attr, fixedValue);
                 });
             });
+        }
+
+        const defaultWeatherTarget = {
+            lat: 41.0082,
+            lng: 28.9784,
+            location: 'İstanbul, Türkiye',
+            timezone: 'Europe/Istanbul'
+        };
+
+        let weatherWidgetState = {
+            location: defaultWeatherTarget.location,
+            timezone: defaultWeatherTarget.timezone,
+            weatherCode: 0,
+            isDay: true,
+            temperature: null,
+            windSpeed: null,
+            status: 'loading',
+            detail: 'Bir ülke seçildiğinde yerel saat ve hava burada canlı olarak yenilenir.'
+        };
+        let weatherClockTimer = null;
+
+        function formatTimeInTimezone(timezone) {
+            try {
+                return new Intl.DateTimeFormat('tr-TR', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    timeZone: timezone || defaultWeatherTarget.timezone
+                }).format(new Date());
+            } catch (e) {
+                return new Intl.DateTimeFormat('tr-TR', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }).format(new Date());
+            }
+        }
+
+        function getTimezoneHour(timezone) {
+            try {
+                const parts = new Intl.DateTimeFormat('en-GB', {
+                    hour: '2-digit',
+                    hour12: false,
+                    timeZone: timezone || defaultWeatherTarget.timezone
+                }).formatToParts(new Date());
+                const hourPart = parts.find(part => part.type === 'hour');
+                return Number(hourPart && hourPart.value);
+            } catch (e) {
+                return NaN;
+            }
+        }
+
+        function inferIsDayFromTimezone(timezone) {
+            const hour = getTimezoneHour(timezone);
+            return Number.isFinite(hour) ? hour >= 6 && hour < 19 : true;
+        }
+
+        function getWeatherTheme(weatherCode, isDay) {
+            const code = Number(weatherCode);
+            const daylight = typeof isDay === 'boolean' ? isDay : true;
+
+            if ([95, 96, 99].includes(code)) return { className: 'weather-storm', label: 'Fırtınalı' };
+            if ([71, 73, 75, 77, 85, 86].includes(code)) return { className: 'weather-snow', label: 'Karlı' };
+            if ([45, 48].includes(code)) return { className: 'weather-fog', label: 'Sisli' };
+            if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return { className: 'weather-rain', label: 'Yağmurlu' };
+            if ([1, 2].includes(code)) return { className: 'weather-partly-cloudy', label: daylight ? 'Parçalı bulutlu' : 'Açık gece' };
+            if ([3].includes(code)) return { className: 'weather-cloudy', label: 'Kapalı' };
+            return { className: 'weather-clear', label: daylight ? 'Açık ve güneşli' : 'Açık gece' };
+        }
+
+        function formatWeatherTemperature(value) {
+            return Number.isFinite(Number(value)) ? `${Math.round(Number(value))}°C` : '';
+        }
+
+        function formatWeatherWind(value) {
+            return Number.isFinite(Number(value)) ? `Rüzgar ${Math.round(Number(value))} km/sa` : '';
+        }
+
+        function getWeatherSummaryText(theme) {
+            if (weatherWidgetState.status === 'error') return 'Canlı hava verisi alınamadı';
+            if (weatherWidgetState.status === 'loading') return 'Güncel hava hazırlanıyor...';
+            return theme.label;
+        }
+
+        function getWeatherDetailText() {
+            if (weatherWidgetState.status !== 'ready') return weatherWidgetState.detail || '';
+            return [
+                formatWeatherTemperature(weatherWidgetState.temperature),
+                formatWeatherWind(weatherWidgetState.windSpeed),
+                weatherWidgetState.timezone
+            ].filter(Boolean).join(' • ');
+        }
+
+        function getWeatherPanelText(theme) {
+            if (weatherWidgetState.status !== 'ready') {
+                return weatherWidgetState.status === 'error'
+                    ? 'Canlı hava verisi şu an alınamadı'
+                    : 'Güncel hava hazırlanıyor...';
+            }
+            return [
+                theme.label,
+                formatWeatherTemperature(weatherWidgetState.temperature),
+                formatWeatherWind(weatherWidgetState.windSpeed)
+            ].filter(Boolean).join(' • ');
+        }
+
+        function updateWeatherPanelRows() {
+            const panel = document.getElementById('infoPanel');
+            if (!panel || !panel.classList.contains('visible') || activeOcean) return;
+
+            const timezoneNode = document.getElementById('timezoneValue');
+            const weatherNode = document.getElementById('weatherValue');
+            const daylight = inferIsDayFromTimezone(weatherWidgetState.timezone);
+            const theme = getWeatherTheme(weatherWidgetState.weatherCode, daylight);
+            const liveTime = formatTimeInTimezone(weatherWidgetState.timezone);
+            const zoneText = weatherWidgetState.timezone || 'Bilgi Yok';
+
+            if (timezoneNode) {
+                timezoneNode.innerText = zoneText !== 'Bilgi Yok'
+                    ? `${zoneText} • ${liveTime}`
+                    : liveTime;
+            }
+
+            if (weatherNode) {
+                weatherNode.innerText = fixMojibake(getWeatherPanelText(theme));
+            }
+        }
+
+        function renderWeatherWidget() {
+            const widget = document.getElementById('weatherWidget');
+            if (!widget) return;
+
+            const locationNode = document.getElementById('weatherLocation');
+            const timeNode = document.getElementById('weatherTime');
+            const summaryNode = document.getElementById('weatherSummary');
+            const detailNode = document.getElementById('weatherDetail');
+
+            const daylight = inferIsDayFromTimezone(weatherWidgetState.timezone);
+            const isDay = weatherWidgetState.status === 'ready'
+                ? daylight
+                : (typeof weatherWidgetState.isDay === 'boolean' ? weatherWidgetState.isDay : daylight);
+            const theme = getWeatherTheme(weatherWidgetState.weatherCode, isDay);
+
+            widget.className = `weather-widget ${theme.className} ${isDay ? 'is-day' : 'is-night'}`;
+            if (locationNode) locationNode.textContent = fixMojibake(weatherWidgetState.location || defaultWeatherTarget.location);
+            if (timeNode) timeNode.textContent = formatTimeInTimezone(weatherWidgetState.timezone);
+            if (summaryNode) summaryNode.textContent = fixMojibake(getWeatherSummaryText(theme));
+            if (detailNode) detailNode.textContent = fixMojibake(getWeatherDetailText());
+
+            updateWeatherPanelRows();
+        }
+
+        function ensureWeatherClock() {
+            if (weatherClockTimer) return;
+            weatherClockTimer = window.setInterval(renderWeatherWidget, 30000);
+        }
+
+        function setWeatherWidgetState(nextState) {
+            weatherWidgetState = Object.assign({}, weatherWidgetState, nextState || {});
+            ensureWeatherClock();
+            renderWeatherWidget();
+        }
+
+        async function fetchWeatherSnapshot(lat, lng) {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lng)}&current=temperature_2m,apparent_temperature,weather_code,is_day,wind_speed_10m&timezone=auto`;
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            const current = data.current || {};
+            return {
+                timezone: data.timezone || defaultWeatherTarget.timezone,
+                weatherCode: current.weather_code ?? current.weathercode ?? 0,
+                isDay: current.is_day === 1 || current.is_day === true,
+                temperature: Number(current.temperature_2m),
+                windSpeed: Number(current.wind_speed_10m)
+            };
+        }
+
+        function resolveCountryWeatherTarget(props, data) {
+            const displayName = getDisplayCountryName(props);
+            const capitalName = data && Array.isArray(data.capital) && data.capital.length ? data.capital[0] : '';
+            const capitalCoords = data && data.capitalInfo && Array.isArray(data.capitalInfo.latlng) && data.capitalInfo.latlng.length >= 2
+                ? { lat: Number(data.capitalInfo.latlng[0]), lng: Number(data.capitalInfo.latlng[1]) }
+                : null;
+            const countryCoords = data && Array.isArray(data.latlng) && data.latlng.length >= 2
+                ? { lat: Number(data.latlng[0]), lng: Number(data.latlng[1]) }
+                : null;
+            const timezone = data && Array.isArray(data.timezones) && data.timezones.length
+                ? data.timezones[0]
+                : defaultWeatherTarget.timezone;
+            const fallbackFeature = activePolygon && activePolygon.properties === props
+                ? activePolygon
+                : (allCountryFeatures || []).find(feature => feature && feature.properties === props);
+            const fallbackCenter = fallbackFeature ? getCountryCenter(fallbackFeature) : null;
+            const coords = capitalCoords || countryCoords || fallbackCenter || defaultWeatherTarget;
+
+            return {
+                lat: Number(coords.lat),
+                lng: Number(coords.lng),
+                location: capitalName ? `${capitalName}, ${displayName}` : displayName,
+                timezone
+            };
+        }
+
+        async function refreshWeatherExperience(target) {
+            const hasWeatherUi = document.getElementById('weatherWidget') || document.getElementById('weatherValue') || document.getElementById('timezoneValue');
+            if (!hasWeatherUi) return;
+
+            currentWeatherRenderToken += 1;
+            const token = currentWeatherRenderToken;
+            const safeTarget = Object.assign({}, defaultWeatherTarget, target || {});
+            const fallbackTimezone = safeTarget.timezone || defaultWeatherTarget.timezone;
+
+            setWeatherWidgetState({
+                location: safeTarget.location || defaultWeatherTarget.location,
+                timezone: fallbackTimezone,
+                weatherCode: 0,
+                isDay: inferIsDayFromTimezone(fallbackTimezone),
+                temperature: null,
+                windSpeed: null,
+                status: 'loading',
+                detail: 'Yerel saat ve hava durumu seçili konuma göre yenileniyor.'
+            });
+
+            if (!Number.isFinite(Number(safeTarget.lat)) || !Number.isFinite(Number(safeTarget.lng))) return;
+
+            try {
+                const snapshot = await fetchWeatherSnapshot(Number(safeTarget.lat), Number(safeTarget.lng));
+                if (token !== currentWeatherRenderToken) return;
+
+                setWeatherWidgetState({
+                    location: safeTarget.location || defaultWeatherTarget.location,
+                    timezone: snapshot.timezone || fallbackTimezone,
+                    weatherCode: snapshot.weatherCode,
+                    isDay: snapshot.isDay,
+                    temperature: snapshot.temperature,
+                    windSpeed: snapshot.windSpeed,
+                    status: 'ready',
+                    detail: ''
+                });
+            } catch (err) {
+                if (token !== currentWeatherRenderToken) return;
+
+                setWeatherWidgetState({
+                    location: safeTarget.location || defaultWeatherTarget.location,
+                    timezone: fallbackTimezone,
+                    weatherCode: 0,
+                    isDay: inferIsDayFromTimezone(fallbackTimezone),
+                    temperature: null,
+                    windSpeed: null,
+                    status: 'error',
+                    detail: 'Yerel saat gösteriliyor, hava durumu servisi şu an yanıt vermiyor.'
+                });
+            }
         }
 
         function normalizeKey(value) {
@@ -6219,19 +7651,23 @@
             const flagVisualLabel = document.getElementById('flagVisualLabel');
             const animalVisualLabel = document.getElementById('animalVisualLabel');
             const cultureSectionTitle = document.getElementById('cultureSectionTitle');
+            const architectureSectionTitle = document.getElementById('architectureSectionTitle');
             const foodSectionTitle = document.getElementById('foodSectionTitle');
+            const architectureSection = getPanelSection('architectureSection', 'architectureGallery');
             const clothingSection = getPanelSection('clothingSection', 'clothingGallery');
             const clothingSectionTitle = clothingSection ? clothingSection.querySelector('.section-title') : null;
 
             if (flagVisualLabel) flagVisualLabel.textContent = 'Bayrak';
             if (animalVisualLabel) animalVisualLabel.textContent = 'Sembolik Hayvan';
             if (cultureSectionTitle) cultureSectionTitle.textContent = 'Kültürel Özellikler';
+            if (architectureSectionTitle) architectureSectionTitle.textContent = 'Öne Çıkan Mimari';
             if (foodSectionTitle) foodSectionTitle.textContent = 'Geleneksel Yemekler';
             if (clothingSectionTitle) clothingSectionTitle.textContent = 'Geleneksel Kıyafetler';
 
             const cultureSection = getPanelSection('cultureSection', 'cultureFeatures');
             const foodSection = getPanelSection('foodSection', 'foodGallery');
             if (cultureSection) cultureSection.style.display = '';
+            if (architectureSection) architectureSection.style.display = '';
             if (foodSection) foodSection.style.display = '';
             if (clothingSection) clothingSection.style.display = '';
             const flagCard = document.getElementById('flagCard');
@@ -6245,18 +7681,21 @@
             const flagVisualLabel = document.getElementById('flagVisualLabel');
             const animalVisualLabel = document.getElementById('animalVisualLabel');
             const cultureSectionTitle = document.getElementById('cultureSectionTitle');
+            const architectureSection = getPanelSection('architectureSection', 'architectureGallery');
             const foodSection = getPanelSection('foodSection', 'foodGallery');
             const clothingSection = getPanelSection('clothingSection', 'clothingGallery');
 
             if (flagVisualLabel) flagVisualLabel.textContent = 'Okyanus';
             if (animalVisualLabel) animalVisualLabel.textContent = 'Canlı';
             if (cultureSectionTitle) cultureSectionTitle.textContent = 'Okyanus Özellikleri';
+            if (architectureSection) architectureSection.style.display = 'none';
             if (foodSection) foodSection.style.display = 'none';
             if (clothingSection) clothingSection.style.display = 'none';
 
             setPanelRow('officialNameValue', 'Tür', ocean.subtitle, true);
             setPanelRow('capitalValue', 'Yüzey Alanı', ocean.surfaceArea, true);
             setPanelRow('animalStatValue', 'Öne Çıkan Canlı', ocean.species, true);
+            setPanelRow('prosperityValue', '', '', false);
             setPanelRow('currencyValue', 'Ortalama Derinlik', ocean.avgDepth, true);
             setPanelRow('languageValue', 'En Derin Nokta', ocean.maxDepth, true);
             setPanelRow('areaValue', 'Akıntılar', ocean.currents, true);
@@ -6265,12 +7704,14 @@
             setPanelRow('regionValue', 'Konum', ocean.region, true);
             setPanelRow('continentValue', 'Bağlantı', ocean.continents, true);
             setPanelRow('timezoneValue', '', '', false);
+            setPanelRow('weatherValue', '', '', false);
             setPanelRow('domainValue', '', '', false);
             setPanelRow('drivingSideValue', '', '', false);
             setPanelRow('weekStartValue', '', '', false);
             setPanelRow('carSignsValue', '', '', false);
             setPanelRow('demonymValue', '', '', false);
             setPanelRow('statusValue', '', '', false);
+            setPanelRow('architectureValue', '', '', false);
             setPanelRow('bordersValue', '', '', false);
         }
 
@@ -6369,6 +7810,7 @@
                 regionValue: regionText,
                 continentValue: continentText || 'Bilgi Yok',
                 timezoneValue: timezoneText,
+                weatherValue: data ? 'Güncel hava hazırlanıyor...' : 'Hava verisi bekleniyor...',
                 domainValue: domainText,
                 drivingSideValue: drivingSideText,
                 weekStartValue: weekStartText,
@@ -7138,8 +8580,8 @@
         function getCulture(props) {
             if (!props) return defaultCulture;
             const name = props.NAME || '', admin = props.ADMIN || '', subregion = props.SUBREGION || '';
-            const trName = engToTr[name] || engToTr[admin] || name;
-            const trAdmin = engToTr[admin] || admin;
+            const trName = translateCountryName(name, props);
+            const trAdmin = translateCountryName(admin, props);
             const directProfile = countryProfiles[trName] || countryProfiles[trAdmin] || countryProfiles[name] || countryProfiles[admin];
             if (directProfile) return directProfile;
             const inferredProfile = inferCountryProfile(props, trName, trAdmin);
@@ -7157,8 +8599,10 @@
                 if (!d.properties) d.properties = {};
                 const p = d.properties;
                 const name = p.NAME || '', admin = p.ADMIN || '';
-                const trName = engToTr[name] || engToTr[admin] || name;
-                p.TR_NAME = trName || name;
+                const trName = translateCountryName(name, p);
+                const trAdmin = translateCountryName(admin, p);
+                p.TR_NAME = trName || name || admin;
+                p.TR_ADMIN = trAdmin || admin || name;
                 p.TR_SUBREGION = p.SUBREGION || '';
                 p.TR_REGION = p.REGION_UN || '';
                 p.culturalProfile = getCulture(p);
@@ -7169,7 +8613,7 @@
                 p.ISO_NORM = iso;
                 p.SEARCH_ALIASES = buildCountrySearchAliases(p);
                 const a3 = normalizeA3Code(p.ISO_A3 || p.ADM0_A3 || p.BRK_A3 || p.SOV_A3);
-                if (a3) countryNamesByA3[a3] = trName || admin || name || a3;
+                if (a3) countryNamesByA3[a3] = p.TR_NAME || p.TR_ADMIN || admin || name || a3;
             });
 
             buildCountrySearchIndex(countriesData.features);
@@ -7198,7 +8642,7 @@
                 .polygonLabel(({ properties: d }) => {
                     if (!d) return '';
                     const culture = d.culturalProfile || defaultCulture;
-                    const displayName = d.TR_NAME || d.NAME || d.ADMIN || 'Bilinmeyen';
+                    const displayName = getDisplayCountryName(d) || 'Bilinmeyen';
                     const flagHtml = d.FLAG_SVG
                         ? `<img src="${d.FLAG_SVG}" alt="" class="tooltip-flag" onerror="this.style.display='none'" />`
                         : (d.FLAG_EMOJI ? `<span style="font-size:18px;vertical-align:middle;margin-right:6px;">${d.FLAG_EMOJI}</span>` : '');
@@ -7238,7 +8682,7 @@
                     if (!d || !d.properties) return;
                     activePolygon = d;
                     updatePolygonHighlight();
-                    setSearchStatus(`Seçildi: ${d.properties.TR_NAME || d.properties.NAME}`, false);
+                    setSearchStatus(`Seçildi: ${getDisplayCountryName(d.properties)}`, false);
                     syncCultureNavigatorToFeature(d);
                     showCountryDetails(d.properties);
                     try {
@@ -7288,7 +8732,11 @@
         }
 
         fetch(geoJsonUrl)
-            .then(res => { if (!res.ok) throw new Error('Veri indirilemedi (HTTP ' + res.status + ').'); document.getElementById('loaderText').innerText = 'Harita oluşturuluyor...'; return res.json(); })
+            .then(res => {
+                if (!res.ok) throw new Error('Veri indirilemedi (HTTP ' + res.status + ').');
+                document.getElementById('loaderText').innerText = 'Harita oluşturuluyor...';
+                return res.json();
+            })
             .then(data => initGlobe(data))
             .catch(err => {
                 document.getElementById('loader').style.display = 'none';
@@ -7311,11 +8759,14 @@
         const animalImageCache = new Map();
         const foodImageCache = new Map();
         const clothingImageCache = new Map();
+        const architectureImageCache = new Map();
         const countryNamesByA3 = {};
         let activeOcean = null;
         let currentAnimalRenderToken = 0;
+        let currentArchitectureRenderToken = 0;
         let currentFoodRenderToken = 0;
         let currentClothingRenderToken = 0;
+        let currentWeatherRenderToken = 0;
 
         const globalUsedMediaUrls = new Set();
         function canLoadImage(url) {
@@ -7348,6 +8799,7 @@
             officialNameValue: 'Resmi Adı',
             capitalValue: 'Başkent',
             animalStatValue: 'Sembolik Hayvan',
+            prosperityValue: 'Refah Dilimi',
             currencyValue: 'Para Birimi',
             languageValue: 'Dil',
             areaValue: 'Yüzölçümü',
@@ -7356,12 +8808,14 @@
             regionValue: 'Bölge',
             continentValue: 'Kıta',
             timezoneValue: 'Saat Dilimi',
+            weatherValue: 'Hava Durumu',
             domainValue: 'İnternet Alanı',
             drivingSideValue: 'Trafik Akışı',
             weekStartValue: 'Hafta Başlangıcı',
             carSignsValue: 'Araç Kodları',
             demonymValue: 'Halk Adı',
             statusValue: 'Uluslararası Durum',
+            architectureValue: 'Öne Çıkan Mimari',
             bordersValue: 'Komşu Ülkeler'
         };
         const oceanProfiles = [
@@ -7519,7 +8973,7 @@
 
         function getFeatureDisplayName(feature) {
             const props = feature && feature.properties;
-            return (props && (props.TR_NAME || props.NAME || props.ADMIN)) || 'Bilinmeyen ülke';
+            return getDisplayCountryName(props) || 'Bilinmeyen ülke';
         }
 
         function getCultureMatches(features, cultureKey) {
@@ -7899,6 +9353,290 @@
             return fallback;
         }
 
+        const architectureHighlightOverrides = {
+            TR: { title: 'Ayasofya', page: 'Hagia Sophia', searchTerms: ['Hagia Sophia', 'Ayasofya'] },
+            US: { title: 'Özgürlük Heykeli', page: 'Statue of Liberty', searchTerms: ['Statue of Liberty'] },
+            FR: { title: 'Eyfel Kulesi', page: 'Eiffel Tower', searchTerms: ['Eiffel Tower'] },
+            GB: { title: 'Westminster Sarayı', page: 'Palace of Westminster', searchTerms: ['Palace of Westminster', 'Big Ben'] },
+            IT: { title: 'Kolezyum', page: 'Colosseum', searchTerms: ['Colosseum'] },
+            ES: { title: 'Sagrada Familia', page: 'Sagrada Família', searchTerms: ['Sagrada Família', 'La Sagrada Familia'] },
+            DE: { title: 'Brandenburg Kapısı', page: 'Brandenburg Gate', searchTerms: ['Brandenburg Gate'] },
+            GR: { title: 'Parthenon', page: 'Parthenon', searchTerms: ['Parthenon'] },
+            EG: { title: 'Gize Piramidi', page: 'Great Pyramid of Giza', searchTerms: ['Great Pyramid of Giza', 'Pyramids of Giza'] },
+            IN: { title: 'Tac Mahal', page: 'Taj Mahal', searchTerms: ['Taj Mahal'] },
+            CN: { title: 'Yasak Şehir', page: 'Forbidden City', searchTerms: ['Forbidden City'] },
+            JP: { title: 'Himeji Kalesi', page: 'Himeji Castle', searchTerms: ['Himeji Castle'] },
+            BR: { title: 'Kurtarıcı İsa Heykeli', page: 'Christ the Redeemer (statue)', searchTerms: ['Christ the Redeemer'] },
+            MX: { title: 'Chichén Itzá', page: 'Chichen Itza', searchTerms: ['Chichen Itza'] },
+            RU: { title: 'Aziz Vasil Katedrali', page: "Saint Basil's Cathedral", searchTerms: ["Saint Basil's Cathedral"] },
+            AU: { title: 'Sidney Opera Binası', page: 'Sydney Opera House', searchTerms: ['Sydney Opera House'] },
+            CA: { title: 'Parliament Hill', page: 'Parliament Hill', searchTerms: ['Parliament Hill'] },
+            KR: { title: 'Gyeongbokgung', page: 'Gyeongbokgung', searchTerms: ['Gyeongbokgung'] },
+            SA: { title: 'Mescid-i Haram', page: 'Masjid al-Haram', searchTerms: ['Masjid al-Haram'] },
+            AE: { title: 'Burj Khalifa', page: 'Burj Khalifa', searchTerms: ['Burj Khalifa'] },
+            TH: { title: 'Wat Arun', page: 'Wat Arun', searchTerms: ['Wat Arun'] },
+            SG: { title: 'Marina Bay Sands', page: 'Marina Bay Sands', searchTerms: ['Marina Bay Sands'] },
+            PT: { title: 'Belém Kulesi', page: 'Belém Tower', searchTerms: ['Belém Tower', 'Belem Tower'] },
+            NL: { title: 'Rijksmuseum', page: 'Rijksmuseum', searchTerms: ['Rijksmuseum'] },
+            CH: { title: 'Kapellbrücke', page: 'Chapel Bridge', searchTerms: ['Chapel Bridge'] },
+            BE: { title: 'Grand Place', page: 'Grand Place', searchTerms: ['Grand Place'] },
+            AT: { title: 'Schönbrunn Sarayı', page: 'Schönbrunn Palace', searchTerms: ['Schönbrunn Palace'] },
+            CZ: { title: 'Prag Kalesi', page: 'Prague Castle', searchTerms: ['Prague Castle'] },
+            HU: { title: 'Macar Parlamento Binası', page: 'Hungarian Parliament Building', searchTerms: ['Hungarian Parliament Building'] },
+            SE: { title: 'Stockholm Belediye Binası', page: 'Stockholm City Hall', searchTerms: ['Stockholm City Hall'] },
+            NO: { title: 'Oslo Opera Binası', page: 'Oslo Opera House', searchTerms: ['Oslo Opera House'] },
+            DK: { title: 'Amalienborg', page: 'Amalienborg', searchTerms: ['Amalienborg'] },
+            PL: { title: 'Wawel Kalesi', page: 'Wawel Castle', searchTerms: ['Wawel Castle'] },
+            ID: { title: 'Borobudur', page: 'Borobudur', searchTerms: ['Borobudur'] },
+            KH: { title: 'Angkor Wat', page: 'Angkor Wat', searchTerms: ['Angkor Wat'] },
+            VN: { title: 'Imperial City of Huế', page: 'Imperial City of Huế', searchTerms: ['Imperial City of Huế', 'Hue Imperial City'] },
+            MA: { title: 'Hasan II Camii', page: 'Hassan II Mosque', searchTerms: ['Hassan II Mosque'] }
+        };
+
+        let prosperityDatasetPromise = null;
+
+        function getCountryArchitectureOverride(props, data) {
+            const iso2 = normalizeIsoCode((data && data.cca2) || (props && props.ISO_NORM) || resolveCountryIso(props));
+            const iso3 = normalizeA3Code((data && data.cca3) || (props && props.ISO_A3) || (props && props.ADM0_A3) || (props && props.BRK_A3));
+            const displayName = getDisplayCountryName(props);
+            const englishName = (data && data.name && data.name.common) || props.NAME || props.ADMIN || displayName;
+            return architectureHighlightOverrides[iso2]
+                || architectureHighlightOverrides[iso3]
+                || architectureHighlightOverrides[displayName]
+                || architectureHighlightOverrides[englishName]
+                || null;
+        }
+
+        function buildArchitectureCandidates(props, data) {
+            const displayName = getDisplayCountryName(props);
+            const englishName = (data && data.name && data.name.common) || props.NAME || props.ADMIN || displayName;
+            const capitalName = (data && Array.isArray(data.capital) && data.capital.length ? data.capital[0] : '') || '';
+            const override = getCountryArchitectureOverride(props, data);
+            const primaryPage = override && override.page ? override.page : '';
+            const primaryTitle = override && override.title ? override.title : (capitalName ? `${capitalName} mimarisi` : `${displayName} mimarisi`);
+
+            const summaryCandidates = [
+                primaryTitle,
+                primaryPage,
+                `${displayName} mimarisi`,
+                `Architecture of ${englishName}`,
+                `${englishName} architecture`,
+                `${capitalName} skyline`,
+                `${englishName} landmark`
+            ].filter(Boolean);
+
+            return { primaryTitle, summaryCandidates };
+        }
+
+        async function fetchTurkishWikipediaSummary(query) {
+            if (!query) return '';
+            const cacheKey = `tr-summary:${query}`;
+            if (wikiSummaryCache.has(cacheKey)) return wikiSummaryCache.get(cacheKey);
+
+            try {
+                let url = `https://tr.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts&exintro&explaintext&redirects=1&titles=${encodeURIComponent(query)}`;
+                let response = await fetch(url);
+                if (response.ok) {
+                    let data = await response.json();
+                    let pages = (data && data.query && data.query.pages) ? Object.values(data.query.pages) : [];
+                    let extract = pages.find(page => page && page.extract && String(page.extract).trim());
+                    if (extract) {
+                        const result = String(extract.extract).replace(/\s+/g, ' ').trim();
+                        wikiSummaryCache.set(cacheKey, result);
+                        return result;
+                    }
+                }
+
+                url = `https://tr.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=1&prop=extracts&exintro&explaintext&redirects=1`;
+                response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                const pages = (data && data.query && data.query.pages) ? Object.values(data.query.pages) : [];
+                const extract = pages.find(page => page && page.extract && String(page.extract).trim());
+                const result = extract ? String(extract.extract).replace(/\s+/g, ' ').trim() : '';
+                wikiSummaryCache.set(cacheKey, result);
+                return result;
+            } catch (err) {
+                console.warn('Türkçe mimari özeti alınamadı:', query, err.message);
+                wikiSummaryCache.set(cacheKey, '');
+                return '';
+            }
+        }
+
+        function isLikelyTurkishText(text) {
+            const value = String(text || '').trim();
+            if (!value) return false;
+            return /[çğıöşüÇĞİÖŞÜ]/.test(value) || /\b(ve|ile|olan|olarak|bir|ülke|şehir|yapı|mimari|tarihi|kültürel)\b/i.test(value);
+        }
+
+        function buildArchitectureTurkishDescription(props, data, title, summary) {
+            const displayName = getDisplayCountryName(props);
+            const capitalName = (data && Array.isArray(data.capital) && data.capital.length ? data.capital[0] : '') || '';
+            const cleanSummary = String(summary || '').replace(/\s+/g, ' ').trim();
+
+            if (cleanSummary && isLikelyTurkishText(cleanSummary)) {
+                return cleanSummary.length > 420 ? `${cleanSummary.slice(0, 417).trim()}...` : cleanSummary;
+            }
+
+            const sentences = [
+                `${title}, ${displayName} ile en çok anılan öne çıkan mimari yapılardan biridir.`
+            ];
+
+            if (capitalName) {
+                sentences.push(`${capitalName} ve çevresindeki tarihî anlatının görünür simgelerinden biri olarak öne çıkar.`);
+            } else {
+                sentences.push(`Ülkenin tarihî birikimini, estetik anlayışını ve kamusal hafızasını yansıtan önemli yapılardan biri olarak değerlendirilir.`);
+            }
+
+            sentences.push(`Bu kartta yer alan açıklama, mimariyi kısa ve anlaşılır biçimde Türkçe özetlemek için düzenlenmiştir.`);
+            return sentences.join(' ');
+        }
+
+        async function resolveCountryArchitectureProfile(props, data) {
+            const displayName = getDisplayCountryName(props);
+            const candidateBundle = buildArchitectureCandidates(props, data);
+            let summary = '';
+
+            for (const candidate of candidateBundle.summaryCandidates) {
+                summary = await fetchTurkishWikipediaSummary(candidate);
+                if (summary) break;
+            }
+
+            return {
+                title: candidateBundle.primaryTitle || `${displayName} mimarisi`,
+                summary: buildArchitectureTurkishDescription(props, data, candidateBundle.primaryTitle || `${displayName} mimarisi`, summary)
+            };
+        }
+
+        async function loadProsperityDataset() {
+            if (prosperityDatasetPromise) return prosperityDatasetPromise;
+
+            prosperityDatasetPromise = (async () => {
+                const response = await fetch('https://api.worldbank.org/v2/country/all/indicator/NY.GDP.PCAP.PP.CD?format=json&per_page=20000&mrv=5');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const payload = await response.json();
+                const rows = Array.isArray(payload) && Array.isArray(payload[1]) ? payload[1] : [];
+                const bestByIso3 = new Map();
+
+                rows.forEach(row => {
+                    const iso3 = normalizeA3Code(row && row.countryiso3code);
+                    const value = Number(row && row.value);
+                    const year = Number(row && row.date);
+                    if (!iso3 || !countryNamesByA3[iso3] || !Number.isFinite(value) || value <= 0 || !Number.isFinite(year)) return;
+                    const current = bestByIso3.get(iso3);
+                    if (!current || year > current.year) {
+                        bestByIso3.set(iso3, { value, year });
+                    }
+                });
+
+                const sorted = [...bestByIso3.entries()].sort((a, b) => a[1].value - b[1].value);
+                const total = sorted.length;
+                const result = new Map();
+
+                sorted.forEach(([iso3, entry], index) => {
+                    const percentile = total > 0 ? Math.max(1, Math.round(((index + 1) / total) * 100)) : 0;
+                    result.set(iso3, {
+                        value: entry.value,
+                        year: entry.year,
+                        percentile,
+                        total
+                    });
+                });
+
+                return result;
+            })().catch(err => {
+                prosperityDatasetPromise = null;
+                throw err;
+            });
+
+            return prosperityDatasetPromise;
+        }
+
+        function formatDollarAmount(value) {
+            if (!Number.isFinite(value) || value <= 0) return 'Bilgi Yok';
+            return `${new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 0 }).format(value)} $`;
+        }
+
+        async function renderCountryProsperity(props, data) {
+            const node = document.getElementById('prosperityValue');
+            if (!node) return;
+
+            const iso3 = normalizeA3Code((data && data.cca3) || (props && props.ISO_A3) || (props && props.ADM0_A3) || (props && props.BRK_A3));
+            node.innerText = 'Yükleniyor...';
+            node.title = '';
+            if (!iso3) {
+                node.innerText = 'Veri Yok';
+                return;
+            }
+
+            try {
+                const dataset = await loadProsperityDataset();
+                const entry = dataset.get(iso3);
+                if (!entry) {
+                    node.innerText = 'Veri Yok';
+                    return;
+                }
+
+                node.innerText = `%${entry.percentile}`;
+                node.title = `Dünya Bankası kişi başı GSYH (SGP) verisi: ${formatDollarAmount(entry.value)} • ${entry.year}`;
+            } catch (err) {
+                console.warn('Refah verisi alınamadı:', err.message);
+                node.innerText = 'Veri Yok';
+            }
+        }
+
+        async function renderCountryArchitecture(props, data) {
+            const gallery = document.getElementById('architectureGallery');
+            const valueNode = document.getElementById('architectureValue');
+            const renderToken = ++currentArchitectureRenderToken;
+            if (!gallery || !valueNode) return;
+
+            gallery.innerHTML = `
+        <article class="architecture-card">
+            <div class="architecture-body">
+                <div class="architecture-kicker">Mimari</div>
+                <h4 class="architecture-title">Yükleniyor...</h4>
+                <p class="architecture-text">Ülkenin öne çıkan mimari açıklaması hazırlanıyor.</p>
+            </div>
+        </article>
+    `;
+            valueNode.innerText = 'Yükleniyor...';
+
+            try {
+                const profile = await resolveCountryArchitectureProfile(props, data);
+                if (renderToken !== currentArchitectureRenderToken) return;
+
+                const title = profile.title || 'Bilgi Yok';
+                const summary = profile.summary || 'Bu ülke için mimari özeti hazırlanamadı.';
+
+                valueNode.innerText = title;
+                gallery.innerHTML = `
+            <article class="architecture-card">
+                <div class="architecture-body">
+                    <div class="architecture-kicker">Öne Çıkan Mimari</div>
+                    <h4 class="architecture-title">${escapeHtml(title)}</h4>
+                    <p class="architecture-text">${escapeHtml(summary)}</p>
+                    <div class="architecture-source">Açıklama Türkçe biçimde düzenlendi.</div>
+                </div>
+            </article>
+        `;
+                fixMojibakeDomText(gallery);
+            } catch (err) {
+                console.warn('Mimari verisi alınamadı:', err.message);
+                if (renderToken !== currentArchitectureRenderToken) return;
+                valueNode.innerText = 'Veri Yok';
+                gallery.innerHTML = `
+            <article class="architecture-card">
+                <div class="architecture-body">
+                    <div class="architecture-kicker">Öne Çıkan Mimari</div>
+                    <h4 class="architecture-title">Bilgi bulunamadı</h4>
+                    <p class="architecture-text">Bu ülke için mimari açıklama şu anda yüklenemedi.</p>
+                </div>
+            </article>
+        `;
+            }
+        }
+
         async function renderTraditionalFoods(props) {
             const gallery = document.getElementById('foodGallery');
             if (!gallery) return;
@@ -7984,11 +9722,15 @@
 
         function buildCountrySearchAliases(props) {
             return uniqueValues([
+                props && getDisplayCountryName(props),
                 props && props.TR_NAME,
+                props && props.TR_ADMIN,
                 props && props.NAME,
                 props && props.ADMIN,
                 props && props.FORMAL_EN,
                 props && props.NAME_EN,
+                props && translateCountryName(props.NAME, props),
+                props && translateCountryName(props.ADMIN, props),
                 props && engToTr[props.NAME],
                 props && engToTr[props.ADMIN]
             ]);
@@ -8004,7 +9746,7 @@
         function syncSearchInput(props) {
             const input = document.getElementById('countrySearchInput');
             if (!input || !props) return;
-            input.value = fixMojibake(props.TR_NAME || props.NAME || props.ADMIN || '');
+            input.value = fixMojibake(getDisplayCountryName(props));
         }
 
         function collectCoordinatePairs(coords, pairs = []) {
@@ -8091,7 +9833,362 @@
             syncCultureNavigatorToFeature(match.feature);
             focusOnCountry(match.feature, 1.05);
             syncSearchInput(match.feature.properties);
-            setSearchStatus(`Yakınlaşıldı: ${match.feature.properties.TR_NAME || match.feature.properties.NAME}`, false);
+            setSearchStatus(`Yakınlaşıldı: ${getDisplayCountryName(match.feature.properties)}`, false);
+        }
+
+        const countryQuizPool = [
+            { question: "Kanguru hangi ülkenin sembolik hayvanı olarak bilinir?", options: ["Avustralya", "Kanada", "Peru", "Japonya"], answer: "Avustralya", note: "Kanguru, Avustralya ile en çok özdeşleşen hayvanlardan biridir." },
+            { question: "Moussaka en çok hangi ülke mutfağıyla anılır?", options: ["Yunanistan", "Meksika", "Fas", "Japonya"], answer: "Yunanistan", note: "Moussaka, Yunanistan mutfağının en bilinen tabaklarından biridir." },
+            { question: "Hanbok hangi ülkenin geleneksel kıyafetidir?", options: ["Güney Kore", "İtalya", "Peru", "Nijerya"], answer: "Güney Kore", note: "Hanbok, Güney Kore'nin en tanınan geleneksel giysilerindendir." },
+            { question: "Kivi kuşu hangi ülkenin sembollerindendir?", options: ["Yeni Zelanda", "Finlandiya", "Peru", "Mısır"], answer: "Yeni Zelanda", note: "Kiwi kuşu, Yeni Zelanda ile özdeş bir simgedir." },
+            { question: "Ceviche hangi ülkenin en bilinen yemeklerinden biridir?", options: ["Peru", "Almanya", "Nepal", "Angola"], answer: "Peru", note: "Ceviche, Peru mutfağının küresel ölçekte en bilinen lezzetlerinden biridir." },
+            { question: "Bozkurt bu haritada hangi ülkeyle eşleştirilir?", options: ["Türkiye", "Kanada", "Sudan", "Fiji"], answer: "Türkiye", note: "Haritadaki sembolik hayvan alanında Türkiye için bozkurt kullanılıyor." },
+            { question: "Gho ve Kira hangi ülkenin geleneksel kıyafetleridir?", options: ["Bhutan", "Vietnam", "İspanya", "Kenya"], answer: "Bhutan", note: "Gho ve Kira, Bhutan'ın ulusal giyim kültürünü temsil eder." },
+            { question: "Kunduz hangi ülkeyle sık anılan sembolik hayvanlardan biridir?", options: ["Kanada", "Yunanistan", "Kenya", "Tunus"], answer: "Kanada", note: "Kunduz, Kanada'nın en tanınan ulusal sembollerindendir." },
+            { question: "Phở hangi ülkenin geleneksel yemeğidir?", options: ["Vietnam", "Portekiz", "Paraguay", "Fas"], answer: "Vietnam", note: "Phở, Vietnam mutfağının dünyaca ünlü çorbalı erişte yemeğidir." },
+            { question: "Sari hangi ülkenin geleneksel giyimlerinden biridir?", options: ["Hindistan", "Şili", "Norveç", "Panama"], answer: "Hindistan", note: "Sari, Hindistan'da özellikle kadın giyiminde öne çıkar." },
+            { question: "Harpy kartalı hangi ülkenin sembolik hayvanı olarak gösterilir?", options: ["Panama", "İtalya", "Zambiya", "Nauru"], answer: "Panama", note: "Harpy kartalı, Panama'nın en bilinen sembolik hayvanlarındandır." },
+            { question: "Barong Tagalog hangi ülkeye aittir?", options: ["Filipinler", "Fas", "İsveç", "Gürcistan"], answer: "Filipinler", note: "Barong Tagalog, Filipinler'in geleneksel resmi giysilerinden biridir." },
+            { question: "Gri taçlı turna hangi ülkenin ulusal sembolüdür?", options: ["Uganda", "Libya", "Monako", "Belarus"], answer: "Uganda", note: "Uganda bayrağı ve armasında taçlı turna yer alır." },
+            { question: "Sopa Paraguaya hangi ülkenin geleneksel yiyeceğidir?", options: ["Paraguay", "Fransa", "Çin", "Sudan"], answer: "Paraguay", note: "Sopa Paraguaya, adı çorba olsa da fırında yapılan geleneksel Paraguay yemeğidir." },
+            { question: "Daura Suruwal hangi ülkenin geleneksel kıyafetidir?", options: ["Nepal", "Peru", "Angola", "İsveç"], answer: "Nepal", note: "Daura Suruwal, Nepal'in en karakteristik geleneksel giysilerindendir." },
+            { question: "Mandi ve Saltah en çok hangi ülke mutfağıyla anılır?", options: ["Yemen", "Kanada", "Paraguay", "Fiji"], answer: "Yemen", note: "Mandi ve Saltah, Yemen mutfağının en bilinen yemekleri arasındadır." },
+            { question: "Panda hangi ülkenin sembollerinden biridir?", options: ["Çin", "Danimarka", "Kenya", "Küba"], answer: "Çin", note: "Panda, Çin ile en güçlü biçimde özdeşleşen hayvanlardan biridir." },
+            { question: "Ao Po'i hangi ülkenin geleneksel giyimlerinden biridir?", options: ["Paraguay", "Norveç", "Tunus", "Laos"], answer: "Paraguay", note: "Ao Po'i, Paraguay'ın ince pamuklu ve nakışlı geleneksel kumaş/giyim kültürüdür." },
+            { question: "Sverigedräkten hangi ülkenin geleneksel kıyafetidir?", options: ["İsveç", "Türkiye", "Meksika", "Bhutan"], answer: "İsveç", note: "Sverigedräkten, İsveç'in mavi-sarı renkleriyle öne çıkan geleneksel halk giysisidir." },
+            { question: "Eyfel Kulesi hangi ülkenin simge yapılarından biridir?", options: ["Fransa", "Belçika", "Kanada", "Avusturya"], answer: "Fransa", note: "Eyfel Kulesi, Fransa denince akla gelen en bilinen yapılardan biridir." },
+            { question: "Tac Mahal hangi ülkede bulunur?", options: ["Hindistan", "Pakistan", "İran", "Mısır"], answer: "Hindistan", note: "Tac Mahal, Hindistan'ın en tanınmış mimari simgelerinden biridir." },
+            { question: "Ayasofya ile en çok özdeşleşen ülke hangisidir?", options: ["Türkiye", "Yunanistan", "Bulgaristan", "Sırbistan"], answer: "Türkiye", note: "Ayasofya, İstanbul'da yer alır ve Türkiye'nin simge yapılarındandır." },
+            { question: "Sydney Opera House hangi ülkededir?", options: ["Avustralya", "Yeni Zelanda", "Kanada", "İrlanda"], answer: "Avustralya", note: "Sydney Opera House, Avustralya'nın en tanınan modern yapılarındandır." },
+            { question: "Maple leaf yani akçaağaç yaprağı hangi ülkenin güçlü sembollerindendir?", options: ["Kanada", "Finlandiya", "Peru", "Portekiz"], answer: "Kanada", note: "Akçaağaç yaprağı, Kanada bayrağında da yer alır." },
+            { question: "Kimchi en çok hangi ülke mutfağıyla tanınır?", options: ["Güney Kore", "Japonya", "Çin", "Moğolistan"], answer: "Güney Kore", note: "Kimchi, Güney Kore mutfağının en bilinen fermente lezzetlerinden biridir." },
+            { question: "Sushi en çok hangi ülke ile özdeşleşmiştir?", options: ["Japonya", "Tayland", "Vietnam", "Endonezya"], answer: "Japonya", note: "Sushi, Japon mutfağının dünyaca ünlü yemeklerinden biridir." },
+            { question: "Paella hangi ülkenin meşhur yemeklerinden biridir?", options: ["İspanya", "İtalya", "Meksika", "Arjantin"], answer: "İspanya", note: "Paella, özellikle Valencia ile anılan İspanyol yemeğidir." },
+            { question: "Feijoada en çok hangi ülke mutfağıyla bilinir?", options: ["Brezilya", "Portekiz", "Kolombiya", "Şili"], answer: "Brezilya", note: "Feijoada, Brezilya mutfağının en tanınmış yemeklerinden biridir." },
+            { question: "Tango dansı denince hangi ülke en çok akla gelir?", options: ["Arjantin", "İspanya", "Küba", "Peru"], answer: "Arjantin", note: "Tango, Arjantin'in kültürel kimliğinin önemli parçalarından biridir." },
+            { question: "Flamenko en çok hangi ülke kültürüyle anılır?", options: ["İspanya", "Portekiz", "Fas", "Meksika"], answer: "İspanya", note: "Flamenko, özellikle Endülüs bölgesiyle tanınan İspanyol performans geleneğidir." },
+            { question: "Kilt hangi ülkenin geleneksel giyimlerinden biridir?", options: ["İskoçya", "İrlanda", "Norveç", "İzlanda"], answer: "İskoçya", note: "Kilt, İskoç kültürünün en ayırt edici kıyafetlerinden biridir." },
+            { question: "Dirndl hangi ülke kültüründe en çok görülür?", options: ["Avusturya", "İsveç", "Macaristan", "Hırvatistan"], answer: "Avusturya", note: "Dirndl, özellikle Avusturya ve Alp kültürüyle anılan geleneksel kıyafetlerdendir." },
+            { question: "Chichen Itza hangi ülkenin tarihi simgelerindendir?", options: ["Meksika", "Peru", "Bolivya", "Guatemala"], answer: "Meksika", note: "Chichen Itza, Meksika'nın dünyaca tanınan Maya mirası alanlarından biridir." },
+            { question: "Machu Picchu hangi ülkenin en bilinen tarihî alanlarından biridir?", options: ["Peru", "Ekvador", "Bolivya", "Şili"], answer: "Peru", note: "Machu Picchu, Peru'nun en ünlü arkeolojik alanlarından biridir." },
+            { question: "Angkor Wat hangi ülkede bulunur?", options: ["Kamboçya", "Tayland", "Laos", "Myanmar"], answer: "Kamboçya", note: "Angkor Wat, Kamboçya bayrağında da yer alan çok bilinen bir yapıdır." },
+            { question: "Gyeongbokgung Sarayı hangi ülkenin kültürel mirasındandır?", options: ["Güney Kore", "Çin", "Japonya", "Moğolistan"], answer: "Güney Kore", note: "Gyeongbokgung, Seul'deki en tanınmış tarihî saraylardan biridir." },
+            { question: "Burj Khalifa hangi ülkenin simge yapılarından biridir?", options: ["Birleşik Arap Emirlikleri", "Katar", "Kuveyt", "Bahreyn"], answer: "Birleşik Arap Emirlikleri", note: "Burj Khalifa, Dubai'de yer alır ve BAE ile özdeşleşmiştir." },
+            { question: "Petra antik kenti hangi ülkededir?", options: ["Ürdün", "İsrail", "Mısır", "Lübnan"], answer: "Ürdün", note: "Petra, Ürdün'ün en tanınmış tarihî ve mimari simgelerinden biridir." },
+            { question: "Fado müziği hangi ülkeyle en çok anılır?", options: ["Portekiz", "İspanya", "İtalya", "Yunanistan"], answer: "Portekiz", note: "Fado, Portekiz'in duygulu şehir müziği geleneğidir." },
+            { question: "Sauna kültürü hangi ülkeyle en çok özdeşleşmiştir?", options: ["Finlandiya", "Norveç", "Estonya", "Litvanya"], answer: "Finlandiya", note: "Sauna, Finlandiya'nın gündelik yaşamında çok önemli bir yere sahiptir." },
+            { question: "Tulip yani lale kültürü günümüzde en çok hangi Avrupa ülkesiyle anılır?", options: ["Hollanda", "Belçika", "Danimarka", "İsviçre"], answer: "Hollanda", note: "Lale tarlaları ve çiçekçilik kültürü Hollanda ile güçlü biçimde özdeşleşmiştir." },
+            { question: "Merlion hangi ülkenin sembollerinden biridir?", options: ["Singapur", "Malezya", "Endonezya", "Brunei"], answer: "Singapur", note: "Merlion, Singapur'un en bilinen sembollerinden biridir." }
+        ];
+
+        let currentCountryQuiz = [];
+        let currentCountryQuizScore = 0;
+        let currentCountryQuizAnswered = 0;
+        let currentCountryQuizIndex = 0;
+        let countryQuizAdvanceTimer = null;
+        let countryQuizConfettiTimer = null;
+        let countryQuizFireworksTimer = null;
+
+        function shuffleItems(items) {
+            const copy = Array.isArray(items) ? items.slice() : [];
+            for (let i = copy.length - 1; i > 0; i -= 1) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function clearCountryQuizAdvanceTimer() {
+            if (countryQuizAdvanceTimer) {
+                clearTimeout(countryQuizAdvanceTimer);
+                countryQuizAdvanceTimer = null;
+            }
+        }
+
+        function resetCountryQuizConfetti() {
+            const confetti = document.getElementById('quizConfetti');
+            const fireworks = document.getElementById('quizFireworks');
+            if (countryQuizConfettiTimer) {
+                clearTimeout(countryQuizConfettiTimer);
+                countryQuizConfettiTimer = null;
+            }
+            if (countryQuizFireworksTimer) {
+                clearTimeout(countryQuizFireworksTimer);
+                countryQuizFireworksTimer = null;
+            }
+            if (!confetti) return;
+            confetti.innerHTML = '';
+            if (fireworks) fireworks.innerHTML = '';
+        }
+
+        function launchCountryQuizConfetti() {
+            const confetti = document.getElementById('quizConfetti');
+            const fireworks = document.getElementById('quizFireworks');
+            if (!confetti) return;
+
+            resetCountryQuizConfetti();
+
+            const colors = ['#FF512F', '#F09819', '#FFD166', '#2EC4B6', '#3A86FF', '#EF476F', '#FF77A8', '#7CFFB2'];
+            const pieces = Array.from({ length: 96 }, (_, index) => {
+                const left = Math.random() * 100;
+                const drift = (Math.random() * 280) - 140;
+                const delay = Math.random() * 620;
+                const duration = 2200 + Math.random() * 1200;
+                const rotate = 540 + Math.random() * 720;
+                const width = 8 + Math.random() * 10;
+                const height = 16 + Math.random() * 18;
+                const color = colors[index % colors.length];
+                return `<span class="quiz-confetti-piece" style="left:${left.toFixed(2)}%;--drift-x:${drift.toFixed(0)}px;--fall-delay:${delay.toFixed(0)}ms;--fall-duration:${duration.toFixed(0)}ms;--piece-rotate:${rotate.toFixed(0)}deg;--piece-width:${width.toFixed(0)}px;--piece-height:${height.toFixed(0)}px;--piece-color:${color};"></span>`;
+            }).join('');
+
+            confetti.innerHTML = pieces;
+            if (fireworks) {
+                const burstColors = [
+                    { color: '#FFD166', glow: 'rgba(255, 209, 102, 0.62)' },
+                    { color: '#FF6B6B', glow: 'rgba(255, 107, 107, 0.54)' },
+                    { color: '#4D96FF', glow: 'rgba(77, 150, 255, 0.52)' },
+                    { color: '#7CFFB2', glow: 'rgba(124, 255, 178, 0.52)' }
+                ];
+                const bursts = [
+                    { left: 20, top: 28, delay: 120, colorIndex: 0 },
+                    { left: 76, top: 24, delay: 280, colorIndex: 1 },
+                    { left: 54, top: 18, delay: 520, colorIndex: 2 },
+                    { left: 30, top: 54, delay: 760, colorIndex: 3 },
+                    { left: 74, top: 50, delay: 980, colorIndex: 0 }
+                ];
+
+                fireworks.innerHTML = bursts.map((burst, burstIndex) => {
+                    const palette = burstColors[burst.colorIndex % burstColors.length];
+                    const rays = Array.from({ length: 12 }, (_, rayIndex) => {
+                        const rotate = rayIndex * 30;
+                        const rayDelay = burst.delay + rayIndex * 14;
+                        return `<span class="quiz-firework-ray" style="--ray-rotate:${rotate}deg;--ray-delay:${rayDelay}ms;--ray-duration:1300ms;--burst-color:${palette.color};--burst-glow:${palette.glow};"></span>`;
+                    }).join('');
+                    return `<span class="quiz-firework" style="--burst-left:${burst.left}%;--burst-top:${burst.top}%;--burst-delay:${burst.delay}ms;--burst-duration:${1300 + burstIndex * 100}ms;--burst-color:${palette.color};--burst-glow:${palette.glow};"><span class="quiz-firework-core"></span>${rays}</span>`;
+                }).join('');
+            }
+
+            countryQuizConfettiTimer = window.setTimeout(() => {
+                confetti.innerHTML = '';
+                countryQuizConfettiTimer = null;
+            }, 4600);
+            if (fireworks) {
+                countryQuizFireworksTimer = window.setTimeout(() => {
+                    fireworks.innerHTML = '';
+                    countryQuizFireworksTimer = null;
+                }, 2800);
+            }
+        }
+
+        function updateCountryQuizProgress() {
+            const progressText = document.getElementById('quizProgressText');
+            const scoreText = document.getElementById('quizScoreText');
+            const progressFill = document.getElementById('quizProgressFill');
+            const total = currentCountryQuiz.length || 5;
+            const nextQuestion = Math.min(currentCountryQuizIndex + 1, total);
+            const completed = currentCountryQuizAnswered >= total;
+
+            if (progressText) {
+                progressText.textContent = completed
+                    ? `Tur tamamlandı • ${total}/${total}`
+                    : `Soru ${nextQuestion} / ${total}`;
+            }
+
+            if (scoreText) {
+                scoreText.textContent = `Doğru ${currentCountryQuizScore}`;
+            }
+
+            if (progressFill) {
+                const ratio = total ? (currentCountryQuizAnswered / total) * 100 : 0;
+                progressFill.style.width = `${Math.max(0, Math.min(100, ratio))}%`;
+            }
+        }
+
+        function updateCountryQuizSummary(done) {
+            const summary = document.getElementById('quizSummary');
+            if (!summary) return;
+
+            if (!done) {
+                summary.style.display = 'none';
+                summary.classList.remove('perfect');
+                return;
+            }
+
+            const score = currentCountryQuizScore;
+            let message = "Harika bir tur oldu.";
+            if (score === currentCountryQuiz.length) message = "Helal olsun, 5 te 5 yaptın.";
+            else if (score >= 4) message = "Çok iyi, ülkeleri gayet iyi ayırt ediyorsun.";
+            else if (score >= 3) message = "Güzel, temel bilgiler oturmuş durumda.";
+            else message = "İyi başlangıç, yeni sorularla bir tur daha deneyebilirsin.";
+
+            summary.style.display = 'block';
+            summary.classList.toggle('perfect', score === currentCountryQuiz.length);
+            summary.textContent = `Skor: ${score}/${currentCountryQuiz.length}. ${message}`;
+        }
+
+        function renderCountryQuizResult() {
+            const list = document.getElementById('quizList');
+            if (!list) return;
+
+            const perfectScore = currentCountryQuizScore === currentCountryQuiz.length;
+            list.innerHTML = `
+        <article class="quiz-card quiz-card-result">
+            <p class="quiz-step-label">${perfectScore ? 'Şahane Tur' : 'Tur Tamamlandı'}</p>
+            <h3 class="quiz-result-title">${perfectScore ? 'Helal olsun' : 'Test bitti'}</h3>
+            <p class="quiz-result-text">${perfectScore
+                    ? '5 sorunun 5\'ini de doğru bildin. Konfetiler ve havai fişekler senin için patlıyor.'
+                    : `Bu turu ${currentCountryQuizScore}/${currentCountryQuiz.length} ile tamamladın. İstersen hemen yeni tur başlatabilirsin.`}</p>
+            <div class="quiz-result-actions">
+                <button id="quizPlayAgainBtn" type="button" class="quiz-launch-btn quiz-result-btn">Tekrar Oyna</button>
+            </div>
+        </article>
+    `;
+            const playAgainBtn = document.getElementById('quizPlayAgainBtn');
+            if (playAgainBtn) {
+                playAgainBtn.addEventListener('click', () => renderCountryQuiz());
+            }
+            if (perfectScore) {
+                launchCountryQuizConfetti();
+            }
+            fixMojibakeDomText(list);
+        }
+
+        function handleCountryQuizAnswer(button) {
+            const questionIndex = Number(button.getAttribute('data-quiz-index'));
+            if (!Number.isFinite(questionIndex)) return;
+
+            const card = button.closest('[data-quiz-card]');
+            if (!card || card.getAttribute('data-answered') === 'true') return;
+
+            const question = currentCountryQuiz[questionIndex];
+            if (!question) return;
+
+            card.setAttribute('data-answered', 'true');
+            const selected = button.textContent || '';
+            const isCorrect = selected === question.answer;
+            currentCountryQuizAnswered += 1;
+            if (isCorrect) currentCountryQuizScore += 1;
+
+            card.querySelectorAll('.quiz-option').forEach(optionBtn => {
+                optionBtn.disabled = true;
+                const text = optionBtn.textContent || '';
+                if (text === question.answer) {
+                    optionBtn.classList.add('correct');
+                } else if (optionBtn === button && !isCorrect) {
+                    optionBtn.classList.add('wrong');
+                }
+            });
+
+            const feedback = document.getElementById(`quizFeedback${questionIndex}`);
+            if (feedback) {
+                feedback.textContent = isCorrect
+                    ? `Doğru. ${question.note}`
+                    : `Yanlış. Doğru cevap: ${question.answer}. ${question.note}`;
+            }
+
+            const isDone = currentCountryQuizAnswered === currentCountryQuiz.length;
+            updateCountryQuizProgress();
+            updateCountryQuizSummary(isDone);
+            clearCountryQuizAdvanceTimer();
+            countryQuizAdvanceTimer = window.setTimeout(() => {
+                if (isDone) {
+                    renderCountryQuizResult();
+                    return;
+                }
+                currentCountryQuizIndex += 1;
+                renderCurrentCountryQuizStep();
+            }, isDone ? 1200 : 950);
+        }
+
+        function renderCurrentCountryQuizStep() {
+            const list = document.getElementById('quizList');
+            if (!list) return;
+
+            const item = currentCountryQuiz[currentCountryQuizIndex];
+            if (!item) {
+                renderCountryQuizResult();
+                return;
+            }
+
+            list.innerHTML = `
+        <article class="quiz-card quiz-card-question" data-quiz-card="${currentCountryQuizIndex}">
+            <p class="quiz-step-label">Soru ${currentCountryQuizIndex + 1}</p>
+            <p class="quiz-question">${escapeHtml(item.question)}</p>
+            <div class="quiz-options">
+                ${item.options.map(option => `
+                    <button type="button" class="quiz-option" data-quiz-index="${currentCountryQuizIndex}" data-quiz-option="${escapeHtml(option)}">${escapeHtml(option)}</button>
+                `).join('')}
+            </div>
+            <div class="quiz-feedback" id="quizFeedback${currentCountryQuizIndex}">Cevabını seç, sonra sıradaki soru gelsin.</div>
+        </article>
+    `;
+
+            list.querySelectorAll('.quiz-option').forEach(button => {
+                button.addEventListener('click', () => handleCountryQuizAnswer(button));
+            });
+
+            updateCountryQuizSummary(false);
+            updateCountryQuizProgress();
+            fixMojibakeDomText(list);
+        }
+
+        function renderCountryQuiz() {
+            currentCountryQuiz = shuffleItems(countryQuizPool).slice(0, 5).map(item => ({
+                question: item.question,
+                options: shuffleItems(item.options),
+                answer: item.answer,
+                note: item.note
+            }));
+            currentCountryQuizScore = 0;
+            currentCountryQuizAnswered = 0;
+            currentCountryQuizIndex = 0;
+            clearCountryQuizAdvanceTimer();
+            resetCountryQuizConfetti();
+            renderCurrentCountryQuizStep();
+        }
+
+        function openQuizPanel() {
+            const quizPanel = document.getElementById('quizPanel');
+            const infoPanel = document.getElementById('infoPanel');
+            if (!quizPanel) return;
+
+            if (infoPanel && infoPanel.classList.contains('visible')) {
+                closePanel();
+            }
+
+            if (!currentCountryQuiz.length || currentCountryQuizAnswered === currentCountryQuiz.length) {
+                renderCountryQuiz();
+            } else if (currentCountryQuizAnswered > currentCountryQuizIndex) {
+                currentCountryQuizIndex = Math.min(currentCountryQuizAnswered, Math.max(0, currentCountryQuiz.length - 1));
+                renderCurrentCountryQuizStep();
+            } else {
+                updateCountryQuizProgress();
+            }
+
+            quizPanel.classList.add('visible');
+            quizPanel.setAttribute('aria-hidden', 'false');
+            fixMojibakeDomText(quizPanel);
+        }
+
+        function closeQuizPanel() {
+            const quizPanel = document.getElementById('quizPanel');
+            if (!quizPanel) return;
+            clearCountryQuizAdvanceTimer();
+            resetCountryQuizConfetti();
+            if (currentCountryQuizAnswered >= currentCountryQuiz.length && currentCountryQuiz.length) {
+                renderCountryQuizResult();
+            } else if (currentCountryQuizAnswered > currentCountryQuizIndex) {
+                currentCountryQuizIndex = Math.min(currentCountryQuizAnswered, Math.max(0, currentCountryQuiz.length - 1));
+                renderCurrentCountryQuizStep();
+            }
+            quizPanel.classList.remove('visible');
+            quizPanel.setAttribute('aria-hidden', 'true');
+        }
+
+        function initCountryQuiz() {
+            const list = document.getElementById('quizList');
+            if (!list) return;
+            renderCountryQuiz();
         }
 
         function renderCultureLegend(features) {
@@ -8575,6 +10672,7 @@
             const panel = document.getElementById('infoPanel');
             if (!panel) return;
 
+            closeQuizPanel();
             activeOcean = ocean;
             activePolygon = null;
             updatePolygonHighlight();
@@ -8623,6 +10721,12 @@
             renderOceanFeatures(ocean);
             panel.classList.add('visible');
             fixMojibakeDomText(panel);
+            refreshWeatherExperience({
+                lat: ocean.lat,
+                lng: ocean.lng,
+                location: ocean.name,
+                timezone: ''
+            });
         }
 
         // ============================================================
@@ -8634,6 +10738,7 @@
             const culture = props.culturalProfile || defaultCulture;
             const displayName = getDisplayCountryName(props);
 
+            closeQuizPanel();
             activeOcean = null;
             setCountryPanelMode();
             document.getElementById('countryName').innerText = displayName;
@@ -8688,7 +10793,11 @@
             document.getElementById('cultureDesc').innerText = culture.desc;
             document.getElementById('animalNameValue').innerText = 'Araştırılıyor';
             document.getElementById('animalStatValue').innerText = 'Yükleniyor...';
+            document.getElementById('prosperityValue').innerText = 'Yükleniyor...';
+            document.getElementById('architectureValue').innerText = 'Yükleniyor...';
             renderSymbolicAnimal(props);
+            renderCountryProsperity(props, null);
+            renderCountryArchitecture(props, null);
             renderTraditionalFoods(props);
             renderTraditionalClothing(props);
             applyCountryFactData(props, culture, null);
@@ -8697,6 +10806,7 @@
             const btn = document.getElementById('anthemBtn');
             btn.innerHTML = '🎵 Milli Marşı Çal';
             btn.style.display = 'none';
+            refreshWeatherExperience(resolveCountryWeatherTarget(props, null));
 
             const isoCode = props.ISO_NORM || resolveCountryIso(props);
             const apiCode = isoCode || normalizeA3Code(props.ISO_A3);
@@ -8746,6 +10856,9 @@
                 const apiIso = normalizeIsoCode(data.cca2 || isoCode);
                 if (apiIso) mergeAnthemCandidates(apiIso);
                 applyCountryFactData(props, culture, data);
+                renderCountryProsperity(props, data);
+                renderCountryArchitecture(props, data);
+                refreshWeatherExperience(resolveCountryWeatherTarget(props, data));
 
                 document.getElementById('capitalValue').innerText =
                     (data.capital && data.capital.length) ? data.capital.join(', ') : '-';
@@ -8788,6 +10901,7 @@
             isPlaying = false;
             const btn = document.getElementById('anthemBtn');
             if (btn) btn.innerHTML = '🎵 Milli Marşı Çal';
+            refreshWeatherExperience(defaultWeatherTarget);
         }
 
         function getGlobeViewportSize() {
@@ -8822,6 +10936,8 @@
             isoA3Overrides,
             inferredCountryProfiles,
             inferredRegionalProfiles,
+            countryIsoDisplayOverrides,
+            countryNameDisplayOverrides,
             countryClothingProfiles,
             regionalClothingProfiles,
             legacyCleanCountryFoodProfiles,
@@ -8861,10 +10977,25 @@
         const cultureNextBtn = document.getElementById('cultureNextBtn');
         if (cultureNextBtn) cultureNextBtn.addEventListener('click', () => focusSelectedCultureCountry(1));
 
+        const quizLaunchBtn = document.getElementById('quizLaunchBtn');
+        if (quizLaunchBtn) quizLaunchBtn.addEventListener('click', () => openQuizPanel());
+
+        const quizRefreshBtn = document.getElementById('quizRefreshBtn');
+        if (quizRefreshBtn) quizRefreshBtn.addEventListener('click', () => {
+            renderCountryQuiz();
+            openQuizPanel();
+        });
+
         document.addEventListener('keydown', e => {
             const targetTag = e.target && e.target.tagName ? e.target.tagName.toUpperCase() : '';
             if (targetTag === 'INPUT' || targetTag === 'TEXTAREA') return;
             if (e.key === 'Escape') {
+                const quizPanel = document.getElementById('quizPanel');
+                if (quizPanel && quizPanel.classList.contains('visible')) {
+                    e.preventDefault();
+                    closeQuizPanel();
+                    return;
+                }
                 const infoPanel = document.getElementById('infoPanel');
                 if (infoPanel && infoPanel.classList.contains('visible')) {
                     e.preventDefault();
@@ -8883,7 +11014,9 @@
             }
         });
 
+        initCountryQuiz();
         updateCultureNavigator();
+        refreshWeatherExperience(defaultWeatherTarget);
 
         window.addEventListener('resize', () => {
             resizeGlobeToViewport();
