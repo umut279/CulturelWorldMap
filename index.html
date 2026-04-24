@@ -22,6 +22,12 @@
             overflow: hidden;
             font-family: 'Inter', sans-serif;
             color: #1a1a24;
+            --phone-mode-width: 390px;
+            --phone-mode-height: 694px;
+            --phone-mode-left: 24px;
+            --phone-mode-top: 24px;
+            --phone-mode-bottom: 24px;
+            --phone-mode-sheet-max-height: 458px;
         }
 
         #globeViz {
@@ -31,12 +37,63 @@
             width: 100vw;
             height: 100vh;
             cursor: grab;
+            overflow: hidden;
             z-index: 1;
             transition: width 0.38s ease, height 0.38s ease, top 0.38s ease, left 0.38s ease, transform 0.38s ease, border-radius 0.38s ease, box-shadow 0.38s ease, border 0.38s ease;
         }
 
         #globeViz:active {
             cursor: grabbing;
+        }
+
+        .view-mode-toggle {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            z-index: 35;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.58);
+            border-radius: 999px;
+            background: rgba(18, 26, 42, 0.88);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            box-shadow: 0 16px 28px rgba(9, 16, 28, 0.22);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+        }
+
+        .view-mode-toggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 18px 34px rgba(9, 16, 28, 0.28);
+        }
+
+        .view-mode-toggle.is-active {
+            background: linear-gradient(135deg, #FF512F 0%, #F09819 100%);
+            border-color: rgba(255, 255, 255, 0.72);
+            box-shadow: 0 18px 36px rgba(240, 152, 25, 0.3);
+        }
+
+        .view-mode-toggle-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.16);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .view-mode-toggle.is-active .view-mode-toggle-badge {
+            background: rgba(255, 255, 255, 0.22);
         }
 
         .title-overlay {
@@ -1569,6 +1626,373 @@
             margin-right: 8px;
         }
 
+        body.phone-mode {
+            background:
+                radial-gradient(circle at top, rgba(255, 210, 148, 0.34), transparent 36%),
+                linear-gradient(180deg, #eef2f7 0%, #d7e0eb 100%);
+        }
+
+        body.phone-mode::before,
+        body.phone-mode::after {
+            content: '';
+            position: fixed;
+            pointer-events: none;
+        }
+
+        body.phone-mode::before {
+            inset: 0;
+            background: rgba(10, 18, 30, 0.12);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 0;
+        }
+
+        body.phone-mode::after {
+            top: calc(var(--phone-mode-top) - 10px);
+            left: calc(var(--phone-mode-left) - 10px);
+            width: calc(var(--phone-mode-width) + 20px);
+            height: calc(var(--phone-mode-height) + 20px);
+            border-radius: 38px;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.08), rgba(255, 255, 255, 0.64));
+            box-shadow: 0 28px 80px rgba(14, 23, 38, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+            z-index: 0;
+        }
+
+        body.phone-mode #globeViz {
+            top: var(--phone-mode-top);
+            left: var(--phone-mode-left);
+            width: var(--phone-mode-width);
+            height: var(--phone-mode-height);
+            transform: none;
+            border-radius: 32px;
+            border: 8px solid rgba(15, 23, 42, 0.88);
+            box-shadow: 0 30px 90px rgba(15, 23, 42, 0.28);
+        }
+
+        body.phone-mode .view-mode-toggle {
+            top: calc(var(--phone-mode-top) + 14px);
+            left: calc(var(--phone-mode-left) + var(--phone-mode-width) - 158px);
+            right: auto;
+            padding: 10px 14px;
+            font-size: 12px;
+        }
+
+        body.phone-mode .title-overlay {
+            top: calc(var(--phone-mode-top) + 16px);
+            left: calc(var(--phone-mode-left) + 16px);
+            right: auto;
+            width: calc(var(--phone-mode-width) - 32px);
+        }
+
+        body.phone-mode .title-overlay h1 {
+            font-size: 24px;
+        }
+
+        body.phone-mode .title-overlay p {
+            margin-top: 8px;
+            max-width: 220px;
+            font-size: 11px;
+        }
+
+        body.phone-mode .title-signature {
+            max-width: 220px;
+            margin-top: 8px;
+            font-size: 11px;
+            line-height: 1.5;
+            letter-spacing: 0.14em;
+        }
+
+        body.phone-mode .weather-widget {
+            width: min(250px, calc(var(--phone-mode-width) - 24px));
+            margin-top: 12px;
+            padding: 11px 12px;
+            gap: 10px;
+            border-radius: 18px;
+        }
+
+        body.phone-mode .weather-visual {
+            width: 72px;
+            height: 56px;
+        }
+
+        body.phone-mode .weather-orb {
+            width: 36px;
+            height: 36px;
+        }
+
+        body.phone-mode .weather-time {
+            font-size: 22px;
+        }
+
+        body.phone-mode .weather-summary {
+            font-size: 12px;
+        }
+
+        body.phone-mode .weather-detail {
+            font-size: 11px;
+        }
+
+        body.phone-mode #controlPanel {
+            top: calc(var(--phone-mode-top) + 96px);
+            left: calc(var(--phone-mode-left) + 10px);
+            right: auto;
+            width: calc(var(--phone-mode-width) - 20px);
+            gap: 12px;
+            max-height: calc(var(--phone-mode-height) - 108px);
+            overflow-y: auto;
+            padding-bottom: 8px;
+        }
+
+        body.phone-mode .control-card {
+            padding: 12px;
+            border-radius: 16px;
+        }
+
+        body.phone-mode .control-title {
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        body.phone-mode .search-row {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        body.phone-mode #countrySearchInput,
+        body.phone-mode #countrySearchBtn {
+            width: 100%;
+            padding: 11px 12px;
+            font-size: 13px;
+            border-radius: 10px;
+        }
+
+        body.phone-mode .search-status {
+            margin-top: 8px;
+            min-height: 16px;
+            font-size: 11px;
+        }
+
+        body.phone-mode .legend-list {
+            gap: 8px;
+            max-height: 180px;
+        }
+
+        body.phone-mode .legend-item {
+            gap: 8px;
+            padding: 9px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        body.phone-mode .legend-text strong {
+            font-size: 12px;
+        }
+
+        body.phone-mode .legend-text span,
+        body.phone-mode .culture-nav-status {
+            font-size: 11px;
+        }
+
+        body.phone-mode .culture-nav {
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        body.phone-mode .culture-nav-btn {
+            padding: 9px 10px;
+            font-size: 12px;
+            border-radius: 10px;
+        }
+
+        body.phone-mode .quiz-launch-card {
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        body.phone-mode #quizPanel {
+            top: auto;
+            left: calc(var(--phone-mode-left) + 8px);
+            right: auto;
+            bottom: calc(var(--phone-mode-bottom) + 8px);
+            width: calc(var(--phone-mode-width) - 16px);
+            min-width: 0;
+            max-width: none;
+            min-height: 0;
+            max-height: var(--phone-mode-sheet-max-height);
+            padding: 16px 12px 14px;
+            border-radius: 18px;
+            transform: translateY(20px);
+        }
+
+        body.phone-mode #quizPanel.visible {
+            transform: translateY(0);
+        }
+
+        body.phone-mode .quiz-panel-head {
+            flex-direction: column;
+            padding-right: 0;
+        }
+
+        body.phone-mode .quiz-panel-title {
+            font-size: 22px;
+        }
+
+        body.phone-mode .quiz-question {
+            font-size: 17px;
+        }
+
+        body.phone-mode .quiz-options {
+            grid-template-columns: 1fr;
+        }
+
+        body.phone-mode .quiz-progress-row {
+            flex-wrap: wrap;
+        }
+
+        body.phone-mode .quiz-card {
+            padding: 16px;
+            border-radius: 18px;
+        }
+
+        body.phone-mode .quiz-option {
+            padding: 11px 12px;
+            font-size: 12px;
+            border-radius: 12px;
+        }
+
+        body.phone-mode .quiz-result-title {
+            font-size: 26px;
+        }
+
+        body.phone-mode #infoPanel {
+            top: auto;
+            left: calc(var(--phone-mode-left) + 8px);
+            right: auto;
+            bottom: calc(var(--phone-mode-bottom) + 8px);
+            width: calc(var(--phone-mode-width) - 16px);
+            min-width: 0;
+            max-width: none;
+            max-height: var(--phone-mode-sheet-max-height);
+            padding: 16px 12px 14px;
+            border-radius: 18px;
+            transform: translateY(20px);
+        }
+
+        body.phone-mode #infoPanel.visible {
+            transform: translateY(0);
+        }
+
+        body.phone-mode .panel-flag-header {
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        body.phone-mode .panel-visual-stack {
+            width: 100%;
+            gap: 12px;
+        }
+
+        body.phone-mode .visual-card {
+            width: 100%;
+            padding: 12px;
+            border-radius: 16px;
+        }
+
+        body.phone-mode #flagImg,
+        body.phone-mode #animalImg {
+            width: 100%;
+            height: 118px;
+        }
+
+        body.phone-mode #flagEmoji,
+        body.phone-mode #animalEmoji {
+            min-height: 118px;
+            font-size: 58px;
+        }
+
+        body.phone-mode #animalImg {
+            height: 138px;
+        }
+
+        body.phone-mode #animalEmoji {
+            min-height: 138px;
+            font-size: 68px;
+        }
+
+        body.phone-mode .panel-header {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        body.phone-mode .panel-culture {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 16px;
+        }
+
+        body.phone-mode #anthemBtn {
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        body.phone-mode .stats-grid {
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        body.phone-mode .stat-row.full-width {
+            grid-column: auto;
+        }
+
+        body.phone-mode .stat-row {
+            padding: 10px 12px;
+            border-radius: 12px;
+        }
+
+        body.phone-mode .stat-label {
+            font-size: 11px;
+        }
+
+        body.phone-mode .stat-value {
+            font-size: 15px;
+        }
+
+        body.phone-mode .section-title {
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        body.phone-mode .feature-grid,
+        body.phone-mode .food-grid,
+        body.phone-mode .clothing-grid,
+        body.phone-mode .architecture-grid {
+            grid-template-columns: 1fr;
+        }
+
+        body.phone-mode .feature-card,
+        body.phone-mode .food-card,
+        body.phone-mode .clothing-card,
+        body.phone-mode .architecture-card {
+            padding: 12px;
+            border-radius: 14px;
+        }
+
+        body.phone-mode .architecture-title {
+            font-size: 20px;
+        }
+
+        body.phone-mode .architecture-text {
+            font-size: 13px;
+        }
+
+        body.phone-mode #errorBox {
+            bottom: calc(var(--phone-mode-bottom) + 18px);
+            max-width: calc(var(--phone-mode-width) - 32px);
+        }
+
         @media (max-width: 1024px) {
             #controlPanel {
                 right: 20px;
@@ -1628,6 +2052,18 @@
         @media (max-width: 768px) {
             body {
                 min-height: 100dvh;
+            }
+
+            .view-mode-toggle {
+                top: 16px;
+                right: 16px;
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+
+            .view-mode-toggle-badge {
+                min-width: 38px;
+                padding: 5px 8px;
             }
 
             #globeViz {
@@ -2035,6 +2471,10 @@
             görmek için haritayı döndürün ve detaylar için ülkelere tıklayın.</p>
         <div class="title-signature">Designed by Umut Şahin and Ramazan Çanta</div>
     </div>
+    <button id="phoneModeToggle" class="view-mode-toggle" type="button" aria-pressed="false" aria-label="Telefon modunu ac">
+        <span class="view-mode-toggle-badge">9:16</span>
+        <span id="phoneModeLabel">Telefon Modu</span>
+    </button>
     <div id="globeViz"></div>
     <div id="controlPanel">
         <div class="control-card">
@@ -8721,8 +9161,12 @@
                     if (controls) {
                         controls.autoRotate = true;
                         controls.autoRotateSpeed = 0.5;
-                        controls.addEventListener('start', () => { controls.autoRotate = false; });
+                        controls.addEventListener('start', () => {
+                            controls.autoRotate = false;
+                            globeContainer.style.cursor = 'grabbing';
+                        });
                         controls.addEventListener('end', () => {
+                            globeContainer.style.cursor = hoveredPolygon ? 'pointer' : 'grab';
                             if (window.autoRotateTimeout) clearTimeout(window.autoRotateTimeout);
                             window.autoRotateTimeout = setTimeout(() => { controls.autoRotate = true; }, 3000);
                         });
@@ -8767,6 +9211,9 @@
         let currentFoodRenderToken = 0;
         let currentClothingRenderToken = 0;
         let currentWeatherRenderToken = 0;
+        let isPhoneMode = false;
+        let phoneModeResizeTimer = null;
+        const phoneModeStorageKey = 'kulturatlasi-phone-mode';
 
         const globalUsedMediaUrls = new Set();
         function canLoadImage(url) {
@@ -10904,6 +11351,30 @@
             refreshWeatherExperience(defaultWeatherTarget);
         }
 
+        function updatePhoneModeMetrics() {
+            const root = document.documentElement;
+            const safeMargin = window.innerWidth <= 768 ? 12 : 24;
+            const availableWidth = Math.max(280, window.innerWidth - (safeMargin * 2));
+            const availableHeight = Math.max(520, window.innerHeight - (safeMargin * 2));
+            let width = Math.min(availableWidth, Math.round((availableHeight * 9) / 16));
+            let height = Math.round((width * 16) / 9);
+
+            if (height > availableHeight) {
+                height = availableHeight;
+                width = Math.round((height * 9) / 16);
+            }
+
+            const left = Math.max(safeMargin, Math.round((window.innerWidth - width) / 2));
+            const top = Math.max(safeMargin, Math.round((window.innerHeight - height) / 2));
+
+            root.style.setProperty('--phone-mode-width', `${width}px`);
+            root.style.setProperty('--phone-mode-height', `${height}px`);
+            root.style.setProperty('--phone-mode-left', `${left}px`);
+            root.style.setProperty('--phone-mode-top', `${top}px`);
+            root.style.setProperty('--phone-mode-bottom', `${top}px`);
+            root.style.setProperty('--phone-mode-sheet-max-height', `${Math.max(320, Math.round(height * 0.66))}px`);
+        }
+
         function getGlobeViewportSize() {
             const globeContainer = document.getElementById('globeViz');
             if (!globeContainer) {
@@ -10922,6 +11393,45 @@
             const viewport = getGlobeViewportSize();
             world.width(viewport.width);
             world.height(viewport.height);
+        }
+
+        function queueGlobeResize() {
+            resizeGlobeToViewport();
+            if (phoneModeResizeTimer) clearTimeout(phoneModeResizeTimer);
+            phoneModeResizeTimer = setTimeout(() => {
+                resizeGlobeToViewport();
+            }, 420);
+        }
+
+        function applyPhoneMode(enabled) {
+            isPhoneMode = !!enabled;
+            updatePhoneModeMetrics();
+            document.body.classList.toggle('phone-mode', isPhoneMode);
+
+            const toggle = document.getElementById('phoneModeToggle');
+            const label = document.getElementById('phoneModeLabel');
+            if (toggle) {
+                toggle.classList.toggle('is-active', isPhoneMode);
+                toggle.setAttribute('aria-pressed', isPhoneMode ? 'true' : 'false');
+                toggle.setAttribute('aria-label', isPhoneMode ? 'Telefon modunu kapat' : 'Telefon modunu ac');
+            }
+            if (label) {
+                label.innerText = isPhoneMode ? 'Telefon Modu Acik' : 'Telefon Modu';
+            }
+
+            try {
+                localStorage.setItem(phoneModeStorageKey, isPhoneMode ? '1' : '0');
+            } catch (err) {
+                console.warn('Telefon modu tercihi kaydedilemedi:', err && err.message ? err.message : err);
+            }
+
+            requestAnimationFrame(() => {
+                queueGlobeResize();
+            });
+        }
+
+        function togglePhoneMode() {
+            applyPhoneMode(!isPhoneMode);
         }
 
         [
@@ -10955,8 +11465,10 @@
             flagColorOverrides
         ].forEach(item => normalizeMojibakeInPlace(item));
 
-        document.title = fixMojibake(document.title);
+        document.title = 'Dijital Değerler Atlası';
         fixMojibakeDomText(document.body);
+        const titleHeading = document.querySelector('.title-overlay h1');
+        if (titleHeading) titleHeading.innerText = 'Dijital Değerler Atlası';
 
         const searchInput = document.getElementById('countrySearchInput');
         if (searchInput) {
@@ -10985,6 +11497,19 @@
             renderCountryQuiz();
             openQuizPanel();
         });
+
+        const phoneModeToggle = document.getElementById('phoneModeToggle');
+        if (phoneModeToggle) phoneModeToggle.addEventListener('click', togglePhoneMode);
+
+        const savedPhoneMode = (() => {
+            try {
+                return localStorage.getItem(phoneModeStorageKey) === '1';
+            } catch (err) {
+                return false;
+            }
+        })();
+
+        applyPhoneMode(savedPhoneMode);
 
         document.addEventListener('keydown', e => {
             const targetTag = e.target && e.target.tagName ? e.target.tagName.toUpperCase() : '';
@@ -11019,7 +11544,8 @@
         refreshWeatherExperience(defaultWeatherTarget);
 
         window.addEventListener('resize', () => {
-            resizeGlobeToViewport();
+            updatePhoneModeMetrics();
+            queueGlobeResize();
         });
     </script>
 </body>
