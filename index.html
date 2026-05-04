@@ -1772,12 +1772,12 @@
         }
 
         body.mobile-device.mobile-portrait #quizPanel {
-            top: auto;
+            top: var(--phone-mode-globe-top);
             left: var(--phone-mode-safe-x);
-            right: var(--phone-mode-safe-x);
+            width: var(--phone-mode-inner-width);
             bottom: calc(env(safe-area-inset-bottom, 0px) + var(--phone-mode-safe-y));
             width: auto;
-            height: var(--phone-mode-sheet-height);
+            height: var(--phone-mode-globe-height);
             min-width: 0;
             max-width: none;
             min-height: 0;
