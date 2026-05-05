@@ -1587,560 +1587,128 @@
             margin-right: 8px;
         }
 
-        body.mobile-device.mobile-portrait {
-            min-height: 200dvh;
-            background:
-                radial-gradient(circle at top, rgba(255, 210, 148, 0.34), transparent 36%),
-                linear-gradient(180deg, #eef2f7 0%, #d7e0eb 100%);
-            overflow: hidden;
-            overscroll-behavior: none;
+                body.mobile-device.mobile-portrait {
+            min-height: 100dvh !important;
+            height: 100dvh !important;
+            position: fixed !important;
+            width: 100% !important;
+            overflow: hidden !important;
+            overscroll-behavior: none !important;
         }
 
-        body.mobile-device.mobile-portrait::before,
-        body.mobile-device.mobile-portrait::after {
-            content: none;
-            display: none;
-        }
-
-        body.mobile-device.mobile-portrait #globeViz {
-            top: var(--phone-mode-globe-top);
-            left: var(--phone-mode-safe-x);
-            width: var(--phone-mode-inner-width);
-            height: var(--phone-mode-globe-height);
-            transform: none;
-            border-radius: 24px;
-            border: 1px solid rgba(15, 23, 42, 0.1);
-            box-shadow:
-                0 18px 30px rgba(15, 23, 42, 0.12),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.22);
-        }
-
+        /* === TITLE: compact single-line row, hide description/signature/weather === */
         body.mobile-device.mobile-portrait .title-overlay {
-            top: var(--phone-mode-title-top);
-            left: var(--phone-mode-safe-x);
-            right: auto;
-            width: var(--phone-mode-inner-width);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: center !important;
+            gap: 0 !important;
+            top: var(--phone-mode-title-top) !important;
+            left: var(--phone-mode-safe-x) !important;
+            right: var(--phone-mode-safe-x) !important;
+            width: auto !important;
         }
-
         body.mobile-device.mobile-portrait .title-overlay h1 {
-            font-size: 22px;
-            line-height: 1.05;
+            font-size: 17px !important;
+            line-height: 1.1 !important;
+            white-space: nowrap !important;
+            margin: 0 !important;
         }
-
-        body.mobile-device.mobile-portrait .title-overlay p {
-            margin-top: 0;
-            max-width: none;
-            font-size: 11px;
-            line-height: 1.55;
-        }
-
-        body.mobile-device.mobile-portrait .title-signature {
-            max-width: none;
-            margin-top: 2px;
-            font-size: 11px;
-            line-height: 1.5;
-            letter-spacing: 0.14em;
-        }
-
+        body.mobile-device.mobile-portrait .title-overlay p,
+        body.mobile-device.mobile-portrait .title-signature,
         body.mobile-device.mobile-portrait .weather-widget {
-            width: 100%;
-            max-width: none;
-            margin-top: 8px;
-            padding: 11px 12px;
-            gap: 10px;
-            border-radius: 18px;
+            display: none !important;
         }
 
-        body.mobile-device.mobile-portrait .weather-visual {
-            width: 72px;
-            height: 56px;
+        /* === GLOBE: enforce CSS var sizing === */
+        body.mobile-device.mobile-portrait #globeViz {
+            width: var(--phone-mode-inner-width) !important;
+            height: var(--phone-mode-globe-height) !important;
+            top: var(--phone-mode-globe-top) !important;
+            left: var(--phone-mode-safe-x) !important;
         }
 
-        body.mobile-device.mobile-portrait .weather-orb {
-            width: 36px;
-            height: 36px;
-        }
-
-        body.mobile-device.mobile-portrait .weather-time {
-            font-size: 22px;
-        }
-
-        body.mobile-device.mobile-portrait .weather-summary {
-            font-size: 12px;
-        }
-
-        body.mobile-device.mobile-portrait .weather-detail {
-            font-size: 11px;
-        }
-
+        /* === CONTROL PANEL: fill remaining space === */
         body.mobile-device.mobile-portrait #controlPanel {
-            top: var(--phone-mode-control-top);
-            left: var(--phone-mode-safe-x);
-            right: auto;
-            width: var(--phone-mode-inner-width);
-            height: var(--phone-mode-control-height);
-            max-height: var(--phone-mode-control-height);
-            gap: 12px;
-            overflow-y: auto;
-            padding-right: 2px;
-            padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 2px);
-            overscroll-behavior: contain;
-            scrollbar-gutter: stable;
+            width: var(--phone-mode-inner-width) !important;
+            height: var(--phone-mode-control-height) !important;
+            max-height: var(--phone-mode-control-height) !important;
+            top: var(--phone-mode-control-top) !important;
+            left: var(--phone-mode-safe-x) !important;
+            right: auto !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
         }
 
-        body.mobile-device.mobile-portrait .control-card {
-            padding: 12px;
-            border-radius: 16px;
-            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-        }
+        /* === QUIZ PANEL: high z-index on desktop === */
+        #quizPanel { z-index: 9998 !important; }
 
-        body.mobile-device.mobile-portrait .control-title {
-            margin-bottom: 10px;
-            font-size: 13px;
-        }
-
-        body.mobile-device.mobile-portrait .search-row {
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        body.mobile-device.mobile-portrait #countrySearchInput,
-        body.mobile-device.mobile-portrait #countrySearchBtn {
-            width: 100%;
-            padding: 11px 12px;
-            font-size: 13px;
-            border-radius: 10px;
-        }
-
-        body.mobile-device.mobile-portrait .search-status {
-            margin-top: 8px;
-            min-height: 16px;
-            font-size: 11px;
-        }
-
-        body.mobile-device.mobile-portrait .legend-list {
-            gap: 8px;
-            max-height: none;
-            overflow: visible;
-            padding-right: 0;
-        }
-
-        body.mobile-device.mobile-portrait .legend-item {
-            gap: 8px;
-            padding: 9px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-
-        body.mobile-device.mobile-portrait .legend-text strong {
-            font-size: 12px;
-        }
-
-        body.mobile-device.mobile-portrait .legend-text span,
-        body.mobile-device.mobile-portrait .culture-nav-status {
-            font-size: 11px;
-        }
-
-        body.mobile-device.mobile-portrait .culture-nav {
-            margin-top: 10px;
-            padding-top: 10px;
-        }
-
-        body.mobile-device.mobile-portrait .culture-nav-row {
-            flex-direction: column;
-        }
-
-        body.mobile-device.mobile-portrait .culture-nav-btn {
-            width: 100%;
-            padding: 9px 10px;
-            font-size: 12px;
-            border-radius: 10px;
-        }
-
-        body.mobile-device.mobile-portrait .quiz-launch-card {
-            align-items: stretch;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        body.mobile-device.mobile-portrait .quiz-launch-btn,
-        body.mobile-device.mobile-portrait .quiz-refresh {
-            width: 100%;
-        }
-
-        body.mobile-device.mobile-portrait #quizPanel {
-            transform: translateY(0);
-        }
-
+        /* === QUIZ PANEL: FULLSCREEN on mobile portrait === */
         body.mobile-device.mobile-portrait #quizPanel.visible {
-            top: var(--phone-mode-globe-top);
-            left: var(--phone-mode-safe-x);
-            width: var(--phone-mode-inner-width);
-            bottom: calc(env(safe-area-inset-bottom, 0px) + var(--phone-mode-safe-y));
-            width: auto;
-            height: var(--phone-mode-sheet-height);
-            min-width: 0;
-            max-width: none;
-            min-height: 0;
-            max-height: var(--phone-mode-sheet-max-height);
-            padding: 18px 14px 16px;
-            border-radius: 24px 24px 18px 18px;
-            transform: translateY(24px);
-            overflow-y: auto;
-            box-shadow: 0 26px 48px rgba(15, 23, 42, 0.2);
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100vw !important;
+            height: 100dvh !important;
+            max-height: 100dvh !important;
+            max-width: none !important;
+            min-width: 0 !important;
+            padding: 56px 18px 24px !important;
+            border-radius: 0 !important;
+            transform: none !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            z-index: 99999 !important;
+            box-shadow: none !important;
+            border: none !important;
         }
 
-        body.mobile-device.mobile-portrait .close-btn {
-            top: 14px;
-            right: 14px;
-            font-size: 22px;
+        /* Close button: fixed top-right when fullscreen */
+        body.mobile-device.mobile-portrait #quizPanel.visible .close-btn {
+            position: fixed !important;
+            top: 14px !important;
+            right: 14px !important;
+            z-index: 100000 !important;
+            background: rgba(255, 255, 255, 0.96) !important;
+            border-radius: 50% !important;
+            width: 38px !important;
+            height: 38px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18) !important;
+            font-size: 20px !important;
         }
 
-        body.mobile-device.mobile-portrait .quiz-panel-shell {
-            min-height: 0;
-            gap: 14px;
-        }
-
-        body.mobile-device.mobile-portrait .quiz-panel-head {
-            flex-direction: column;
-            gap: 10px;
-            padding-right: 26px;
-        }
-
-        body.mobile-device.mobile-portrait .quiz-panel-title {
-            font-size: 22px;
-        }
-
-        body.mobile-device.mobile-portrait .quiz-question {
-            font-size: 17px;
-        }
-
+        /* Quiz internals on mobile */
         body.mobile-device.mobile-portrait .quiz-options {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr !important;
+            gap: 8px !important;
         }
-
-        body.mobile-device.mobile-portrait .quiz-progress-row {
-            flex-wrap: wrap;
-            gap: 8px;
+        body.mobile-device.mobile-portrait .quiz-question {
+            font-size: 18px !important;
         }
-
-        body.mobile-device.mobile-portrait .quiz-list {
-            min-height: 0;
-        }
-
         body.mobile-device.mobile-portrait .quiz-card {
-            padding: 16px;
-            border-radius: 18px;
+            padding: 16px !important;
+            border-radius: 18px !important;
+        }
+        body.mobile-device.mobile-portrait .quiz-panel-shell {
+            min-height: 0 !important;
+            gap: 12px !important;
+        }
+        body.mobile-device.mobile-portrait .quiz-panel-title {
+            font-size: 22px !important;
+        }
+        body.mobile-device.mobile-portrait .quiz-panel-head {
+            padding-right: 44px !important;
         }
 
-        body.mobile-device.mobile-portrait .quiz-option {
-            padding: 11px 12px;
-            font-size: 12px;
-            border-radius: 12px;
-        }
-
-        body.mobile-device.mobile-portrait .quiz-result-title {
-            font-size: 26px;
-        }
-
+        /* Info panel z-index */
         body.mobile-device.mobile-portrait #infoPanel {
-            top: auto;
-            left: var(--phone-mode-safe-x);
-            right: var(--phone-mode-safe-x);
-            bottom: calc(env(safe-area-inset-bottom, 0px) + var(--phone-mode-safe-y));
-            width: auto;
-            height: var(--phone-mode-sheet-height);
-            min-width: 0;
-            max-width: none;
-            max-height: var(--phone-mode-sheet-max-height);
-            padding: 18px 14px 16px;
-            border-radius: 24px 24px 18px 18px;
-            transform: translateY(24px);
-            box-shadow: 0 26px 48px rgba(15, 23, 42, 0.2);
-        }
-
-        body.mobile-device.mobile-portrait #infoPanel.visible {
-            transform: translateY(0);
-        }
-
-        body.mobile-device.mobile-portrait .panel-flag-header {
-            flex-direction: column;
-            gap: 14px;
-            padding-right: 0;
-        }
-
-        body.mobile-device.mobile-portrait .panel-visual-stack {
-            width: 100%;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        body.mobile-device.mobile-portrait .visual-card {
-            width: 100%;
-            padding: 12px;
-            border-radius: 16px;
-        }
-
-        body.mobile-device.mobile-portrait .visual-name {
-            font-size: 16px;
-        }
-
-        body.mobile-device.mobile-portrait #flagImg,
-        body.mobile-device.mobile-portrait #animalImg {
-            width: 100%;
-            height: 118px;
-        }
-
-        body.mobile-device.mobile-portrait #flagEmoji,
-        body.mobile-device.mobile-portrait #animalEmoji {
-            min-height: 118px;
-            font-size: 58px;
-        }
-
-        body.mobile-device.mobile-portrait #animalImg {
-            height: 138px;
-        }
-
-        body.mobile-device.mobile-portrait #animalEmoji {
-            min-height: 138px;
-            font-size: 68px;
-        }
-
-        body.mobile-device.mobile-portrait .panel-header {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        body.mobile-device.mobile-portrait .panel-culture {
-            padding: 6px 12px;
-            font-size: 12px;
-            border-radius: 16px;
-        }
-
-        body.mobile-device.mobile-portrait #anthemBtn {
-            padding: 10px 12px;
-            margin-bottom: 14px;
-            border-radius: 10px;
-            font-size: 13px;
-        }
-
-        body.mobile-device.mobile-portrait .stats-grid {
-            grid-template-columns: 1fr;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        body.mobile-device.mobile-portrait .stat-row.full-width {
-            grid-column: auto;
-        }
-
-        body.mobile-device.mobile-portrait .stat-row {
-            padding: 10px 12px;
-            border-radius: 12px;
-            margin-bottom: 0;
-            border-bottom: none;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 249, 252, 0.9));
-        }
-
-        body.mobile-device.mobile-portrait .stat-label {
-            font-size: 11px;
-        }
-
-        body.mobile-device.mobile-portrait .stat-value {
-            font-size: 15px;
-            line-height: 1.4;
-            word-break: break-word;
-        }
-
-        body.mobile-device.mobile-portrait .section-title {
-            margin-bottom: 12px;
-            font-size: 16px;
-        }
-
-        body.mobile-device.mobile-portrait .detail-section,
-        body.mobile-device.mobile-portrait .culture-description {
-            margin-top: 18px;
-            padding-top: 18px;
-        }
-
-        body.mobile-device.mobile-portrait .feature-grid,
-        body.mobile-device.mobile-portrait .food-grid,
-        body.mobile-device.mobile-portrait .clothing-grid,
-        body.mobile-device.mobile-portrait .architecture-grid {
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        body.mobile-device.mobile-portrait .feature-card,
-        body.mobile-device.mobile-portrait .food-card,
-        body.mobile-device.mobile-portrait .clothing-card,
-        body.mobile-device.mobile-portrait .architecture-card {
-            padding: 12px;
-            border-radius: 14px;
-        }
-
-        body.mobile-device.mobile-portrait .feature-text,
-        body.mobile-device.mobile-portrait .food-note,
-        body.mobile-device.mobile-portrait .clothing-note,
-        body.mobile-device.mobile-portrait .culture-description {
-            font-size: 13px;
-            line-height: 1.65;
-        }
-
-        body.mobile-device.mobile-portrait .food-img,
-        body.mobile-device.mobile-portrait .clothing-img {
-            height: 148px;
-        }
-
-        body.mobile-device.mobile-portrait .architecture-media {
-            min-height: 168px;
-        }
-
-        body.mobile-device.mobile-portrait .architecture-title {
-            font-size: 20px;
-        }
-
-        body.mobile-device.mobile-portrait .architecture-text {
-            font-size: 13px;
-        }
-
-        body.mobile-device.mobile-portrait .ocean-node {
-            min-width: 86px;
-            max-width: 104px;
-            padding: 6px 8px 5px;
-        }
-
-        body.mobile-device.mobile-portrait .ocean-node-name {
-            font-size: 8px;
-        }
-
-        body.mobile-device.mobile-portrait .ocean-node-meta {
-            margin-top: 2px;
-            font-size: 7px;
-        }
-
-        body.mobile-device.mobile-portrait #loader {
-            top: 50%;
-            left: 50%;
-            width: min(240px, calc(100vw - 48px));
-            padding: 18px 20px;
-            border-radius: 18px;
-            font-size: 14px;
-            transform: translate(-50%, -50%);
-        }
-
-        body.mobile-device.mobile-portrait #errorBox {
-            left: var(--phone-mode-safe-x);
-            right: var(--phone-mode-safe-x);
-            bottom: calc(env(safe-area-inset-bottom, 0px) + var(--phone-mode-safe-y));
-            transform: none;
-            max-width: none;
-        }
-
-        body.mobile-device.mobile-landscape {
-            background:
-                radial-gradient(circle at top left, rgba(255, 210, 148, 0.22), transparent 34%),
-                linear-gradient(180deg, #eef2f7 0%, #d7e0eb 100%);
-        }
-
-        body.mobile-device.mobile-landscape .title-overlay {
-            top: 14px;
-            left: 14px;
-            width: min(280px, calc(100vw - 184px));
-        }
-
-        body.mobile-device.mobile-landscape .title-overlay h1 {
-            font-size: 22px;
-        }
-
-        body.mobile-device.mobile-landscape .title-overlay p,
-        body.mobile-device.mobile-landscape .title-signature {
-            font-size: 11px;
-            max-width: 250px;
-        }
-
-        body.mobile-device.mobile-landscape #globeViz {
-            top: 112px;
-            left: 14px;
-            width: calc(10vw - 488px);
-            height: calc(100vh - 126px);
-            border-radius: 24px;
-        }
-
-        body.mobile-device.mobile-landscape #controlPanel {
-            top: 14px;
-            right: 14px;
-            left: auto;
-            width: 360px;
-            max-height: calc(10vh - 28px);
-            gap: 10px;
-            overflow-y: auto;
-            z-index: 26;
-        }
-
-        body.mobile-device.mobile-landscape .control-card {
-            padding: 12px;
-            border-radius: 16px;
-        }
-
-        body.mobile-device.mobile-landscape .search-row,
-        body.mobile-device.mobile-landscape .culture-nav-row,
-        body.mobile-device.mobile-landscape .quiz-launch-card {
-            flex-direction: column;
-        }
-
-        body.mobile-device.mobile-landscape #countrySearchInput,
-        body.mobile-device.mobile-landscape #countrySearchBtn,
-        body.mobile-device.mobile-landscape .culture-nav-btn,
-        body.mobile-device.mobile-landscape .quiz-launch-btn {
-            width: 100%;
-        }
-
-        body.mobile-device.mobile-landscape .legend-list {
-            max-height: 190px;
-        }
-
-        body.mobile-device.mobile-landscape #quizPanel {
-
-
-            
-        }
-
-        body.mobile-device.mobile-landscape #quizPanel.visible,{
-            
-        body.mobile-device.mobile-landscape #infoPanel {
-            left: 14px;
-            right: 14px;
-            bottom: 14px;
-            width: auto;
-            max-width: none;
-            max-height: min(60vh, 340px);
-            padding: 16px 12px 14px;
-            border-radius: 22px;
-            transform: translateY(18px);
-        }
-        body.mobile-device.mobile-landscape #infoPanel.visible {
-            transform: translateY(0);
-        }
-
-        body.mobile-device.mobile-landscape .quiz-options,
-        body.mobile-device.mobile-landscape .feature-grid,
-        body.mobile-device.mobile-landscape .food-grid,
-        body.mobile-device.mobile-landscape .clothing-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        body.mobile-device.mobile-landscape .panel-flag-header {
-            flex-direction: row;
-            gap: 14px;
-        }
-
-        body.mobile-device.mobile-landscape .panel-visual-stack {
-            width: min(46%, 260px);
-            flex-direction: column;
+            z-index: 30 !important;
         }
 
         @media (max-width: 1024px) {
